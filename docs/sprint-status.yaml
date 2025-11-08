@@ -1,0 +1,84 @@
+# Sprint Status Template
+# This tracks development progress through Phase 4 implementation
+# Phase 0-3 (Planning/Solutioning) is tracked separately in bmm-workflow-status.yaml
+
+# generated: 2025-11-06
+# project: 15ecosystem
+# project_key: 15ecosystem
+# tracking_system: file-system
+# story_location: "{project-root}/docs/stories"
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic exists in epic file but not contexted
+#   - contexted: Epic tech context created (required before drafting stories)
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - drafted: Story file created in stories folder
+#   - ready-for-dev: Draft approved and story context created
+#   - in-progress: Developer actively working on implementation
+#   - review: Under SM review (via code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - completed: Retrospective has been done
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epics should be 'contexted' before stories can be 'drafted'
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically drafts next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', SM reviews, then Dev moves to 'done'
+
+generated: 2025-11-06
+project: 15ecosystem
+project_key: 15ecosystem
+tracking_system: file-system
+story_location: "{project-root}/docs/stories"
+
+development_status:
+  # Epic 1: Foundation & Setup
+  epic-1: backlog
+  1-1-project-setup-with-i18n: in-progress
+  1-2-component-based-project-structure: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: Content Extraction & Organization
+  epic-2: backlog
+  2-1-parse-yaml-source-files-bilingual: backlog
+  2-2-organize-skills-content-3-categories: backlog
+  2-3-extract-book-references: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Page Structure
+  epic-3: backlog
+  3-1-landing-page-bilingual: backlog
+  3-2-category-pages-3-categories: backlog
+  3-3-skill-pages-15-pages-component-based: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Content Pages
+  epic-4: backlog
+  4-1-transcript-page: backlog
+  4-2-summary-page: backlog
+  4-3-books-page: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Visual Diagrams
+  epic-5: backlog
+  5-1-category-structure-diagram-3-categories-modern-design: backlog
+  5-2-skill-relationship-diagram: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: Navigation & Polish
+  epic-6: backlog
+  6-1-main-navigation-menu-bilingual: backlog
+  6-2-breadcrumb-navigation: backlog
+  6-3-skill-navigation-previous-next: backlog
+  6-4-mobile-responsiveness-modern-design-polish: backlog
+  6-5-performance-optimization-code-quality: backlog
+  epic-6-retrospective: optional
+

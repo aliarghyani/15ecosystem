@@ -1,0 +1,228 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1</storyId>
+    <title>Project Setup with i18n</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-06</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/1-1-project-setup-with-i18n.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>a Nuxt 4 project configured for static site generation with bilingual support</iWant>
+    <soThat>I can build a fast, content-driven website in Persian and English</soThat>
+    <tasks>
+      <task id="1" ac="1">Initialize Nuxt 4 project - Run npx nuxi@latest init 15ecosystem, verify app/ directory structure, nuxt.config.ts, and package.json</task>
+      <task id="2" ac="1">Install and configure dependencies - Install core dependencies (nuxt, @nuxt/ui, @nuxtjs/i18n, @nuxt/image, @nuxtjs/color-mode, tailwindcss, typescript) and dev dependencies (ESLint, Prettier)</task>
+      <task id="3" ac="1,4">Configure TypeScript - Create/update tsconfig.json with strict mode, verify configuration matches portfolio setup, test compilation</task>
+      <task id="4" ac="1">Configure Tailwind CSS 4 - Create/update tailwind.config.ts with custom utilities and variants, set up global CSS imports in app/assets/css/</task>
+      <task id="5" ac="1">Configure Nuxt UI 4 - Create/update app.config.ts with theme tokens, configure to match portfolio theme</task>
+      <task id="6" ac="1,3">Configure @nuxtjs/i18n - Configure module in nuxt.config.ts with prefix_except_default strategy, set up Persian (fa) and English (en) locales with RTL/LTR support, create locale files</task>
+      <task id="7" ac="1">Set up project structure - Create app/components/ subdirectories (common/, skills/, categories/, content/, diagrams/), composables/, utils/, types/, data/, public/ directories</task>
+      <task id="8" ac="1">Configure fonts - Set up Vazirmatn font for Persian (RTL), Roobert or system fonts for English (LTR)</task>
+      <task id="9" ac="1">Configure @nuxt/image - Set up module in nuxt.config.ts, configure image optimization settings</task>
+      <task id="10" ac="1">Configure Vercel deployment - Create vercel.json configuration file, configure build settings for SSG</task>
+      <task id="11" ac="4">Set up code quality tools - Configure ESLint, Prettier, accessibility linting tools</task>
+      <task id="12" ac="1">Initialize Git repository - Initialize Git if needed, create .gitignore with appropriate patterns</task>
+      <task id="13" ac="2">Test build process - Run pnpm build, verify successful build and static file generation in .output/public/</task>
+      <task id="14" ac="3">Test language switching - Test language switcher, verify Persian routes use /fa prefix, English routes are default, verify RTL/LTR layouts</task>
+      <task id="15" ac="1,2,3,4">Documentation and verification - Document setup process in README.md, verify all acceptance criteria are met</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">
+      <given>A new project repository</given>
+      <when>I initialize the project</when>
+      <then>
+        <item>Nuxt 4 project with SSG mode enabled</item>
+        <item>TypeScript configuration with strict mode</item>
+        <item>Tailwind CSS 4 setup with custom utilities and variants</item>
+        <item>Nuxt UI 4 integration with theme tokens in app.config.ts</item>
+        <item>@nuxtjs/i18n module configured with prefix_except_default strategy</item>
+        <item>Persian (fa) and English (en) locales set up with RTL/LTR support</item>
+        <item>Basic project structure matching portfolio (app/, public/, i18n/locales/)</item>
+        <item>Git repository initialized with appropriate .gitignore</item>
+      </then>
+    </ac>
+    <ac id="2">
+      <given>The project is initialized</given>
+      <when>I run pnpm build</when>
+      <then>
+        <item>The project builds successfully without errors</item>
+        <item>Generates static files in .output/public/</item>
+      </then>
+    </ac>
+    <ac id="3">
+      <given>The project is built</given>
+      <when>I test language switching</when>
+      <then>
+        <item>The language switcher works correctly</item>
+        <item>Persian content displays with RTL layout</item>
+        <item>English content displays with LTR layout</item>
+        <item>Routes respect the prefix_except_default strategy (English default, Persian /fa prefix)</item>
+      </then>
+    </ac>
+    <ac id="4">
+      <given>The project is set up</given>
+      <when>I check code quality tools</when>
+      <then>
+        <item>ESLint and Prettier are configured</item>
+        <item>TypeScript strict mode is enabled</item>
+        <item>Accessibility linting tools are set up</item>
+      </then>
+    </ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 1.1: Project Setup with i18n</section>
+        <snippet>Story acceptance criteria and technical notes for initializing Nuxt 4 project with SSG mode, TypeScript, Tailwind CSS 4, Nuxt UI 4, and @nuxtjs/i18n with prefix_except_default strategy. Includes project structure requirements matching portfolio setup.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Technology Stack (Based on Portfolio)</section>
+        <snippet>Defines technology stack requirements: Nuxt 4 (SSG mode), Nuxt UI 4, Tailwind CSS 4, TypeScript (strict mode), @nuxtjs/i18n with prefix_except_default strategy. Specifies component-based architecture, modern design standards, accessibility (WCAG AA), and code quality tools (ESLint, Prettier).</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Internationalization</section>
+        <snippet>Specifies bilingual support requirements: Persian (fa) and English (en) languages, full RTL support for Persian, LTR support for English, user-selectable language switcher. Critical for MVP success.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Project Initialization</section>
+        <snippet>Provides initialization approach matching portfolio structure. Includes setup commands: npx nuxi@latest init 15ecosystem, dependency installation commands, and portfolio-provided decisions for project structure, component organization, i18n strategy, styling approach, TypeScript strict mode, build tool (Vite), and package manager (pnpm).</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Decision Summary</section>
+        <snippet>Architectural decisions table specifying versions and rationale for framework (Nuxt 4 SSG), UI library (Nuxt UI 4), styling (Tailwind CSS 4), language (TypeScript), i18n (@nuxtjs/i18n), images (@nuxt/image), theme (@nuxtjs/color-mode), deployment (Vercel), code quality (ESLint + Prettier), fonts (Vazirmatn for FA, Roobert/System for EN), and build tool (Vite).</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Project Structure</section>
+        <snippet>Detailed project structure showing app/ directory pattern with components/ (feature-based subdirectories: common/, skills/, categories/, content/, diagrams/), composables/, utils/, types/, data/ (separate EN/FA), layouts/, pages/, plugins/, public/ (fonts/, img/), and i18n/locales/ (en.json, fa.json).</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Consistency Patterns</section>
+        <snippet>Naming conventions: Components (PascalCase), Composables (camelCase with "use" prefix), Pages (kebab-case), Types (PascalCase), Data Files (camelCase), Constants (UPPER_SNAKE_CASE). Code organization patterns for components and composables. Error handling and logging strategies.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <!-- Greenfield project - no existing code artifacts to reference -->
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="nuxt" version="latest" />
+        <package name="@nuxt/ui" version="latest" />
+        <package name="@nuxtjs/i18n" version="latest" />
+        <package name="@nuxt/image" version="latest" />
+        <package name="@nuxtjs/color-mode" version="latest" />
+        <package name="tailwindcss" version="latest" />
+        <package name="typescript" version="latest" />
+        <package name="eslint" version="latest" />
+        <package name="prettier" version="latest" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <name>Reference Architecture</name>
+      <description>Must match portfolio structure for consistency and maintainability. Reference: https://github.com/aliarghyani/nuxt-portfolio</description>
+      <source>docs/architecture.md#Project-Initialization</source>
+    </constraint>
+    <constraint>
+      <name>SSG Mode</name>
+      <description>Static site generation required for Vercel static hosting. No server-side rendering for MVP.</description>
+      <source>docs/PRD.md#Deployment</source>
+    </constraint>
+    <constraint>
+      <name>TypeScript Strict Mode</name>
+      <description>TypeScript strict mode required for code quality and type safety.</description>
+      <source>docs/PRD.md#Technology-Stack</source>
+    </constraint>
+    <constraint>
+      <name>i18n Strategy</name>
+      <description>prefix_except_default strategy - English default (no prefix), Persian /fa prefix. RTL/LTR support is critical for bilingual experience.</description>
+      <source>docs/architecture.md#Decision-Summary</source>
+    </constraint>
+    <constraint>
+      <name>Component Organization</name>
+      <description>Feature-based subdirectories: common/, skills/, categories/, content/, diagrams/. Fully component-based architecture for expandability.</description>
+      <source>docs/architecture.md#Project-Structure</source>
+    </constraint>
+    <constraint>
+      <name>Package Manager</name>
+      <description>Use pnpm as package manager (matches portfolio).</description>
+      <source>docs/architecture.md#Decision-Summary</source>
+    </constraint>
+    <constraint>
+      <name>Build Tool</name>
+      <description>Vite (via Nuxt) - fast builds, HMR, matches Nuxt defaults.</description>
+      <source>docs/architecture.md#Decision-Summary</source>
+    </constraint>
+    <constraint>
+      <name>Code Quality Standards</name>
+      <description>ESLint and Prettier required. Accessibility linting tools required. Code must be production-ready.</description>
+      <source>docs/PRD.md#Technology-Stack</source>
+    </constraint>
+    <constraint>
+      <name>Font Configuration</name>
+      <description>Vazirmatn font for Persian (RTL), Roobert or system fonts for English (LTR). Proper font loading configuration required.</description>
+      <source>docs/architecture.md#Decision-Summary</source>
+    </constraint>
+    <constraint>
+      <name>Project Structure Pattern</name>
+      <description>app/ directory pattern (Nuxt 4). Must match portfolio structure: app/components/, app/composables/, app/utils/, app/types/, app/data/, i18n/locales/, public/.</description>
+      <source>docs/architecture.md#Project-Structure</source>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <!-- Greenfield project - no existing interfaces to reference -->
+  </interfaces>
+
+  <tests>
+    <standards>
+      Build testing: Verify pnpm build completes without errors, static files generated correctly, no TypeScript errors, no ESLint errors (if configured to block build). Language testing: Test language switching functionality, verify RTL layout for Persian, LTR layout for English, verify route prefixes work correctly (/fa for Persian, default for English). Code quality testing: Run ESLint and fix errors, run Prettier and verify formatting, verify TypeScript strict mode catches type errors, test accessibility linting (if configured).
+    </standards>
+    <locations>
+      Tests will be located in project root during build process. No dedicated test directory required for MVP setup story.
+    </locations>
+    <ideas>
+      <test ac="1">Verify Nuxt 4 project structure exists (app/, public/, nuxt.config.ts, package.json)</test>
+      <test ac="1">Verify TypeScript configuration has strict mode enabled in tsconfig.json</test>
+      <test ac="1">Verify Tailwind CSS 4 configuration exists (tailwind.config.ts) and global CSS imports work</test>
+      <test ac="1">Verify Nuxt UI 4 theme tokens configured in app.config.ts</test>
+      <test ac="1">Verify @nuxtjs/i18n module configured with prefix_except_default strategy in nuxt.config.ts</test>
+      <test ac="1">Verify locale files exist: i18n/locales/en.json and i18n/locales/fa.json</test>
+      <test ac="1">Verify project structure directories exist: app/components/ (with subdirectories), app/composables/, app/utils/, app/types/, app/data/, public/</test>
+      <test ac="1">Verify fonts configured: Vazirmatn for Persian, Roobert/system for English</test>
+      <test ac="1">Verify @nuxt/image module configured in nuxt.config.ts</test>
+      <test ac="1">Verify vercel.json exists with SSG build configuration</test>
+      <test ac="1">Verify .gitignore exists with appropriate patterns</test>
+      <test ac="2">Run pnpm build and verify successful build without errors</test>
+      <test ac="2">Verify static files generated in .output/public/ directory</test>
+      <test ac="3">Test language switching: verify Persian routes use /fa prefix, English routes are default (no prefix)</test>
+      <test ac="3">Verify RTL layout works for Persian content</test>
+      <test ac="3">Verify LTR layout works for English content</test>
+      <test ac="4">Run pnpm lint and verify ESLint configuration works</test>
+      <test ac="4">Run Prettier and verify formatting works</test>
+      <test ac="4">Verify TypeScript strict mode enabled and catches type errors</test>
+    </ideas>
+  </tests>
+</story-context>
