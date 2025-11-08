@@ -74,6 +74,11 @@
     "title": "Full Transcript",
     "description": "Complete video transcript for reference",
     "notAvailable": "English transcript is not yet available. Please switch to Persian to view the transcript."
+  },
+  "summary": {
+    "title": "Video Summary",
+    "description": "Key points and overview of the 15 essential skills",
+    "notAvailable": "English summary is not yet available. Please switch to Persian to view the summary."
   }
 }
 
