@@ -50,12 +50,12 @@ development_status:
   epic-2: backlog
   2-1-parse-yaml-source-files-bilingual: review
   2-2-organize-skills-content-3-categories: review
-  2-3-extract-book-references: backlog
+  2-3-extract-book-references: review
   epic-2-retrospective: optional
 
   # Epic 3: Page Structure
   epic-3: backlog
-  3-1-landing-page-bilingual: backlog
+  3-1-landing-page-bilingual: review
   3-2-category-pages-3-categories: backlog
   3-3-skill-pages-15-pages-component-based: backlog
   epic-3-retrospective: optional

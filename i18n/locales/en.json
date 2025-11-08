@@ -30,7 +30,17 @@
   "home": {
     "title": "15ecosystem",
     "subtitle": "15 Essential Skills for 2025",
-    "description": "An interactive educational platform to help you learn and grow"
+    "description": "An interactive educational platform to help you learn and grow",
+    "introduction": "Welcome to 15ecosystem, a comprehensive platform designed to help you master the 15 essential skills needed to thrive in 2025 and beyond. These skills are organized into three foundational categories that build upon each other, creating a complete ecosystem for personal and professional growth.",
+    "skillsOverview": "The 15 skills are carefully organized into three main categories, each building upon the previous one. Start with Health to build your foundation, develop your Identity through learning and creativity, and advance your Career with modern skills.",
+    "exploreCategories": "Explore Categories",
+    "viewAllSkills": "View All Skills",
+    "categoryDescription": {
+      "health": "Skills 1-6: Build your foundation with health and energy",
+      "identity": "Skills 7-12: Develop your identity, purpose, and learning",
+      "career": "Skills 13-15: Advance your career and income"
+    },
+    "skillCount": "{count} Skills"
   }
 }
 

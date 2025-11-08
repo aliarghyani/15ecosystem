@@ -1,0 +1,214 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>3.1</storyId>
+    <title>Landing Page (Bilingual)</title>
+    <status>drafted</status>
+    <generatedAt>2025-01-XX</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/3-1-landing-page-bilingual.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>a welcoming landing page in my preferred language</iWant>
+    <soThat>I understand what 15ecosystem is about</soThat>
+    <tasks>
+      <task id="1" ac="1">Enhance landing page content</task>
+      <task id="2" ac="1">Create visual category representation</task>
+      <task id="3" ac="1,3">Add navigation to categories and skills</task>
+      <task id="4" ac="1,2">Verify language switcher integration</task>
+      <task id="5" ac="1">Ensure modern design and responsiveness</task>
+      <task id="6" ac="1,2">Verify RTL/LTR support</task>
+      <task id="7" ac="1,2">Add i18n translations</task>
+      <task id="8" ac="1,2,3">Test and verify functionality</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">
+      <given>I visit the homepage</given>
+      <when>I view the landing page</when>
+      <then>I see: Introduction to 15ecosystem (in selected language), Overview of the 15 skills concept, Visual representation of the three main categories (Health, Identity, Career), Navigation to categories and skills, Language switcher (Persian/English) prominently displayed, Clean, modern design, Proper RTL layout for Persian, LTR for English</then>
+    </criterion>
+    <criterion id="2">
+      <given>I switch language</given>
+      <when>I change language</when>
+      <then>all content updates to selected language, layout direction changes (RTL/LTR), and language switcher reflects current language</then>
+    </criterion>
+    <criterion id="3">
+      <given>I view the landing page</given>
+      <when>I interact with navigation elements</when>
+      <then>I can navigate to categories, I can navigate to skills, and navigation works correctly in both languages</then>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 3.1: Landing Page (Bilingual)</section>
+        <snippet>Story 3.1 focuses on creating a welcoming landing page with introduction to 15ecosystem, overview of 15 skills concept, visual representation of three categories, navigation to categories and skills, language switcher, and proper RTL/LTR support.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Product Scope - Landing Page</section>
+        <snippet>Landing page should include introduction to 15ecosystem, overview of the 15 skills concept, and navigation to main categories. Should be fully bilingual with RTL/LTR support.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Implementation Patterns - Pages</section>
+        <snippet>Pages use kebab-case for routes. Dynamic routes use [param].vue syntax. Use Nuxt UI components and i18n composables for bilingual support.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/pages/index.vue</path>
+        <kind>page</kind>
+        <symbol>LandingPage</symbol>
+        <lines>1-45</lines>
+        <reason>Existing landing page that needs enhancement. Currently has basic structure with category cards but needs comprehensive introduction, better visual representation, and navigation links.</reason>
+      </artifact>
+      <artifact>
+        <path>app/components/common/TopNav.vue</path>
+        <kind>component</kind>
+        <symbol>TopNav</symbol>
+        <lines>1-94</lines>
+        <reason>TopNav component already includes LanguageSwitcher. Can be reused for navigation. Already integrated in app.vue.</reason>
+      </artifact>
+      <artifact>
+        <path>app/components/LanguageSwitcher.vue</path>
+        <kind>component</kind>
+        <symbol>LanguageSwitcher</symbol>
+        <lines>1-50</lines>
+        <reason>Language switcher component already exists and is integrated in TopNav. Provides language switching functionality.</reason>
+      </artifact>
+      <artifact>
+        <path>app/app.vue</path>
+        <kind>root-component</kind>
+        <symbol>App</symbol>
+        <lines>1-22</lines>
+        <reason>Root component already has RTL/LTR support via useHead with dir attribute based on locale. TopNav is already included.</reason>
+      </artifact>
+      <artifact>
+        <path>app/data/fa/categories.ts</path>
+        <kind>data-file</kind>
+        <symbol>categories</symbol>
+        <lines>1-61</lines>
+        <reason>Category data with 3 categories (Health, Identity, Career) and bilingual names/descriptions. Can be imported and displayed on landing page.</reason>
+      </artifact>
+      <artifact>
+        <path>app/utils/skills.ts</path>
+        <kind>utility</kind>
+        <symbol>getAllSkills, getSkillsByCategory</symbol>
+        <lines>1-100</lines>
+        <reason>Skill utilities can be used to get skill overview for landing page. getAllSkills() provides all 15 skills for overview.</reason>
+      </artifact>
+      <artifact>
+        <path>i18n/locales/en.json</path>
+        <kind>i18n-file</kind>
+        <symbol>translations</symbol>
+        <lines>1-35</lines>
+        <reason>English translations file. Has basic home translations but needs enhancement for comprehensive landing page content.</reason>
+      </artifact>
+      <artifact>
+        <path>i18n/locales/fa.json</path>
+        <kind>i18n-file</kind>
+        <symbol>translations</symbol>
+        <lines>1-35</lines>
+        <reason>Persian translations file. Has basic home translations but needs enhancement for comprehensive landing page content.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="nuxt" version="^4.2.1" />
+        <package name="@nuxt/ui" version="^4.0.1" />
+        <package name="@nuxtjs/i18n" version="10.1.1" />
+        <package name="vue" version="^3.5.24" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>i18n-integration</type>
+      <description>Must use useI18n() composable and $t() for all text content. All content must be translatable via i18n keys.</description>
+    </constraint>
+    <constraint>
+      <type>rtl-ltr-support</type>
+      <description>Must support RTL layout for Persian (fa) and LTR layout for English (en). App.vue already has dir attribute support, but page content must align properly.</description>
+    </constraint>
+    <constraint>
+      <type>component-usage</type>
+      <description>Must use Nuxt UI components (UCard, UButton, etc.) following portfolio design patterns. Follow existing component structure.</description>
+    </constraint>
+    <constraint>
+      <type>routing</type>
+      <description>Navigation links must use Nuxt routing with i18n prefixes. Category routes: /categories/[slug] or /fa/categories/[slug]. Skill routes: /skills/[slug] or /fa/skills/[slug].</description>
+    </constraint>
+    <constraint>
+      <type>data-access</type>
+      <description>Use category data from app/data/fa/categories.ts or app/data/en/categories.ts. Use skill utilities from app/utils/skills.ts. Data is already organized and ready for consumption.</description>
+    </constraint>
+    <constraint>
+      <type>design-consistency</type>
+      <description>Must follow portfolio's modern design patterns: glassmorphism effects, subtle shadows, clean layouts, modern typography. Support dark mode.</description>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>useI18n</name>
+      <kind>Composable</kind>
+      <signature>const { locale, t } = useI18n()</signature>
+      <path>@nuxtjs/i18n</path>
+    </interface>
+    <interface>
+      <name>$t</name>
+      <kind>Template Helper</kind>
+      <signature>$t(key: string): string</signature>
+      <path>@nuxtjs/i18n</path>
+    </interface>
+    <interface>
+      <name>useRoute</name>
+      <kind>Composable</kind>
+      <signature>const route = useRoute()</signature>
+      <path>nuxt</path>
+    </interface>
+    <interface>
+      <name>navigateTo</name>
+      <kind>Function</kind>
+      <signature>navigateTo(path: string): Promise&lt;void&gt;</signature>
+      <path>nuxt</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Functional tests should verify language switching updates all content, RTL/LTR layout switching works correctly, navigation links work in both languages, and category display shows correct information. Visual tests should verify modern design, mobile responsiveness, dark mode support, and proper spacing.
+    </standards>
+    <locations>
+      Tests should be co-located with components or in __tests__ directories (future). For now, manual testing and browser testing are sufficient.
+    </locations>
+    <ideas>
+      <test ac="1">Verify landing page displays introduction to 15ecosystem</test>
+      <test ac="1">Verify overview of 15 skills concept is displayed</test>
+      <test ac="1">Verify three categories are visually represented</test>
+      <test ac="1">Verify navigation links to categories exist</test>
+      <test ac="1">Verify navigation links to skills exist</test>
+      <test ac="1">Verify language switcher is prominently displayed</test>
+      <test ac="1">Verify clean, modern design</test>
+      <test ac="1">Verify RTL layout for Persian</test>
+      <test ac="1">Verify LTR layout for English</test>
+      <test ac="2">Test language switching updates all content</test>
+      <test ac="2">Test layout direction changes (RTL/LTR)</test>
+      <test ac="2">Test language switcher reflects current language</test>
+      <test ac="3">Test navigation to categories works</test>
+      <test ac="3">Test navigation to skills works</test>
+      <test ac="3">Test navigation works in both languages</test>
+    </ideas>
+  </tests>
+</story-context>

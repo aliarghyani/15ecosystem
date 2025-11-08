@@ -1,0 +1,193 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2.3</storyId>
+    <title>Extract Book References</title>
+    <status>drafted</status>
+    <generatedAt>2025-01-XX</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/2-3-extract-book-references.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>all book references extracted and organized</iWant>
+    <soThat>I can display them on the books page</soThat>
+    <tasks>
+      <task id="1" ac="1">Verify book extraction</task>
+      <task id="2" ac="1,3">Organize books by category</task>
+      <task id="3" ac="2">Verify book-skill relationships</task>
+      <task id="4" ac="3">Create book access utilities</task>
+      <task id="5" ac="1,2,3">Verify data integrity</task>
+      <task id="6" ac="3">Prepare for books page display</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">
+      <given>parsed video content from Story 2.1</given>
+      <when>I extract book references</when>
+      <then>I have: List of all books mentioned (deduplicated), Book title and author for each book, Which skill(s) each book relates to (via skillIds array), Books organized by category (Health, Identity, Career)</then>
+    </criterion>
+    <criterion id="2">
+      <given>books are extracted and organized</given>
+      <when>I verify the structure</when>
+      <then>books are deduplicated (no duplicate title/author combinations), all books have valid skillIds that reference existing skills (1-15), and books are properly linked to their related skills</then>
+    </criterion>
+    <criterion id="3">
+      <given>organized book data</given>
+      <when>I verify component readiness</when>
+      <then>books are ready for books page display, data can be filtered by category, data can be filtered by skill, and TypeScript types are properly defined and used</then>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 2.3: Extract Book References</section>
+        <snippet>Story 2.3 focuses on extracting and organizing all book references from the video content. Books should be deduplicated, linked to skills via skillIds, and organized by category for books page display.</snippet>
+      </doc>
+      <doc>
+        <path>docs/stories/2-1-parse-yaml-source-files-bilingual.md</path>
+        <title>Story 2.1 - Book Extraction</title>
+        <section>Dev Agent Record - Completion Notes</section>
+        <snippet>Books already extracted in Story 2.1. Created app/data/fa/books.ts with 13 unique book references. Books are linked to skills via skillIds array. Generation script includes collectAllBooks function.</snippet>
+      </doc>
+      <doc>
+        <path>docs/stories/2-2-organize-skills-content-3-categories.md</path>
+        <title>Story 2.2 - Skills Organization</title>
+        <section>Dev Agent Record - Completion Notes</section>
+        <snippet>Created app/utils/skills.ts with skill access utilities. Categories properly organized (Health 1-6, Identity 7-12, Career 13-15). Can reuse skill utilities to organize books by category.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/types/index.ts</path>
+        <kind>type-definition</kind>
+        <symbol>Book</symbol>
+        <lines>35-39</lines>
+        <reason>Book interface with title, author, and skillIds array. Must ensure all books match this interface.</reason>
+      </artifact>
+      <artifact>
+        <path>app/data/fa/books.ts</path>
+        <kind>data-file</kind>
+        <symbol>books</symbol>
+        <lines>1-99</lines>
+        <reason>Persian book data already extracted from Story 2.1. Contains 13 unique books with skillIds linking to skills. Books are deduplicated.</reason>
+      </artifact>
+      <artifact>
+        <path>app/data/en/books.ts</path>
+        <kind>data-file</kind>
+        <symbol>books</symbol>
+        <lines>1-99</lines>
+        <reason>English book data (same as Persian - books are in English). Structure matches Persian data.</reason>
+      </artifact>
+      <artifact>
+        <path>app/utils/skills.ts</path>
+        <kind>utility</kind>
+        <symbol>getSkillsByCategory, getSkillById</symbol>
+        <lines>1-100</lines>
+        <reason>Skill utilities can be used to get skills by category, which helps organize books by category through their linked skills.</reason>
+      </artifact>
+      <artifact>
+        <path>app/data/fa/categories.ts</path>
+        <kind>data-file</kind>
+        <symbol>categories</symbol>
+        <lines>1-61</lines>
+        <reason>Category data with skill assignments. Can be used to organize books by category (Health 1-6, Identity 7-12, Career 13-15).</reason>
+      </artifact>
+      <artifact>
+        <path>app/utils/content.ts</path>
+        <kind>utility</kind>
+        <symbol>collectAllBooks, extractBooks</symbol>
+        <lines>1-339</lines>
+        <reason>Book extraction utilities from Story 2.1. Includes collectAllBooks and extractBooks functions for parsing books from source files.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="nuxt" version="^4.2.1" />
+        <package name="typescript" version="^5.9.3" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>type-safety</type>
+      <description>Must use existing TypeScript types from app/types/index.ts. All books must match Book interface with title, author, and skillIds array.</description>
+    </constraint>
+    <constraint>
+      <type>data-organization</type>
+      <description>Books are already extracted in Story 2.1. Need to verify organization and create utilities for books page display.</description>
+    </constraint>
+    <constraint>
+      <type>deduplication</type>
+      <description>Books must be deduplicated (no duplicate title/author combinations). Already done in Story 2.1, but need to verify.</description>
+    </constraint>
+    <constraint>
+      <type>book-skill-relationship</type>
+      <description>All book skillIds must reference valid skills (1-15). Books are linked to skills bidirectionally (books → skills via skillIds, skills → books via books array).</description>
+    </constraint>
+    <constraint>
+      <type>category-organization</type>
+      <description>Books should be organized by category through their linked skills. Health (skills 1-6), Identity (skills 7-12), Career (skills 13-15).</description>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>Book</name>
+      <kind>TypeScript Interface</kind>
+      <signature>interface Book { title: string; author: string; skillIds: number[] }</signature>
+      <path>app/types/index.ts</path>
+    </interface>
+    <interface>
+      <name>getAllBooks</name>
+      <kind>Function Signature (to be created)</kind>
+      <signature>function getAllBooks(locale: 'fa' | 'en'): Book[]</signature>
+      <path>app/utils/books.ts</path>
+    </interface>
+    <interface>
+      <name>getBooksByCategory</name>
+      <kind>Function Signature (to be created)</kind>
+      <signature>function getBooksByCategory(category: 'health' | 'identity' | 'career', locale: 'fa' | 'en'): Book[]</signature>
+      <path>app/utils/books.ts</path>
+    </interface>
+    <interface>
+      <name>getBooksBySkillId</name>
+      <kind>Function Signature (to be created)</kind>
+      <signature>function getBooksBySkillId(skillId: number, locale: 'fa' | 'en'): Book[]</signature>
+      <path>app/utils/books.ts</path>
+    </interface>
+    <interface>
+      <name>getBookByTitle</name>
+      <kind>Function Signature (to be created)</kind>
+      <signature>function getBookByTitle(title: string, locale: 'fa' | 'en'): Book | undefined</signature>
+      <path>app/utils/books.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Data validation tests should verify all books are deduplicated, all book skillIds reference valid skills (1-15), books can be organized by category, books can be filtered by skill, and TypeScript compilation succeeds. Test book access utilities with existing data.
+    </standards>
+    <locations>
+      Tests should be co-located with components or in __tests__ directories (future). For now, manual verification and TypeScript compilation checks are sufficient.
+    </locations>
+    <ideas>
+      <test ac="1">Verify all books are deduplicated (no duplicate title/author combinations)</test>
+      <test ac="1">Verify all books have skillIds array</test>
+      <test ac="1">Verify books can be organized by category (Health, Identity, Career)</test>
+      <test ac="2">Verify all book skillIds reference valid skills (1-15)</test>
+      <test ac="2">Verify books are properly linked in skill data files</test>
+      <test ac="2">Verify bidirectional relationship (books → skills, skills → books)</test>
+      <test ac="3">Test utility functions: getAllBooks, getBooksByCategory, getBooksBySkillId, getBookByTitle</test>
+      <test ac="3">Verify data structure supports filtering by category</test>
+      <test ac="3">Verify data structure supports filtering by skill</test>
+      <test ac="3">Verify data structure supports sorting (by title, author, category)</test>
+    </ideas>
+  </tests>
+</story-context>
