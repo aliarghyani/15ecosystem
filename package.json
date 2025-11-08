@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
     "format": "prettier --check .",
-    "format:write": "prettier --write ."
+    "format:write": "prettier --write .",
+    "generate:content": "tsx scripts/generate-content-data.ts"
   },
   "dependencies": {
     "@nuxt/image": "^1.11.0",
@@ -29,15 +30,18 @@
     "@csstools/postcss-relative-color-syntax": "^3.0.12",
     "@nuxtjs/eslint-module": "^4.1.0",
     "@tailwindcss/vite": "^4.1.14",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "22.18.11",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.15.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
+    "js-yaml": "^4.1.0",
     "postcss": "^8.5.6",
     "postcss-preset-env": "^10.4.0",
     "prettier": "3.6.2",
     "prettier-plugin-tailwindcss": "0.7.1",
     "tailwindcss": "^4.1.14",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.1.3"
   },

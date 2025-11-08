@@ -44,7 +44,7 @@ So that the platform is expandable and maintainable.
   - [x] Verify `app/components/categories/` exists
   - [x] Verify `app/components/content/` exists
   - [x] Verify `app/components/diagrams/` exists
-  - [x] Verify LanguageSwitcher exists in `common/`
+  - [x] Verify LanguageSwitcher exists (moved to root components/)
 
 - [x] Task 2: Verify composables directory (AC: #1)
   - [x] Verify `app/composables/` directory exists
@@ -157,6 +157,9 @@ Composer (BMAD DEV Agent)
 - Verified auto-imports configuration in `nuxt.config.ts`
 - Confirmed structure matches portfolio reference architecture
 - Structure is now self-documenting and ready for expansion
+- **UI Enhancement:** Copied TopNav, ThemeCustomizer, and LanguageSwitcher components from portfolio app for consistent UI/UX
+- **Styling:** Updated CSS with portfolio background colors (#f2f5f9 light, #0b1220 dark) and card styling
+- **Theme System:** Implemented theme customization modal with primary color picker and dark/light/system mode selection
 
 **Technical Changes:**
 - Created `app/data/en/` and `app/data/fa/` directories
@@ -206,9 +209,23 @@ Composer (BMAD DEV Agent)
 - `app/data/fa/README.md` - Persian data documentation
 
 **Verified Existing Files:**
-- `app/components/common/LanguageSwitcher.vue` - Already exists
+- `app/components/LanguageSwitcher.vue` - Exists at root level (matching portfolio structure)
+- `app/components/common/TopNav.vue` - Navigation component (copied from portfolio)
+- `app/components/common/ThemeCustomizer.vue` - Theme customization modal (copied from portfolio)
 - `app/types/index.ts` - Type definitions exist
-- `i18n/locales/en.json` - English locale file exists
-- `i18n/locales/fa.json` - Persian locale file exists
+- `i18n/locales/en.json` - English locale file exists (updated with nav and theme keys)
+- `i18n/locales/fa.json` - Persian locale file exists (updated with nav and theme keys)
 - `nuxt.config.ts` - Auto-imports configured correctly
+
+**UI Components Added (from Portfolio):**
+- `app/components/common/TopNav.vue` - Fixed navbar with navigation links, language switcher, and theme customizer
+- `app/components/common/ThemeCustomizer.vue` - Modal for theme mode (dark/light/system) and primary color selection
+- `app/components/LanguageSwitcher.vue` - Updated language switcher matching portfolio design
+- `app/composables/useViewTransitionRipple.ts` - View transitions utility for smooth theme switching
+
+**Styling Updates:**
+- `app/assets/css/main.css` - Added portfolio background colors, view transitions, and utility classes
+- `app.config.ts` - Updated with portfolio theme configuration (purple primary, merge strategy)
+- `app/app.vue` - Updated to include TopNav and UApp wrapper
+- `app/pages/index.vue` - Updated with portfolio-style cards and dark background support
 

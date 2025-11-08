@@ -1,12 +1,15 @@
 <template>
-  <div>
-    <NuxtRouteAnnouncer />
+  <UApp :toaster="{ expand: false }">
+    <NuxtLoadingIndicator color="#6366F1" :height="3" :throttle="100" />
+    <TopNav />
     <NuxtPage />
-  </div>
+  </UApp>
 </template>
 
 <script setup lang="ts">
-const { locale, setLocale } = useI18n()
+import TopNav from '@/components/common/TopNav.vue'
+
+const { locale } = useI18n()
 
 // Set HTML dir attribute based on locale
 useHead({

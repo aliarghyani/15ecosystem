@@ -10,6 +10,23 @@
     "english": "English",
     "persian": "Persian"
   },
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "skills": "Skills",
+    "theme": "Theme"
+  },
+  "theme": {
+    "customizer": "Theme Customization",
+    "mode": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "primary": {
+      "label": "Primary Color"
+    }
+  },
   "home": {
     "title": "15ecosystem",
     "subtitle": "15 Essential Skills for 2025",

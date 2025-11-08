@@ -10,6 +10,23 @@
     "english": "انگلیسی",
     "persian": "فارسی"
   },
+  "nav": {
+    "home": "خانه",
+    "categories": "دسته‌بندی‌ها",
+    "skills": "مهارت‌ها",
+    "theme": "تم"
+  },
+  "theme": {
+    "customizer": "سفارشی سازی تم",
+    "mode": {
+      "system": "سیستم",
+      "light": "روشن",
+      "dark": "تاریک"
+    },
+    "primary": {
+      "label": "رنگ اصلی"
+    }
+  },
   "home": {
     "title": "۱۵ اکوسیستم",
     "subtitle": "۱۵ مهارت ضروری برای ۲۰۲۵",

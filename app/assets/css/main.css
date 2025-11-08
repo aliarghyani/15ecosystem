@@ -21,6 +21,7 @@
 @layer base {
   html {
     overflow-y: scroll;
+    /* Avoid width variation */
   }
 
   html,
@@ -28,9 +29,45 @@
   #__nuxt,
   #__layout {
     @apply min-h-screen w-full;
+    background-color: #f2f5f9;
+    color-scheme: light;
   }
 
-  /* In Persian/RTL, use Vazirmatn */
+  .dark html,
+  .dark body,
+  .dark #__nuxt,
+  .dark #__layout {
+    /* fallback for SSR edge cases */
+  }
+
+  :root.dark #__nuxt,
+  :root.dark #__layout,
+  html.dark,
+  html.dark body,
+  html.dark #__nuxt,
+  html.dark #__layout {
+    background-color: #0b1220;
+    color-scheme: dark;
+  }
+
+  div,
+  span,
+  input,
+  textarea,
+  button,
+  select,
+  a {
+    @apply focus:outline-hidden;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  /* Use the sans variable globally; switches automatically when we override variables */
+  html,
+  body {
+    font-family: var(--font-sans);
+  }
+
+  /* In Persian/RTL, prefer Vazirmatn for both body and headings via variables */
   html[dir="rtl"],
   html[lang^="fa"] {
     --font-sans: 'Vazirmatn', 'ui-sans-serif', 'system-ui', 'sans-serif';
@@ -42,6 +79,110 @@
   html[lang^="en"] {
     --font-sans: 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif';
     --font-display: 'system-ui', 'sans-serif';
+  }
+}
+
+@layer components {
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+
+  h1 {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  h2 {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  h3 {
+    @apply text-xl sm:text-2xl;
+  }
+}
+
+@layer utilities {
+  .primary-text {
+    @apply text-primary-500 dark:text-primary-400;
+  }
+
+  .primary-text-muted {
+    @apply text-slate-500 dark:text-slate-400;
+  }
+
+  .decorated {
+    @apply underline underline-offset-8 decoration-primary-500 dark:decoration-primary-400;
+  }
+
+  /* Soft text color helpers */
+  .muted {
+    @apply text-slate-600 dark:text-slate-300;
+  }
+
+  .chip-base {
+    @apply inline-flex items-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-medium ring-1 ring-slate-200/70 bg-white/70 text-slate-700 shadow-sm backdrop-blur-sm dark:bg-white/5 dark:text-slate-300 dark:ring-slate-700/50;
+  }
+
+  /* Minimal hover: subtle bg tint, slight shadow, no ring/border change */
+  .hover-minimal {
+    @apply transition-all duration-150 ease-out hover:bg-gray-100/70 dark:hover:bg-white/5 hover:shadow-sm;
+  }
+}
+
+/* View Transitions ripple for theme switch (best-practice) */
+@supports (view-transition-name: theme) {
+  :root {
+    view-transition-name: theme;
+  }
+
+  /* Configure transition pseudo-elements */
+  ::view-transition-old(theme),
+  ::view-transition-new(theme) {
+    animation-duration: var(--vtx-duration, 500ms);
+    animation-timing-function: var(--vtx-easing, ease-in-out);
+  }
+
+  /* Old view: let new view reveal with ripple */
+  ::view-transition-old(theme) {
+    animation: none;
+  }
+
+  /* New view: reveal from click origin via expanding circle */
+  ::view-transition-new(theme) {
+    animation-name: vtx-reveal;
+  }
+
+  @keyframes vtx-reveal {
+    from {
+      clip-path: circle(0 at var(--vtx-x, 50vw) var(--vtx-y, 50vh));
+    }
+
+    to {
+      clip-path: circle(var(--vtx-end, 200vmax) at var(--vtx-x, 50vw) var(--vtx-y, 50vh));
+    }
+  }
+}
+
+/* Fallback fade when View Transitions unsupported or prefers-reduced-motion */
+.vtx-fade #__nuxt {
+  animation: vtx-fade var(--vtx-duration, 500ms) var(--vtx-easing, ease-in-out);
+}
+
+@keyframes vtx-fade {
+  from {
+    opacity: 0.92;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reduced motion guard */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    view-transition-name: none;
   }
 }
 
