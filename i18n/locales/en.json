@@ -69,6 +69,11 @@
     "home": "Home",
     "categories": "Categories",
     "skills": "Skills"
+  },
+  "transcript": {
+    "title": "Full Transcript",
+    "description": "Complete video transcript for reference",
+    "notAvailable": "English transcript is not yet available. Please switch to Persian to view the transcript."
   }
 }
 

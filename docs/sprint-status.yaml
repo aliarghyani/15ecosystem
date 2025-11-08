@@ -62,7 +62,7 @@ development_status:
 
   # Epic 4: Content Pages
   epic-4: backlog
-  4-1-transcript-page: backlog
+  4-1-transcript-page: review
   4-2-summary-page: backlog
   4-3-books-page: backlog
   epic-4-retrospective: optional
