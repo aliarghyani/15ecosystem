@@ -52,11 +52,23 @@
   },
   "skills": {
     "viewDetails": "View Details",
-    "skillNumber": "Skill {number}"
+    "skillNumber": "Skill {number}",
+    "whyItMatters": "Why It Matters",
+    "howTo": "How To",
+    "bookReferences": "Book References",
+    "relatedSkills": "Related Skills",
+    "noBooks": "No books referenced for this skill",
+    "noRelatedSkills": "No related skills",
+    "previousSkill": "Previous Skill",
+    "nextSkill": "Next Skill",
+    "previous": "Previous",
+    "next": "Next",
+    "backToCategory": "Back to Category"
   },
   "breadcrumb": {
     "home": "Home",
-    "categories": "Categories"
+    "categories": "Categories",
+    "skills": "Skills"
   }
 }
 

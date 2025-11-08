@@ -1,0 +1,199 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>3.3</storyId>
+    <title>Skill Pages (15 pages) - Component-Based</title>
+    <status>drafted</status>
+    <generatedAt>2025-01-XX</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/3-3-skill-pages-15-pages-component-based.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to view detailed information about each skill</iWant>
+    <soThat>I can learn about that specific skill</soThat>
+    <tasks>
+      <task id="1" ac="1">Create dynamic skill page route</task>
+      <task id="2" ac="1">Create BookCard component</task>
+      <task id="3" ac="1,3">Create SkillNavigation component</task>
+      <task id="4" ac="1">Display skill information</task>
+      <task id="5" ac="1">Display book references</task>
+      <task id="6" ac="1">Display related skills</task>
+      <task id="7" ac="1,3">Add breadcrumb navigation</task>
+      <task id="8" ac="2">Ensure responsive design</task>
+      <task id="9" ac="1,3">Add i18n translations</task>
+      <task id="10" ac="1,2,3">Test and verify functionality</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">
+      <given>I navigate to a skill page</given>
+      <when>I view the skill</when>
+      <then>I see: Skill number and name prominently displayed (bilingual), "Why it matters" section with content from video (bilingual), "How to" section with practical guidance (bilingual), Book references listed using BookCard component, Related skills section (if available), Navigation: Previous/Next skill, Back to category, Breadcrumb navigation, Modern, compact design following UI/UX best practices</then>
+    </criterion>
+    <criterion id="2">
+      <given>I view any skill page</given>
+      <when>I scroll through content</when>
+      <then>content is well-formatted and readable, mobile-responsive, and uses component-based layout (expandable)</then>
+    </criterion>
+    <criterion id="3">
+      <given>I view a skill page</given>
+      <when>I interact with navigation elements</when>
+      <then>I can navigate to previous/next skill, I can navigate back to category, navigation works correctly in both languages, and breadcrumb navigation shows my location</then>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 3.3: Skill Pages (15 pages) - Component-Based</section>
+        <snippet>Story 3.3 focuses on creating dynamic skill pages that display detailed information about each skill including why it matters, how to implement it, book references, related skills, and navigation.</snippet>
+      </doc>
+      <doc>
+        <path>docs/stories/3-2-category-pages-3-categories.md</path>
+        <title>Story 3.2 - Category Pages</title>
+        <section>Dev Agent Record - Completion Notes</section>
+        <snippet>Created SkillCard component and dynamic routing pattern. Can reuse SkillCard for related skills and follow same routing pattern for skill pages.</snippet>
+      </doc>
+      <doc>
+        <path>docs/stories/2-2-organize-skills-content-3-categories.md</path>
+        <title>Story 2.2 - Skills Organization</title>
+        <section>Dev Agent Record - Completion Notes</section>
+        <snippet>Created skill utilities with getSkillById(), getRelatedSkills(), getNextSkill(), getPreviousSkill(). Skills have complete structure with whyItMatters, howTo, books, relatedSkills.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/utils/skills.ts</path>
+        <kind>utility</kind>
+        <symbol>getSkillById, getRelatedSkills, getNextSkill, getPreviousSkill</symbol>
+        <lines>15-98</lines>
+        <reason>Skill utilities for getting skill data, related skills, and navigation (next/previous). Essential for skill page implementation.</reason>
+      </artifact>
+      <artifact>
+        <path>app/utils/books.ts</path>
+        <kind>utility</kind>
+        <symbol>getBooksBySkillId</symbol>
+        <lines>50-60</lines>
+        <reason>Book utilities for getting books linked to a specific skill. Essential for displaying book references on skill pages.</reason>
+      </artifact>
+      <artifact>
+        <path>app/utils/categories.ts</path>
+        <kind>utility</kind>
+        <symbol>getCategoryById</symbol>
+        <lines>20-30</lines>
+        <reason>Category utilities for getting category data. Used for breadcrumb navigation on skill pages.</reason>
+      </artifact>
+      <artifact>
+        <path>app/components/skills/SkillCard.vue</path>
+        <kind>component</kind>
+        <symbol>SkillCard</symbol>
+        <lines>1-79</lines>
+        <reason>SkillCard component can be reused for displaying related skills on skill pages.</reason>
+      </artifact>
+      <artifact>
+        <path>app/pages/categories/[slug].vue</path>
+        <kind>page</kind>
+        <symbol>CategoryPage</symbol>
+        <lines>1-150</lines>
+        <reason>Category page shows breadcrumb navigation pattern and design patterns that can be reused for skill pages.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="nuxt" version="^4.2.1" />
+        <package name="@nuxt/ui" version="^4.0.1" />
+        <package name="@nuxtjs/i18n" version="10.1.1" />
+        <package name="vue" version="^3.5.24" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>dynamic-routing</type>
+      <description>Must use Nuxt dynamic routing with [slug].vue for skill pages. Handle skill IDs (1-15). Validate slug and return 404 for invalid routes.</description>
+    </constraint>
+    <constraint>
+      <type>component-reusability</type>
+      <description>BookCard and SkillNavigation components must be reusable. BookCard should be flexible for future book pages. SkillNavigation should handle edge cases (first/last skill).</description>
+    </constraint>
+    <constraint>
+      <type>i18n-integration</type>
+      <description>Must use useI18n() composable and $t() for all text content. All content must be translatable. Use localePath() for navigation links.</description>
+    </constraint>
+    <constraint>
+      <type>rtl-ltr-support</type>
+      <description>Must support RTL layout for Persian (fa) and LTR layout for English (en). Ensure text alignment and navigation elements align properly.</description>
+    </constraint>
+    <constraint>
+      <type>data-access</type>
+      <description>Use getSkillById() for skill data. Use getBooksBySkillId() for book references. Use getRelatedSkills() for related skills. Use getNextSkill() and getPreviousSkill() for navigation.</description>
+    </constraint>
+    <constraint>
+      <type>design-consistency</type>
+      <description>Must follow portfolio's modern design patterns: glassmorphism effects, subtle shadows, clean layouts, modern typography. Support dark mode. Ensure mobile-responsive design.</description>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>useRoute</name>
+      <kind>Composable</kind>
+      <signature>const route = useRoute()</signature>
+      <path>nuxt</path>
+    </interface>
+    <interface>
+      <name>useI18n</name>
+      <kind>Composable</kind>
+      <signature>const { locale, t } = useI18n()</signature>
+      <path>@nuxtjs/i18n</path>
+    </interface>
+    <interface>
+      <name>useLocalePath</name>
+      <kind>Composable</kind>
+      <signature>const localePath = useLocalePath()</signature>
+      <path>@nuxtjs/i18n</path>
+    </interface>
+    <interface>
+      <name>BookCard Props</name>
+      <kind>Component Props (to be created)</kind>
+      <signature>interface BookCardProps { book: Book; showAuthor?: boolean; variant?: 'default' | 'compact' }</signature>
+      <path>app/components/books/BookCard.vue</path>
+    </interface>
+    <interface>
+      <name>SkillNavigation Props</name>
+      <kind>Component Props (to be created)</kind>
+      <signature>interface SkillNavigationProps { currentSkillId: number; categoryId: string }</signature>
+      <path>app/components/skills/SkillNavigation.vue</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Functional tests should verify all 15 skill pages load correctly, skill content displays correctly, book references display correctly, related skills display correctly, navigation works, breadcrumb navigation works, and 404 handling for invalid skill slugs. Visual tests should verify modern design, mobile responsiveness, content readability, and RTL/LTR layout works.
+    </standards>
+    <locations>
+      Tests should be co-located with components or in __tests__ directories (future). For now, manual testing and browser testing are sufficient.
+    </locations>
+    <ideas>
+      <test ac="1">Verify skill page displays skill number and name</test>
+      <test ac="1">Verify "Why it matters" section displays correctly</test>
+      <test ac="1">Verify "How to" section displays correctly</test>
+      <test ac="1">Verify book references display correctly</test>
+      <test ac="1">Verify related skills display correctly (if available)</test>
+      <test ac="1">Verify navigation buttons work</test>
+      <test ac="1">Verify breadcrumb navigation works</test>
+      <test ac="2">Test mobile responsiveness</test>
+      <test ac="2">Test content readability</test>
+      <test ac="3">Test previous/next skill navigation</test>
+      <test ac="3">Test back to category navigation</test>
+      <test ac="3">Test navigation works in both languages</test>
+      <test ac="1">Test 404 handling for invalid skill slugs</test>
+    </ideas>
+  </tests>
+</story-context>

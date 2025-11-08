@@ -52,11 +52,23 @@
   },
   "skills": {
     "viewDetails": "مشاهده جزئیات",
-    "skillNumber": "مهارت {number}"
+    "skillNumber": "مهارت {number}",
+    "whyItMatters": "چرا مهم است؟",
+    "howTo": "چگونه؟",
+    "bookReferences": "مراجع کتاب",
+    "relatedSkills": "مهارت‌های مرتبط",
+    "noBooks": "هیچ کتابی برای این مهارت ذکر نشده است",
+    "noRelatedSkills": "هیچ مهارت مرتبطی وجود ندارد",
+    "previousSkill": "مهارت قبلی",
+    "nextSkill": "مهارت بعدی",
+    "previous": "قبلی",
+    "next": "بعدی",
+    "backToCategory": "بازگشت به دسته‌بندی"
   },
   "breadcrumb": {
     "home": "خانه",
-    "categories": "دسته‌بندی‌ها"
+    "categories": "دسته‌بندی‌ها",
+    "skills": "مهارت‌ها"
   }
 }
 
