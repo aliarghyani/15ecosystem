@@ -41,6 +41,22 @@
       "career": "مهارت‌های ۱۳ تا ۱۵: حرفه و درآمد خود را پیش ببرید"
     },
     "skillCount": "{count} مهارت"
+  },
+  "category": {
+    "title": "دسته‌بندی {name}",
+    "description": "مهارت‌های این دسته‌بندی",
+    "backToHome": "بازگشت به خانه",
+    "viewAllCategories": "مشاهده همه دسته‌بندی‌ها",
+    "skillsInCategory": "مهارت‌های این دسته‌بندی",
+    "noSkillsFound": "هیچ مهارتی در این دسته‌بندی یافت نشد"
+  },
+  "skills": {
+    "viewDetails": "مشاهده جزئیات",
+    "skillNumber": "مهارت {number}"
+  },
+  "breadcrumb": {
+    "home": "خانه",
+    "categories": "دسته‌بندی‌ها"
   }
 }
 

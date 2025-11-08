@@ -41,6 +41,22 @@
       "career": "Skills 13-15: Advance your career and income"
     },
     "skillCount": "{count} Skills"
+  },
+  "category": {
+    "title": "{name} Category",
+    "description": "Skills in this category",
+    "backToHome": "Back to Home",
+    "viewAllCategories": "View All Categories",
+    "skillsInCategory": "Skills in this category",
+    "noSkillsFound": "No skills found in this category"
+  },
+  "skills": {
+    "viewDetails": "View Details",
+    "skillNumber": "Skill {number}"
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "categories": "Categories"
   }
 }
 
