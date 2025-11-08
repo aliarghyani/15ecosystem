@@ -1,0 +1,238 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2.2</storyId>
+    <title>Organize Skills Content (3 Categories)</title>
+    <status>drafted</status>
+    <generatedAt>2025-01-XX</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/2-2-organize-skills-content-3-categories.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>each skill's content organized into a structured format with 3 categories</iWant>
+    <soThat>I can easily display it on skill pages using components</soThat>
+    <tasks>
+      <task id="1" ac="1,2">Verify and enhance skill data structure</task>
+      <task id="2" ac="1,3">Identify and add related skills connections</task>
+      <task id="3" ac="2,3">Verify TypeScript type compliance</task>
+      <task id="4" ac="3">Organize data for component consumption</task>
+      <task id="5" ac="2">Verify category organization</task>
+      <task id="6" ac="1,2">Update generation script if needed</task>
+      <task id="7" ac="3">Create data access utilities</task>
+      <task id="8" ac="1,2,3">Verify data integrity and completeness</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">
+      <given>parsed video content from Story 2.1</given>
+      <when>I organize skills</when>
+      <then>each skill has: Skill number (1-15), Skill name (Persian and English - English may be placeholder), Category (Health, Identity, or Career), "Why it matters" content (bilingual - English may be placeholder), "How to" content (bilingual - English may be placeholder), Book references (array) linked to skills, Related skills (connections) identified and linked</then>
+    </criterion>
+    <criterion id="2">
+      <given>skills are organized</given>
+      <when>I verify the structure</when>
+      <then>all 15 skills are properly structured: Health category: Skills 1-6, Identity category: Skills 7-12, Career category: Skills 13-15, and each skill has complete data structure matching TypeScript types</then>
+    </criterion>
+    <criterion id="3">
+      <given>organized skill content</given>
+      <when>I verify component readiness</when>
+      <then>content is structured for component consumption, TypeScript types are properly defined and used, data can be imported and used by skill components, and related skills connections are established for navigation</then>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 2.2: Organize Skills Content (3 Categories)</section>
+        <snippet>Story 2.2 focuses on organizing each skill's content into a structured format with 3 categories (Health 1-6, Identity 7-12, Career 13-15). Each skill should have skill number, name (bilingual), category, "why it matters" content, "how to" content, book references, and related skills connections.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Product Scope - Category Structure</section>
+        <snippet>MVP includes three main categories: Health (Skills 1-6), Identity (Skills 7-12), and Career (Skills 13-15). Each category shows its skills as sub-categories. Content should be structured for component-based display.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Project Structure</section>
+        <snippet>Data organization uses separate EN/FA files in app/data/en/ and app/data/fa/. TypeScript types defined in app/types/index.ts. Content parsing happens at build time, storing as TypeScript modules. Component consumption pattern: Components → Composables → Data.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Implementation Patterns - Data Structures</section>
+        <snippet>Skill interface includes id, name (bilingual), category ('health' | 'identity' | 'career'), whyItMatters (bilingual), howTo (bilingual), books array, and relatedSkills array. Data files use camelCase naming and are organized by language.</snippet>
+      </doc>
+      <doc>
+        <path>docs/stories/2-1-parse-yaml-source-files-bilingual.md</path>
+        <title>Story 2.1 - Previous Story Learnings</title>
+        <section>Dev Agent Record - Completion Notes</section>
+        <snippet>Content parsing utilities created at app/utils/content.ts. All Persian data files created with 15 skills, 3 categories, 13 books. Generation script available: pnpm generate:content. Skills already have basic structure but relatedSkills field exists in type but not populated.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/types/index.ts</path>
+        <kind>type-definition</kind>
+        <symbol>Skill, Category, Book</symbol>
+        <lines>1-41</lines>
+        <reason>TypeScript type definitions for Skill (includes relatedSkills?: number[]), Category, and Book interfaces. Must ensure all skills match these types.</reason>
+      </artifact>
+      <artifact>
+        <path>app/data/fa/skills.ts</path>
+        <kind>data-file</kind>
+        <symbol>skills</symbol>
+        <lines>1-363</lines>
+        <reason>Persian skill data already parsed from Story 2.1. Contains 15 skills with id, name, category, whyItMatters, howTo, books. Missing relatedSkills array population.</reason>
+      </artifact>
+      <artifact>
+        <path>app/data/en/skills.ts</path>
+        <kind>data-file</kind>
+        <symbol>skills</symbol>
+        <lines>1-363</lines>
+        <reason>English skill data with placeholder structure. English fields are empty (expected). Structure matches Persian data.</reason>
+      </artifact>
+      <artifact>
+        <path>app/data/fa/categories.ts</path>
+        <kind>data-file</kind>
+        <symbol>categories</symbol>
+        <lines>1-62</lines>
+        <reason>Category data with 3 categories (health, identity, career) and skill assignments. Health: 1-6, Identity: 7-12, Career: 13-15.</reason>
+      </artifact>
+      <artifact>
+        <path>app/data/en/categories.ts</path>
+        <kind>data-file</kind>
+        <symbol>categories</symbol>
+        <lines>1-62</lines>
+        <reason>English category data matching Persian structure. Categories already have English names.</reason>
+      </artifact>
+      <artifact>
+        <path>app/utils/content.ts</path>
+        <kind>utility</kind>
+        <symbol>parseSkillsFromSummary, parseCategories, collectAllBooks</symbol>
+        <lines>1-277</lines>
+        <reason>Content parsing utilities from Story 2.1. Includes functions to parse skills, categories, and books from source YAML files. Can be reused or extended for related skills extraction.</reason>
+      </artifact>
+      <artifact>
+        <path>scripts/generate-content-data.ts</path>
+        <kind>script</kind>
+        <symbol>generate-content-data</symbol>
+        <lines>1-169</lines>
+        <reason>Generation script that parses source files and creates TypeScript data files. May need enhancement to include relatedSkills extraction logic. Run with: pnpm generate:content</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="nuxt" version="^4.2.1" />
+        <package name="typescript" version="^5.9.3" />
+        <package name="@nuxt/ui" version="^4.0.1" />
+        <package name="@nuxtjs/i18n" version="10.1.1" />
+        <package name="tsx" version="^4.20.6" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>type-safety</type>
+      <description>Must use existing TypeScript types from app/types/index.ts. All skills must match Skill interface including relatedSkills?: number[] field.</description>
+    </constraint>
+    <constraint>
+      <type>data-organization</type>
+      <description>Must maintain separate EN/FA files in app/data/en/ and app/data/fa/. Data files must be importable as ES modules.</description>
+    </constraint>
+    <constraint>
+      <type>generation-script</type>
+      <description>Must maintain compatibility with generation script (pnpm generate:content). Any enhancements should preserve script regeneration capability.</description>
+    </constraint>
+    <constraint>
+      <type>category-assignment</type>
+      <description>Skills must be correctly assigned: Health (1-6), Identity (7-12), Career (13-15). Category values must match type definition ('health' | 'identity' | 'career').</description>
+    </constraint>
+    <constraint>
+      <type>component-consumption</type>
+      <description>Data structure must support component needs (SkillCard, SkillDetail, etc.). Data must be ready for filtering, sorting, and navigation.</description>
+    </constraint>
+    <constraint>
+      <type>related-skills</type>
+      <description>Related skills should be logical connections, not forced. Connections should be bidirectional or logically meaningful (e.g., Sleep → Focus → Learning).</description>
+    </constraint>
+    <constraint>
+      <type>english-placeholders</type>
+      <description>English translations are placeholders for now (will be added later). English fields may be empty but structure must exist.</description>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>Skill</name>
+      <kind>TypeScript Interface</kind>
+      <signature>interface Skill { id: number; name: { en: string; fa: string }; category: 'health' | 'identity' | 'career'; whyItMatters: { en: string; fa: string }; howTo: { en: string; fa: string }; books: Book[]; relatedSkills?: number[] }</signature>
+      <path>app/types/index.ts</path>
+    </interface>
+    <interface>
+      <name>Category</name>
+      <kind>TypeScript Interface</kind>
+      <signature>interface Category { id: string; name: { en: string; fa: string }; description: { en: string; fa: string }; skills: number[] }</signature>
+      <path>app/types/index.ts</path>
+    </interface>
+    <interface>
+      <name>Book</name>
+      <kind>TypeScript Interface</kind>
+      <signature>interface Book { title: string; author: string; skillIds: number[] }</signature>
+      <path>app/types/index.ts</path>
+    </interface>
+    <interface>
+      <name>getSkillById</name>
+      <kind>Function Signature (to be created)</kind>
+      <signature>function getSkillById(id: number): Skill | undefined</signature>
+      <path>app/utils/skills.ts</path>
+    </interface>
+    <interface>
+      <name>getSkillsByCategory</name>
+      <kind>Function Signature (to be created)</kind>
+      <signature>function getSkillsByCategory(category: string): Skill[]</signature>
+      <path>app/utils/skills.ts</path>
+    </interface>
+    <interface>
+      <name>getRelatedSkills</name>
+      <kind>Function Signature (to be created)</kind>
+      <signature>function getRelatedSkills(skillId: number): Skill[]</signature>
+      <path>app/utils/skills.ts</path>
+    </interface>
+    <interface>
+      <name>getAllSkills</name>
+      <kind>Function Signature (to be created)</kind>
+      <signature>function getAllSkills(): Skill[]</signature>
+      <path>app/utils/skills.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Data validation tests should verify all 15 skills have complete structure, category assignments are correct (Health 1-6, Identity 7-12, Career 13-15), book references are valid, related skills connections reference valid skill IDs, and TypeScript compilation succeeds. Test data import and access utilities with existing data. Use TypeScript strict mode for compile-time validation.
+    </standards>
+    <locations>
+      Tests should be co-located with components or in __tests__ directories (future). For now, manual verification and TypeScript compilation checks are sufficient. Data validation can be done via script or manual review.
+    </locations>
+    <ideas>
+      <test ac="1">Verify all 15 skills have complete data structure (id, name, category, whyItMatters, howTo, books, relatedSkills)</test>
+      <test ac="1">Verify book references are properly linked to skills</test>
+      <test ac="1">Verify related skills connections are logical and reference valid skill IDs</test>
+      <test ac="2">Verify category assignments: Health (1-6), Identity (7-12), Career (13-15)</test>
+      <test ac="2">Verify all skills match TypeScript Skill interface</test>
+      <test ac="2">Verify category values match type definition ('health' | 'identity' | 'career')</test>
+      <test ac="3">Test data import: import { skills } from '~/data/fa/skills'</test>
+      <test ac="3">Test utility functions: getSkillById, getSkillsByCategory, getRelatedSkills, getAllSkills</test>
+      <test ac="3">Verify data structure supports component consumption (filtering, sorting, navigation)</test>
+      <test ac="3">Verify no duplicate skill IDs</test>
+      <test ac="3">Verify all related skills reference valid skill IDs (1-15)</test>
+    </ideas>
+  </tests>
+</story-context>

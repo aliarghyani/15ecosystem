@@ -67,7 +67,7 @@ export function parseSkillsFromSummary(): Skill[] {
   let inIdentitySection = false
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim()
+    const line = lines[i]?.trim() || ''
 
     // Detect section headers
     if (line.includes('مهارت‌های سلامت') || line.includes('مهارت‌های ۱ تا ۶')) {
@@ -147,10 +147,31 @@ export function parseSkillsFromSummary(): Skill[] {
       continue
     }
 
-    if (currentSkill && (line.includes('چطور؟') || line.includes('چیست؟'))) {
+    // Handle "چیست؟" as fallback for whyItMatters when "چرا؟" is not present
+    if (currentSkill && line.includes('چیست؟')) {
+      // If whyItMatters is empty, use "چیست؟" content as whyItMatters
+      const contentAfter = line.split(/چیست\؟/).pop()?.trim()
+      if (contentAfter && contentAfter.length > 5) {
+        if (!currentSkill.whyItMatters?.fa || currentSkill.whyItMatters.fa.trim() === '') {
+          if (currentSkill.whyItMatters) {
+            currentSkill.whyItMatters.fa = contentAfter
+          }
+          currentSection = 'whyItMatters'
+        } else {
+          // If whyItMatters already has content, treat "چیست؟" as howTo
+          currentSection = 'howTo'
+          if (currentSkill.howTo) {
+            currentSkill.howTo.fa = contentAfter
+          }
+        }
+      }
+      continue
+    }
+
+    if (currentSkill && line.includes('چطور؟')) {
       currentSection = 'howTo'
-      // Extract content after "چطور؟" or "چیست؟"
-      const contentAfter = line.split(/چطور\؟|چیست\؟/).pop()?.trim()
+      // Extract content after "چطور؟"
+      const contentAfter = line.split(/چطور\؟/).pop()?.trim()
       if (contentAfter && contentAfter.length > 5 && currentSkill.howTo) {
         currentSkill.howTo.fa = contentAfter
       }
@@ -194,6 +215,47 @@ export function parseSkillsFromSummary(): Skill[] {
   }
 
   return skills
+}
+
+/**
+ * Identify and add related skills connections based on logical progression
+ * Progression: Health → Focus → Learning → Creativity → Brand/Income
+ */
+export function addRelatedSkills(skills: Skill[]): Skill[] {
+  // Define logical skill relationships based on progression and dependencies
+  const relationships: Record<number, number[]> = {
+    // Health category (1-6): Foundation skills
+    1: [2, 3], // Sleep → Focus, Dopamine Management
+    2: [1, 3, 9], // Focus → Sleep, Dopamine, Learning
+    3: [1, 2, 4], // Dopamine → Sleep, Focus, Stress Management
+    4: [1, 2, 3, 5], // Stress → Sleep, Focus, Dopamine, Mental Health
+    5: [4, 6], // Mental Health → Stress, Longevity
+    6: [1, 4, 5], // Longevity → Sleep, Stress, Mental Health
+    
+    // Identity category (7-12): Building on health foundation
+    7: [2, 8, 9], // Creativity → Focus, Specific Knowledge, Learning
+    8: [7, 9, 10], // Specific Knowledge → Creativity, Learning, English
+    9: [2, 7, 8, 10], // Learning → Focus, Creativity, Specific Knowledge, English
+    10: [8, 9, 11], // English → Specific Knowledge, Learning, Personal Brand
+    11: [7, 8, 10, 12, 13], // Personal Brand → Creativity, Specific Knowledge, English, Authenticity, Content Creation
+    12: [11, 13], // Authenticity → Personal Brand, Content Creation
+    
+    // Career category (13-15): Building on identity
+    13: [7, 8, 11, 12, 14], // Content Creation → Creativity, Specific Knowledge, Personal Brand, Authenticity, AI Literacy
+    14: [8, 9, 13, 15], // AI Literacy → Specific Knowledge, Learning, Content Creation, Agency
+    15: [11, 12, 13, 14], // Agency → Personal Brand, Authenticity, Content Creation, AI Literacy
+  }
+
+  return skills.map((skill) => {
+    const relatedIds = relationships[skill.id] || []
+    // Filter to only include valid skill IDs (1-15) and remove self-reference
+    const validRelatedIds = relatedIds.filter((id) => id >= 1 && id <= 15 && id !== skill.id)
+    
+    return {
+      ...skill,
+      relatedSkills: validRelatedIds.length > 0 ? validRelatedIds : undefined,
+    }
+  })
 }
 
 /**

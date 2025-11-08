@@ -11,6 +11,7 @@ import {
   parseCategories,
   parseSummary,
   collectAllBooks,
+  addRelatedSkills,
 } from '../app/utils/content'
 import type { Skill, Category } from '../app/types'
 
@@ -19,7 +20,9 @@ console.log('📖 Parsing source files...')
 
 const transcriptFa = parseTranscript()
 const summaryFa = parseSummary()
-const skillsFa = parseSkillsFromSummary()
+let skillsFa = parseSkillsFromSummary()
+// Add related skills connections
+skillsFa = addRelatedSkills(skillsFa)
 const categoriesFa = parseCategories(skillsFa)
 const booksFa = collectAllBooks(skillsFa)
 

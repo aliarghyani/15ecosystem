@@ -27,6 +27,10 @@ export const skills: Skill[] = [
           1
         ]
       }
+    ],
+    "relatedSkills": [
+      2,
+      3
     ]
   },
   {
@@ -59,6 +63,11 @@ export const skills: Skill[] = [
           2
         ]
       }
+    ],
+    "relatedSkills": [
+      1,
+      3,
+      9
     ]
   },
   {
@@ -91,6 +100,11 @@ export const skills: Skill[] = [
           3
         ]
       }
+    ],
+    "relatedSkills": [
+      1,
+      2,
+      4
     ]
   },
   {
@@ -123,6 +137,12 @@ export const skills: Skill[] = [
           4
         ]
       }
+    ],
+    "relatedSkills": [
+      1,
+      2,
+      3,
+      5
     ]
   },
   {
@@ -140,7 +160,11 @@ export const skills: Skill[] = [
       "fa": "درمان تروما، شبکهٔ حمایت ۳–۵ نفره، زمان باکیفیت آفلاین.",
       "en": ""
     },
-    "books": []
+    "books": [],
+    "relatedSkills": [
+      4,
+      6
+    ]
   },
   {
     "id": 6,
@@ -172,6 +196,11 @@ export const skills: Skill[] = [
           6
         ]
       }
+    ],
+    "relatedSkills": [
+      1,
+      4,
+      5
     ]
   },
   {
@@ -182,7 +211,7 @@ export const skills: Skill[] = [
     },
     "category": "identity",
     "whyItMatters": {
-      "fa": "",
+      "fa": "کنارهم‌گذاریِ بدیع برای خلق معنا/ارزش.",
       "en": ""
     },
     "howTo": {
@@ -197,6 +226,11 @@ export const skills: Skill[] = [
           7
         ]
       }
+    ],
+    "relatedSkills": [
+      2,
+      8,
+      9
     ]
   },
   {
@@ -207,7 +241,7 @@ export const skills: Skill[] = [
     },
     "category": "identity",
     "whyItMatters": {
-      "fa": "",
+      "fa": "تلفیق یکتا از تجربه‌ها/علایق که «تو داری، دیگران ندارند».",
       "en": ""
     },
     "howTo": {
@@ -222,6 +256,11 @@ export const skills: Skill[] = [
           8
         ]
       }
+    ],
+    "relatedSkills": [
+      7,
+      9,
+      10
     ]
   },
   {
@@ -247,6 +286,12 @@ export const skills: Skill[] = [
           9
         ]
       }
+    ],
+    "relatedSkills": [
+      2,
+      7,
+      8,
+      10
     ]
   },
   {
@@ -264,7 +309,12 @@ export const skills: Skill[] = [
       "fa": "مصرفِ غنی (ورودی زیاد)، خروجی مستمر (نوشتن/گفتن)، اهداف موضوع‌محور.",
       "en": ""
     },
-    "books": []
+    "books": [],
+    "relatedSkills": [
+      8,
+      9,
+      11
+    ]
   },
   {
     "id": 11,
@@ -281,7 +331,14 @@ export const skills: Skill[] = [
       "fa": "موضع روشن (چه هستی/نیستی)، امضای بصری/کلامی، انسجام پیام.",
       "en": ""
     },
-    "books": []
+    "books": [],
+    "relatedSkills": [
+      7,
+      8,
+      10,
+      12,
+      13
+    ]
   },
   {
     "id": 12,
@@ -298,7 +355,11 @@ export const skills: Skill[] = [
       "fa": "خودمشاهده‌گری، بیان ترجیحات واقعی، نه «نقش‌بازی».",
       "en": ""
     },
-    "books": []
+    "books": [],
+    "relatedSkills": [
+      11,
+      13
+    ]
   },
   {
     "id": 13,
@@ -315,7 +376,14 @@ export const skills: Skill[] = [
       "fa": "تقویم تولید، بهینه‌سازی هوک/ساختار، داده‌محوری، استمرار.",
       "en": ""
     },
-    "books": []
+    "books": [],
+    "relatedSkills": [
+      7,
+      8,
+      11,
+      12,
+      14
+    ]
   },
   {
     "id": 14,
@@ -340,6 +408,12 @@ export const skills: Skill[] = [
           14
         ]
       }
+    ],
+    "relatedSkills": [
+      8,
+      9,
+      13,
+      15
     ]
   },
   {
@@ -357,6 +431,12 @@ export const skills: Skill[] = [
       "fa": "پرسشگری نقادانه، معیارهای شخصیِ تصمیم، نه دنباله‌روی جمع.",
       "en": ""
     },
-    "books": []
+    "books": [],
+    "relatedSkills": [
+      11,
+      12,
+      13,
+      14
+    ]
   }
 ]
