@@ -5,10 +5,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   // SSG Mode Configuration
-  ssr: true,
+  ssr: false, // Disable SSR for pure static site generation
   nitro: {
+    preset: 'static', // Use static preset for SSG
     prerender: {
       routes: ['/'],
+      crawlLinks: true, // Automatically discover and prerender all routes
     },
   },
 

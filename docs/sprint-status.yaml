@@ -42,7 +42,7 @@ story_location: "{project-root}/docs/stories"
 development_status:
   # Epic 1: Foundation & Setup
   epic-1: backlog
-  1-1-project-setup-with-i18n: in-progress
+  1-1-project-setup-with-i18n: review
   1-2-component-based-project-structure: backlog
   epic-1-retrospective: optional
 
