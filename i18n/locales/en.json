@@ -1,0 +1,19 @@
+{
+  "common": {
+    "home": "Home",
+    "categories": "Categories",
+    "skills": "Skills",
+    "transcript": "Transcript",
+    "summary": "Summary",
+    "books": "Books",
+    "language": "Language",
+    "english": "English",
+    "persian": "Persian"
+  },
+  "home": {
+    "title": "15ecosystem",
+    "subtitle": "15 Essential Skills for 2025",
+    "description": "An interactive educational platform to help you learn and grow"
+  }
+}
+
