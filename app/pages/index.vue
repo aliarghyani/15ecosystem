@@ -21,9 +21,14 @@
       <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8 text-gray-800 dark:text-gray-200">
         {{ $t('home.skillsOverview') }}
       </h2>
+      
+      <!-- Category Structure Diagram -->
+      <div class="mb-12">
+        <CategoryDiagram />
+      </div>
     </div>
 
-    <!-- Category Cards -->
+    <!-- Category Cards (Alternative View) -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
       <UCard
         v-for="category in categories"
@@ -86,6 +91,7 @@
 
 <script setup lang="ts">
 import { getAllCategories } from '~/utils/categories'
+import CategoryDiagram from '~/components/diagrams/CategoryDiagram.vue'
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
