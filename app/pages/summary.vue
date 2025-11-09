@@ -26,7 +26,7 @@
       <UCard class="dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm">
         <div
           class="summary-content text-gray-700 dark:text-gray-300 leading-relaxed"
-          :dir="locale === 'fa' ? 'rtl' : 'ltr'"
+          :dir="rawSummary && rawSummary.match(/[\u0600-\u06FF]/) ? 'rtl' : (locale === 'fa' ? 'rtl' : 'ltr')"
           v-html="formattedSummary"
         ></div>
       </UCard>
@@ -57,11 +57,14 @@ import { summary as summaryEn } from '~/data/en/summary'
 const { locale } = useI18n()
 const localePath = useLocalePath()
 
-// Get summary for current locale
+// Get summary for current locale, fallback to Persian if English is not available
 const rawSummary = computed(() => {
   const text = locale.value === 'fa' ? summaryFa : summaryEn
-  // Handle empty English summary
+  // If English summary is empty, fallback to Persian
   if (!text || text.trim() === '') {
+    if (locale.value === 'en' && summaryFa && summaryFa.trim()) {
+      return summaryFa.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim()
+    }
     return null
   }
   return text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim()
@@ -239,48 +242,87 @@ useHead({
 </script>
 
 <style scoped>
-.prose {
-  @apply text-gray-700 dark:text-gray-300;
+.summary-content :deep(h2) {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 700; /* font-bold */
+  margin-top: 2.5rem; /* mt-10 */
+  margin-bottom: 1.5rem; /* mb-6 */
+  color: rgb(17 24 39); /* text-gray-900 */
 }
 
-.summary-content :deep(h2) {
-  @apply text-3xl font-bold mt-10 mb-6 text-gray-900 dark:text-gray-100;
+:where(.dark &) .summary-content :deep(h2) {
+  color: rgb(243 244 246); /* dark:text-gray-100 */
 }
 
 .summary-content :deep(h3) {
-  @apply text-2xl font-bold mt-8 mb-4 text-gray-900 dark:text-gray-100;
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 700; /* font-bold */
+  margin-top: 2rem; /* mt-8 */
+  margin-bottom: 1rem; /* mb-4 */
+  color: rgb(17 24 39); /* text-gray-900 */
+}
+
+:where(.dark &) .summary-content :deep(h3) {
+  color: rgb(243 244 246); /* dark:text-gray-100 */
 }
 
 .summary-content :deep(ul) {
-  @apply list-disc ml-6 mb-4 space-y-2;
+  list-style-type: disc; /* list-disc */
+  margin-left: 1.5rem; /* ml-6 */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.summary-content :deep(ul) > li {
+  margin-bottom: 0.5rem; /* space-y-2 equivalent */
 }
 
 .summary-content :deep(ol) {
-  @apply list-decimal ml-6 mb-4 space-y-2;
+  list-style-type: decimal; /* list-decimal */
+  margin-left: 1.5rem; /* ml-6 */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.summary-content :deep(ol) > li {
+  margin-bottom: 0.5rem; /* space-y-2 equivalent */
 }
 
 .summary-content :deep(li) {
-  @apply mb-2;
+  margin-bottom: 0.5rem; /* mb-2 */
 }
 
 .summary-content :deep(hr) {
-  @apply my-8 border-gray-300 dark:border-gray-700;
+  margin-top: 2rem; /* my-8 */
+  margin-bottom: 2rem; /* my-8 */
+  border-color: rgb(209 213 219); /* border-gray-300 */
+}
+
+:where(.dark &) .summary-content :deep(hr) {
+  border-color: rgb(55 65 81); /* dark:border-gray-700 */
 }
 
 .summary-content :deep(strong) {
-  @apply font-semibold;
+  font-weight: 600; /* font-semibold */
 }
 
 .summary-content :deep(em) {
-  @apply italic;
+  font-style: italic; /* italic */
 }
 
 .summary-content :deep(a) {
-  @apply text-primary-600 dark:text-primary-400 hover:underline font-medium;
+  font-weight: 500; /* font-medium */
+  color: rgb(37 99 235); /* text-primary-600 */
+}
+
+.summary-content :deep(a):hover {
+  text-decoration: underline; /* hover:underline */
+}
+
+:where(.dark &) .summary-content :deep(a) {
+  color: rgb(96 165 250); /* dark:text-primary-400 */
 }
 
 .summary-content :deep(p) {
-  @apply mb-4;
+  margin-bottom: 1rem; /* mb-4 */
 }
 </style>
 

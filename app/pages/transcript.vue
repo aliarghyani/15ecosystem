@@ -26,7 +26,7 @@
       <UCard class="dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm">
         <div
           class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line"
-          :dir="locale === 'fa' ? 'rtl' : 'ltr'"
+          :dir="transcriptText && transcriptText.length > 0 && transcriptText.match(/[\u0600-\u06FF]/) ? 'rtl' : (locale === 'fa' ? 'rtl' : 'ltr')"
         >
           {{ transcriptText }}
         </div>
@@ -58,11 +58,14 @@ import { transcript as transcriptEn } from '~/data/en/transcript'
 const { locale } = useI18n()
 const localePath = useLocalePath()
 
-// Get transcript for current locale
+// Get transcript for current locale, fallback to Persian if English is not available
 const transcriptText = computed(() => {
   const text = locale.value === 'fa' ? transcriptFa : transcriptEn
-  // Handle empty English transcript
+  // If English transcript is empty, fallback to Persian
   if (!text || text.trim() === '') {
+    if (locale.value === 'en' && transcriptFa && transcriptFa.trim()) {
+      return transcriptFa.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim()
+    }
     return null
   }
   // Convert \r\n to proper line breaks and clean up
@@ -86,16 +89,12 @@ useHead({
 </script>
 
 <style scoped>
-.prose {
-  @apply text-gray-700 dark:text-gray-300;
-}
-
 .prose p {
-  @apply mb-4;
+  margin-bottom: 1rem; /* mb-4 */
 }
 
 .prose :deep(p) {
-  @apply mb-4;
+  margin-bottom: 1rem; /* mb-4 */
 }
 </style>
 
