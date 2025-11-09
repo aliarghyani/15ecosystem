@@ -225,7 +225,8 @@ export function addRelatedSkills(skills: Skill[]): Skill[] {
   // Define logical skill relationships based on progression and dependencies
   const relationships: Record<number, number[]> = {
     // Health category (1-6): Foundation skills
-    1: [2, 3], // Sleep → Focus, Dopamine Management
+    // Quality Sleep (1) is foundational - connects to most health skills and enables learning/creativity
+    1: [2, 3, 4, 5, 6, 7, 9], // Sleep → Focus, Dopamine, Stress, Mental Health, Longevity, Creativity, Learning
     2: [1, 3, 9], // Focus → Sleep, Dopamine, Learning
     3: [1, 2, 4], // Dopamine → Sleep, Focus, Stress Management
     4: [1, 2, 3, 5], // Stress → Sleep, Focus, Dopamine, Mental Health

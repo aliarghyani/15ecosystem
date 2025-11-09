@@ -70,7 +70,7 @@ development_status:
   # Epic 5: Visual Diagrams
   epic-5: backlog
   5-1-category-structure-diagram-3-categories-modern-design: review
-  5-2-skill-relationship-diagram: backlog
+  5-2-skill-relationship-diagram: review
   epic-5-retrospective: optional
 
   # Epic 6: Navigation & Polish

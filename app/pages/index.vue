@@ -26,6 +26,11 @@
       <div class="mb-12">
         <CategoryDiagram />
       </div>
+
+      <!-- Skill Relationship Diagram -->
+      <div class="mb-12">
+        <SkillRelationshipDiagram />
+      </div>
     </div>
 
     <!-- Category Cards (Alternative View) -->
@@ -92,6 +97,7 @@
 <script setup lang="ts">
 import { getAllCategories } from '~/utils/categories'
 import CategoryDiagram from '~/components/diagrams/CategoryDiagram.vue'
+import SkillRelationshipDiagram from '~/components/diagrams/SkillRelationshipDiagram.vue'
 
 const { locale } = useI18n()
 const localePath = useLocalePath()

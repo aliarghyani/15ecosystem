@@ -94,6 +94,21 @@
     "relatedSkillsDescription": "این کتاب در مهارت‌های زیر ذکر شده است:",
     "backToBooks": "بازگشت به کتاب‌ها",
     "notFound": "کتاب یافت نشد"
+  },
+  "diagrams": {
+    "skillRelationships": "روابط مهارت‌ها و اکوسیستم",
+    "keyConnections": "اتصالات کلیدی",
+    "totalConnections": "کل اتصالات",
+    "crossCategory": "بین دسته‌ای",
+    "withinCategory": "درون دسته‌ای",
+    "connectionsNote": "این بخش در تکرار بعدی با امتیازدهی بصری و نقشه‌برداری جامع روابط بهبود خواهد یافت.",
+    "foundationalSkills": "مهارت‌های بنیادی - از اینجا شروع کنید",
+    "foundationalDescription": "این مهارت‌ها پیش‌نیاز تسلط بر سایر مهارت‌ها هستند. با خواب باکیفیت شروع کنید!",
+    "progressionFlow": "جریان پیشرفت مهارت‌ها",
+    "progressionDescription": "چگونه مهارت‌ها بر روی یکدیگر بنا می‌شوند: سلامت → هویت → شغل",
+    "fullNetwork": "شبکه کامل مهارت‌ها",
+    "networkDescription": "همه اتصالات و روابط مهارت‌ها",
+    "foundationalCount": "مهارت‌های بنیادی"
   }
 }
 

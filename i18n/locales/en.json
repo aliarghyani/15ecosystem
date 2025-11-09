@@ -94,6 +94,21 @@
     "relatedSkillsDescription": "This book is referenced in the following skills:",
     "backToBooks": "Back to Books",
     "notFound": "Book not found"
+  },
+  "diagrams": {
+    "skillRelationships": "Skill Relationships & Ecosystem",
+    "keyConnections": "Key Connections",
+    "totalConnections": "Total Connections",
+    "crossCategory": "Cross-Category",
+    "withinCategory": "Within Category",
+    "connectionsNote": "This section will be enhanced with visual scoring and comprehensive relationship mapping in the next iteration.",
+    "foundationalSkills": "Foundational Skills - Start Here",
+    "foundationalDescription": "These skills are prerequisites for mastering others. Start with Quality Sleep!",
+    "progressionFlow": "Skill Progression Flow",
+    "progressionDescription": "How skills build upon each other: Health → Identity → Career",
+    "fullNetwork": "Complete Skill Network",
+    "networkDescription": "All skill connections and relationships",
+    "foundationalCount": "Foundational Skills"
   }
 }
 

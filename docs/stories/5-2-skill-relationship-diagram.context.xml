@@ -1,0 +1,193 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>5</epicId>
+    <storyId>5.2</storyId>
+    <title>Skill Relationship Diagram</title>
+    <status>drafted</status>
+    <generatedAt>2025-01-XX</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/5-2-skill-relationship-diagram.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to see how skills connect to each other</iWant>
+    <soThat>I understand the "ecosystem" concept</soThat>
+    <tasks>
+      <task id="1" ac="1">Create SkillRelationshipDiagram component</task>
+      <task id="2" ac="1">Display skill progression flow</task>
+      <task id="3" ac="1,2">Make skills clickable</task>
+      <task id="4" ac="3">Ensure responsive design</task>
+      <task id="5" ac="1">Integrate diagram into pages</task>
+      <task id="6" ac="1,2">Polish and animations</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">
+      <given>I view the landing page or a skill page</given>
+      <when>I see the relationship diagram</when>
+      <then>I see: Visual representation of skill connections, Progression flow: Health → Focus → Learning → Creativity → Brand/Income, Simple arrows or lines showing relationships, Clear, understandable visualization, Modern, clean design, Clickable skills (links to skill pages), Bilingual support (Persian/English), RTL/LTR layout support, Responsive design (mobile, tablet, desktop)</then>
+    </criterion>
+    <criterion id="2">
+      <given>I view the relationship diagram</given>
+      <when>I interact with it</when>
+      <then>I see: Smooth hover animations, Clear visual feedback on skill hover, Clickable skills navigate to skill pages, Touch-friendly interactions on mobile</then>
+    </criterion>
+    <criterion id="3">
+      <given>I view the diagram on different devices</given>
+      <when>I resize the browser or view on mobile</when>
+      <then>the diagram adapts responsively, remains readable and interactive, and maintains visual hierarchy</then>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 5.2: Skill Relationship Diagram</section>
+        <snippet>Story 5.2 focuses on creating a visual diagram that shows how skills connect to each other, demonstrating the "ecosystem" concept. The diagram should show progression flow: Health → Focus → Learning → Creativity → Brand/Income.</snippet>
+      </doc>
+      <doc>
+        <path>docs/stories/5-1-category-structure-diagram-3-categories-modern-design.md</path>
+        <title>Story 5.1 - Category Structure Diagram</title>
+        <section>Dev Agent Record - Completion Notes</section>
+        <snippet>Created CategoryDiagram component showing categories and skills. Can reference design patterns and component structure for SkillRelationshipDiagram. Both components should work together to show the complete ecosystem.</snippet>
+      </doc>
+      <doc>
+        <path>app/utils/content.ts</path>
+        <title>Content Utilities</title>
+        <section>addRelatedSkills function</section>
+        <snippet>The addRelatedSkills function defines logical skill relationships based on progression: Health → Focus → Learning → Creativity → Brand/Income. Each skill has a relatedSkills array showing connections.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/utils/skills.ts</path>
+        <kind>utility</kind>
+        <symbol>getRelatedSkills, getAllSkills, getSkillById</symbol>
+        <lines>43-100</lines>
+        <reason>Skill utilities for getting related skills and all skills. Essential for displaying skill relationships in the diagram.</reason>
+      </artifact>
+      <artifact>
+        <path>app/data/fa/skills.ts</path>
+        <kind>data-file</kind>
+        <symbol>skills</symbol>
+        <lines>1-443</lines>
+        <reason>Skill data with relatedSkills arrays showing connections between skills. Each skill has relatedSkills property with IDs of connected skills.</reason>
+      </artifact>
+      <artifact>
+        <path>app/utils/content.ts</path>
+        <kind>utility</kind>
+        <symbol>addRelatedSkills</symbol>
+        <lines>224-259</lines>
+        <reason>Function that defines skill relationships. Shows progression: Health (1-6) → Identity (7-12) → Career (13-15). Can be used to understand the flow.</reason>
+      </artifact>
+      <artifact>
+        <path>app/components/diagrams/CategoryDiagram.vue</path>
+        <kind>component</kind>
+        <symbol>CategoryDiagram</symbol>
+        <lines>1-130</lines>
+        <reason>Reference component showing modern diagram design patterns. Can reuse styling and structure patterns.</reason>
+      </artifact>
+      <artifact>
+        <path>app/pages/index.vue</path>
+        <kind>page</kind>
+        <symbol>LandingPage</symbol>
+        <lines>1-112</lines>
+        <reason>Landing page where SkillRelationshipDiagram should be integrated. Currently has CategoryDiagram.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="nuxt" version="^4.2.1" />
+        <package name="@nuxt/ui" version="^4.0.1" />
+        <package name="@nuxtjs/i18n" version="10.1.1" />
+        <package name="vue" version="^3.5.24" />
+        <package name="tailwindcss" version="^4.1.17" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>component-reusability</type>
+      <description>SkillRelationshipDiagram component must be reusable across multiple pages (landing page, skill pages). Design should be flexible and support different display modes.</description>
+    </constraint>
+    <constraint>
+      <type>visualization-technique</type>
+      <description>Use SVG or CSS for visualization. Show progression flow: Health → Focus → Learning → Creativity → Brand/Income. Use simple arrows or lines to show relationships. Keep visualization clear and understandable.</description>
+    </constraint>
+    <constraint>
+      <type>i18n-integration</type>
+      <description>Must use useI18n() composable and $t() for all text content. All skill names must be translatable. Use localePath() for navigation links.</description>
+    </constraint>
+    <constraint>
+      <type>rtl-ltr-support</type>
+      <description>Must support RTL layout for Persian (fa) and LTR layout for English (en). Ensure text alignment and visual elements align properly in both directions.</description>
+    </constraint>
+    <constraint>
+      <type>data-access</type>
+      <description>Use getAllSkills() from app/utils/skills.ts for all skills. Use getRelatedSkills() for related skills. Use relatedSkills property from skill objects to determine connections.</description>
+    </constraint>
+    <constraint>
+      <type>responsive-design</type>
+      <description>Must be fully responsive: mobile (touch-friendly), tablet, desktop. Ensure diagram adapts to screen size while maintaining readability and interactivity.</description>
+    </constraint>
+    <constraint>
+      <type>ecosystem-concept</type>
+      <description>Must clearly show the "ecosystem" concept - how skills build upon each other and connect. Show progression flow from Health to Career categories.</description>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>useI18n</name>
+      <kind>Composable</kind>
+      <signature>const { locale, t } = useI18n()</signature>
+      <path>@nuxtjs/i18n</path>
+    </interface>
+    <interface>
+      <name>useLocalePath</name>
+      <kind>Composable</kind>
+      <signature>const localePath = useLocalePath()</signature>
+      <path>@nuxtjs/i18n</path>
+    </interface>
+    <interface>
+      <name>getAllSkills</name>
+      <kind>Function</kind>
+      <signature>getAllSkills(locale: 'fa' | 'en'): Skill[]</signature>
+      <path>app/utils/skills.ts</path>
+    </interface>
+    <interface>
+      <name>getRelatedSkills</name>
+      <kind>Function</kind>
+      <signature>getRelatedSkills(skillId: number, locale: 'fa' | 'en'): Skill[]</signature>
+      <path>app/utils/skills.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Functional tests should verify diagram displays skill connections correctly, progression flow is clear, skills are clickable and navigate correctly, diagram is responsive on different screen sizes, and bilingual support works. Visual tests should verify modern design, animations work smoothly, hover states provide clear feedback, and RTL/LTR layout works correctly.
+    </standards>
+    <locations>
+      Tests should be co-located with components or in __tests__ directories (future). For now, manual testing and browser testing are sufficient.
+    </locations>
+    <ideas>
+      <test ac="1">Verify diagram displays skill connections</test>
+      <test ac="1">Verify progression flow is shown (Health → Focus → Learning → Creativity → Brand/Income)</test>
+      <test ac="1">Verify arrows/lines show relationships</test>
+      <test ac="1">Verify skills are clickable and navigate to skill pages</test>
+      <test ac="2">Test hover animations</test>
+      <test ac="2">Test visual feedback on skill hover</test>
+      <test ac="2">Test clickable skills navigation</test>
+      <test ac="3">Test responsive design on mobile</test>
+      <test ac="3">Test responsive design on tablet</test>
+      <test ac="3">Test responsive design on desktop</test>
+      <test ac="1">Test bilingual support (Persian/English)</test>
+      <test ac="1">Test RTL/LTR layout support</test>
+    </ideas>
+  </tests>
+</story-context>
