@@ -64,7 +64,7 @@ development_status:
   epic-4: backlog
   4-1-transcript-page: review
   4-2-summary-page: review
-  4-3-books-page: backlog
+  4-3-books-page: review
   epic-4-retrospective: optional
 
   # Epic 5: Visual Diagrams

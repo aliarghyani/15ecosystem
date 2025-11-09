@@ -17,7 +17,7 @@
 
     <!-- Category Header -->
     <div class="text-center mb-12">
-      <h1 class="text-4xl sm:text-5xl font-bold mb-4 primary-text">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
         {{ category.name[locale] }}
       </h1>
       <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">

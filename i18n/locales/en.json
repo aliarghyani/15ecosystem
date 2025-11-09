@@ -14,6 +14,9 @@
     "home": "Home",
     "categories": "Categories",
     "skills": "Skills",
+    "books": "Books",
+    "transcript": "Transcript",
+    "summary": "Summary",
     "theme": "Theme"
   },
   "theme": {
@@ -79,6 +82,18 @@
     "title": "Video Summary",
     "description": "Key points and overview of the 15 essential skills",
     "notAvailable": "English summary is not yet available. Please switch to Persian to view the summary."
+  },
+  "books": {
+    "title": "Books",
+    "description": "All books mentioned in the video for further learning",
+    "categoryDescription": "{count} book(s) related to {category}",
+    "relatedToSkill": "Skill {skillNumber}",
+    "noBooks": "No books available.",
+    "byAuthor": "By",
+    "relatedSkills": "Related Skills",
+    "relatedSkillsDescription": "This book is referenced in the following skills:",
+    "backToBooks": "Back to Books",
+    "notFound": "Book not found"
   }
 }
 

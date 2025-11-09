@@ -13,7 +13,7 @@
 
     <!-- Page Header -->
     <div class="mb-12 text-center">
-      <h1 class="text-4xl sm:text-5xl font-bold mb-4 primary-text">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
         {{ $t('transcript.title') }}
       </h1>
       <p class="text-lg text-gray-600 dark:text-gray-400">

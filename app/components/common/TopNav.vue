@@ -43,6 +43,45 @@
                   {{ $t('nav.skills') }}
                 </button>
               </div>
+
+              <!-- Books -->
+              <div class="flex items-center gap-1.5">
+                <UTooltip :text="$t('nav.books')">
+                  <UButton class="cursor-pointer" :class="[isActive('books') ? activeClass : inactiveClass]"
+                    variant="soft" square icon="i-heroicons-book-open" :aria-label="$t('nav.books')"
+                    @click="goTo('books')" />
+                </UTooltip>
+                <button type="button" class="hidden lg:inline-flex text-sm font-medium transition-colors"
+                  :class="[isActive('books') ? labelActiveClass : labelInactiveClass]" @click="goTo('books')">
+                  {{ $t('nav.books') }}
+                </button>
+              </div>
+
+              <!-- Transcript -->
+              <div class="flex items-center gap-1.5">
+                <UTooltip :text="$t('nav.transcript')">
+                  <UButton class="cursor-pointer" :class="[isActive('transcript') ? activeClass : inactiveClass]"
+                    variant="soft" square icon="i-heroicons-document-text" :aria-label="$t('nav.transcript')"
+                    @click="goTo('transcript')" />
+                </UTooltip>
+                <button type="button" class="hidden lg:inline-flex text-sm font-medium transition-colors"
+                  :class="[isActive('transcript') ? labelActiveClass : labelInactiveClass]" @click="goTo('transcript')">
+                  {{ $t('nav.transcript') }}
+                </button>
+              </div>
+
+              <!-- Summary -->
+              <div class="flex items-center gap-1.5">
+                <UTooltip :text="$t('nav.summary')">
+                  <UButton class="cursor-pointer" :class="[isActive('summary') ? activeClass : inactiveClass]"
+                    variant="soft" square icon="i-heroicons-clipboard-document-list" :aria-label="$t('nav.summary')"
+                    @click="goTo('summary')" />
+                </UTooltip>
+                <button type="button" class="hidden lg:inline-flex text-sm font-medium transition-colors"
+                  :class="[isActive('summary') ? labelActiveClass : labelInactiveClass]" @click="goTo('summary')">
+                  {{ $t('nav.summary') }}
+                </button>
+              </div>
             </div>
 
             <div class="flex items-center gap-2">
@@ -85,8 +124,10 @@ async function goTo(id: string) {
       await router.push(homePath)
     }
   } else {
-    // For now, just navigate to home - will be updated when pages are created
-    await router.push(homePath)
+    const targetPath = localePath(`/${id}`)
+    if (route.path !== targetPath) {
+      await router.push(targetPath)
+    }
   }
 }
 </script>

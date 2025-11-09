@@ -14,6 +14,9 @@
     "home": "خانه",
     "categories": "دسته‌بندی‌ها",
     "skills": "مهارت‌ها",
+    "books": "کتاب‌ها",
+    "transcript": "متن کامل",
+    "summary": "خلاصه",
     "theme": "تم"
   },
   "theme": {
@@ -79,6 +82,18 @@
     "title": "خلاصه ویدیو",
     "description": "نکات کلیدی و مرور ۱۵ مهارت ضروری",
     "notAvailable": "خلاصه انگلیسی هنوز در دسترس نیست. لطفاً برای مشاهده خلاصه به فارسی تغییر زبان دهید."
+  },
+  "books": {
+    "title": "کتاب‌ها",
+    "description": "همه کتاب‌های ذکر شده در ویدیو برای یادگیری بیشتر",
+    "categoryDescription": "{count} کتاب مرتبط با {category}",
+    "relatedToSkill": "مهارت {skillNumber}",
+    "noBooks": "هیچ کتابی در دسترس نیست.",
+    "byAuthor": "نویسنده",
+    "relatedSkills": "مهارت‌های مرتبط",
+    "relatedSkillsDescription": "این کتاب در مهارت‌های زیر ذکر شده است:",
+    "backToBooks": "بازگشت به کتاب‌ها",
+    "notFound": "کتاب یافت نشد"
   }
 }
 

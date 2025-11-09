@@ -2,7 +2,7 @@
   <div class="max-w-6xl mx-auto pt-24 px-4 pb-16">
     <!-- Hero Section -->
     <div class="text-center mb-16">
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 primary-text">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
         {{ $t('home.title') }}
       </h1>
       <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-6 font-medium">

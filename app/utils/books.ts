@@ -130,3 +130,28 @@ export function verifyBookSkillRelationships(locale: 'fa' | 'en' = 'fa'): {
   }
 }
 
+/**
+ * Generate a URL-friendly slug from book title and author
+ * @param title - Book title
+ * @param author - Book author
+ * @returns URL-friendly slug
+ */
+export function getBookSlug(title: string, author: string): string {
+  const combined = `${title}-${author}`
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric with hyphens
+    .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+  return combined
+}
+
+/**
+ * Get a book by slug
+ * @param slug - Book slug (generated from title and author)
+ * @param locale - Locale to use ('fa' | 'en'), defaults to 'fa'
+ * @returns Book object or undefined if not found
+ */
+export function getBookBySlug(slug: string, locale: 'fa' | 'en' = 'fa'): Book | undefined {
+  const allBooks = getAllBooks(locale)
+  return allBooks.find((book) => getBookSlug(book.title, book.author) === slug)
+}
+
