@@ -29,6 +29,9 @@ importers:
       '@oxc-transform/binding-win32-x64-msvc':
         specifier: ^0.96.0
         version: 0.96.0
+      '@panzoom/panzoom':
+        specifier: ^4.6.0
+        version: 4.6.0
       mermaid:
         specifier: ^11.12.1
         version: 11.12.1
@@ -1522,6 +1525,9 @@ packages:
     resolution: {integrity: sha512-0fI0P0W7bSO/GCP/N5dkmtB9vBqCA4ggo1WmXTnxNJVmFFOtcA1vYm1I9jl8fxo+sucW2WnlpnI4fjKdo3JKxA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     os: [win32]
+
+  '@panzoom/panzoom@4.6.0':
+    resolution: {integrity: sha512-3KxkY1lNKFn98fW5ZFR6vV0YzsXj3I4EQDyFWSXME6/cic86eSS7VjuqIjrA3PEpySo0r5fFtlX8eYCt4JPUFQ==}
 
   '@parcel/watcher-android-arm64@2.5.1':
     resolution: {integrity: sha512-KF8+j9nNbUN8vzOFDpRMsaKBHZ/mcjEjMToVMJOhTozkDonQFFrRcfdLWn6yWKCmJKmdVxSgHiYvTCef4/qcBA==}
@@ -7533,6 +7539,8 @@ snapshots:
     optional: true
 
   '@oxc-transform/binding-win32-x64-msvc@0.96.0': {}
+
+  '@panzoom/panzoom@4.6.0': {}
 
   '@parcel/watcher-android-arm64@2.5.1':
     optional: true

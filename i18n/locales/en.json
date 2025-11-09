@@ -108,7 +108,11 @@
     "progressionDescription": "How skills build upon each other: Health → Identity → Career",
     "fullNetwork": "Complete Skill Network",
     "networkDescription": "All skill connections and relationships",
-    "foundationalCount": "Foundational Skills"
+    "foundationalCount": "Foundational Skills",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetView": "Reset View",
+    "navigationHint": "💡 Tip: Use arrow keys to navigate, mouse wheel to zoom, or drag to pan"
   }
 }
 

@@ -222,29 +222,29 @@ export function parseSkillsFromSummary(): Skill[] {
  * Progression: Health → Focus → Learning → Creativity → Brand/Income
  */
 export function addRelatedSkills(skills: Skill[]): Skill[] {
-  // Define logical skill relationships based on progression and dependencies
+  // Updated comprehensive skill relationships based on investigation
+  // Bidirectional relationships: if A connects to B, B also connects to A
   const relationships: Record<number, number[]> = {
     // Health category (1-6): Foundation skills
-    // Quality Sleep (1) is foundational - connects to most health skills and enables learning/creativity
-    1: [2, 3, 4, 5, 6, 7, 9], // Sleep → Focus, Dopamine, Stress, Mental Health, Longevity, Creativity, Learning
-    2: [1, 3, 9], // Focus → Sleep, Dopamine, Learning
-    3: [1, 2, 4], // Dopamine → Sleep, Focus, Stress Management
-    4: [1, 2, 3, 5], // Stress → Sleep, Focus, Dopamine, Mental Health
-    5: [4, 6], // Mental Health → Stress, Longevity
-    6: [1, 4, 5], // Longevity → Sleep, Stress, Mental Health
+    1: [2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14], // Quality Sleep - Mother skill
+    2: [1, 3, 4, 7, 8, 9, 10, 13, 14], // Focus (Attention Economy)
+    3: [1, 2, 4, 5, 7, 9, 13], // Dopamine Management
+    4: [1, 2, 3, 5, 6, 7, 9, 13, 15], // Stress Management
+    5: [1, 3, 4, 6, 7, 11, 12, 13, 15], // Mental Health & Meaningful Relationships
+    6: [1, 4, 5, 7, 9, 13, 15], // Healthy Longevity
     
     // Identity category (7-12): Building on health foundation
-    7: [2, 8, 9], // Creativity → Focus, Specific Knowledge, Learning
-    8: [7, 9, 10], // Specific Knowledge → Creativity, Learning, English
-    9: [2, 7, 8, 10], // Learning → Focus, Creativity, Specific Knowledge, English
-    10: [8, 9, 11], // English → Specific Knowledge, Learning, Personal Brand
-    11: [7, 8, 10, 12, 13], // Personal Brand → Creativity, Specific Knowledge, English, Authenticity, Content Creation
-    12: [11, 13], // Authenticity → Personal Brand, Content Creation
+    7: [1, 2, 3, 4, 5, 6, 8, 9, 11, 13, 14], // Creativity
+    8: [1, 2, 7, 9, 10, 11, 13, 14, 15], // Specific Knowledge
+    9: [1, 2, 3, 4, 6, 7, 8, 10, 13, 14, 15], // Effective & Continuous Learning
+    10: [1, 2, 8, 9, 11, 13, 14, 15], // English Language
+    11: [5, 7, 8, 10, 12, 13, 15], // Personal Brand
+    12: [5, 11, 13, 15], // Authenticity
     
     // Career category (13-15): Building on identity
-    13: [7, 8, 11, 12, 14], // Content Creation → Creativity, Specific Knowledge, Personal Brand, Authenticity, AI Literacy
-    14: [8, 9, 13, 15], // AI Literacy → Specific Knowledge, Learning, Content Creation, Agency
-    15: [11, 12, 13, 14], // Agency → Personal Brand, Authenticity, Content Creation, AI Literacy
+    13: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15], // Content Creation
+    14: [1, 2, 7, 8, 9, 10, 13, 15], // AI Literacy
+    15: [4, 5, 6, 8, 9, 10, 11, 12, 13, 14], // Agency (Business Execution)
   }
 
   return skills.map((skill) => {

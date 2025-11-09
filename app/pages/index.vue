@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-6xl mx-auto pt-24 px-4 pb-16">
+  <div class="max-w-7xl mx-auto pt-24 px-4 pb-16">
     <!-- Hero Section -->
     <div class="text-center mb-16">
       <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
@@ -22,11 +22,6 @@
         {{ $t('home.skillsOverview') }}
       </h2>
       
-      <!-- Category Structure Diagram -->
-      <div class="mb-12">
-        <CategoryDiagram />
-      </div>
-
       <!-- Skill Relationship Diagram -->
       <div class="mb-12">
         <SkillRelationshipDiagram />
@@ -96,7 +91,6 @@
 
 <script setup lang="ts">
 import { getAllCategories } from '~/utils/categories'
-import CategoryDiagram from '~/components/diagrams/CategoryDiagram.vue'
 import SkillRelationshipDiagram from '~/components/diagrams/SkillRelationshipDiagram.vue'
 
 const { locale } = useI18n()

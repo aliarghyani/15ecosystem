@@ -1,7 +1,7 @@
 <template>
-  <div class="skill-relationship-diagram" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
+  <div class="skill-relationship-diagram w-full" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
     <!-- Diagram Container -->
-    <div class="relative w-full p-6 bg-white/50 dark:bg-slate-900/50 rounded-2xl backdrop-blur-sm border border-gray-200 dark:border-slate-700">
+    <div class="relative w-full p-4 bg-white/50 dark:bg-slate-900/50 rounded-2xl backdrop-blur-sm border border-gray-200 dark:border-slate-700">
       <!-- Title -->
       <h3 class="text-xl font-bold text-center mb-8 text-gray-800 dark:text-gray-200">
         {{ $t('diagrams.skillRelationships') || 'Skill Relationships & Ecosystem' }}
@@ -96,71 +96,6 @@
         </div>
       </div>
 
-      <!-- Mermaid Diagrams Section -->
-      <div v-if="showConnections" class="connections-section mt-10 pt-8 border-t border-gray-200 dark:border-slate-700 space-y-8">
-        <!-- Foundational Skills Diagram -->
-        <div>
-          <h4 class="text-lg font-bold text-center mb-4 text-gray-800 dark:text-gray-200">
-            {{ $t('diagrams.foundationalSkills') || '⭐ Foundational Skills - Start Here' }}
-          </h4>
-          <p class="text-sm text-center text-gray-600 dark:text-gray-400 mb-6">
-            {{ $t('diagrams.foundationalDescription') || 'These skills are prerequisites for mastering others. Start with Quality Sleep!' }}
-          </p>
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700">
-            <MermaidDiagram :definition="foundationalFlowchart" />
-          </div>
-        </div>
-
-        <!-- Progression Flow Diagram -->
-        <div>
-          <h4 class="text-lg font-bold text-center mb-4 text-gray-800 dark:text-gray-200">
-            {{ $t('diagrams.progressionFlow') || 'Skill Progression Flow' }}
-          </h4>
-          <p class="text-sm text-center text-gray-600 dark:text-gray-400 mb-6">
-            {{ $t('diagrams.progressionDescription') || 'How skills build upon each other: Health → Identity → Career' }}
-          </p>
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700 overflow-x-auto">
-            <MermaidDiagram :definition="progressionFlowchart" />
-          </div>
-        </div>
-
-        <!-- Connection Network (Optional - can be toggled) -->
-        <div v-if="showFullNetwork">
-          <h4 class="text-lg font-bold text-center mb-4 text-gray-800 dark:text-gray-200">
-            {{ $t('diagrams.fullNetwork') || 'Complete Skill Network' }}
-          </h4>
-          <p class="text-sm text-center text-gray-600 dark:text-gray-400 mb-6">
-            {{ $t('diagrams.networkDescription') || 'All skill connections and relationships' }}
-          </p>
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-gray-200 dark:border-slate-700 overflow-x-auto">
-            <MermaidDiagram :definition="connectionGraph" />
-          </div>
-        </div>
-
-        <!-- Summary Stats -->
-        <div class="mt-6 pt-6 border-t border-gray-200 dark:border-slate-700">
-          <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-            <div class="text-center">
-              <span class="text-2xl font-bold text-primary-600 dark:text-primary-400 block">
-                {{ allConnections.length }}
-              </span>
-              <span>{{ $t('diagrams.totalConnections') || 'Total Connections' }}</span>
-            </div>
-            <div class="text-center">
-              <span class="text-2xl font-bold text-amber-600 dark:text-amber-400 block">
-                {{ topFoundationalSkills.length }}
-              </span>
-              <span>{{ $t('diagrams.foundationalCount') || 'Foundational Skills' }}</span>
-            </div>
-            <div class="text-center">
-              <span class="text-2xl font-bold text-green-600 dark:text-green-400 block">
-                {{ crossCategoryConnections.length }}
-              </span>
-              <span>{{ $t('diagrams.crossCategory') || 'Cross-Category' }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -170,23 +105,13 @@ import { getAllSkills } from '~/utils/skills'
 import { getAllCategories } from '~/utils/categories'
 import {
   getTopFoundationalSkills,
-  generateFoundationalFlowchart,
-  generateProgressionFlowchart,
-  generateConnectionGraph,
   calculateFoundationScore,
 } from '~/utils/diagrams'
 import type { Skill, Category } from '~/types'
-import MermaidDiagram from '~/components/common/MermaidDiagram.client.vue'
 
 interface Props {
-  showConnections?: boolean
-  showFullNetwork?: boolean
+  // Removed showConnections and showFullNetwork - diagrams will be on individual skill pages
 }
-
-const props = withDefaults(defineProps<Props>(), {
-  showConnections: true,
-  showFullNetwork: false,
-})
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
@@ -222,7 +147,7 @@ const progressionSteps = computed(() => {
   ]
 })
 
-// Get top foundational skills
+// Get top foundational skills (for highlighting)
 const topFoundationalSkills = computed(() => {
   return getTopFoundationalSkills(5, locale.value as 'fa' | 'en')
 })
@@ -236,19 +161,6 @@ function isFoundationalSkill(skillId: number): boolean {
 function getFoundationScore(skillId: number): number {
   return calculateFoundationScore(skillId, allSkills.value, locale.value as 'fa' | 'en')
 }
-
-// Generate Mermaid diagrams
-const foundationalFlowchart = computed(() => {
-  return generateFoundationalFlowchart(locale.value as 'fa' | 'en')
-})
-
-const progressionFlowchart = computed(() => {
-  return generateProgressionFlowchart(locale.value as 'fa' | 'en')
-})
-
-const connectionGraph = computed(() => {
-  return generateConnectionGraph(locale.value as 'fa' | 'en', 40)
-})
 
 // Get category name
 function getCategoryName(categoryId: 'health' | 'identity' | 'career'): string {
@@ -284,52 +196,6 @@ function getCategoryColorClass(
   return colors[category][type]
 }
 
-// All connections (comprehensive)
-const allConnections = computed(() => {
-  const connections: Array<{ from: Skill; to: Skill }> = []
-  const seen = new Set<string>()
-
-  // Find all connections from relatedSkills
-  allSkills.value.forEach((skill) => {
-    if (skill.relatedSkills && skill.relatedSkills.length > 0) {
-      skill.relatedSkills.forEach((relatedId) => {
-        const relatedSkill = allSkills.value.find((s) => s.id === relatedId)
-        if (relatedSkill) {
-          // Create a unique key for the connection (always from lower ID to higher ID)
-          const connectionKey =
-            skill.id < relatedSkill.id
-              ? `${skill.id}-${relatedSkill.id}`
-              : `${relatedSkill.id}-${skill.id}`
-
-          if (!seen.has(connectionKey)) {
-            seen.add(connectionKey)
-            // Always show from lower ID to higher ID
-            if (skill.id < relatedSkill.id) {
-              connections.push({ from: skill, to: relatedSkill })
-            } else {
-              connections.push({ from: relatedSkill, to: skill })
-            }
-          }
-        }
-      })
-    }
-  })
-
-  // Sort by from skill ID, then to skill ID
-  return connections.sort((a, b) => {
-    if (a.from.id !== b.from.id) {
-      return a.from.id - b.from.id
-    }
-    return a.to.id - b.to.id
-  })
-})
-
-// Cross-category connections
-const crossCategoryConnections = computed(() => {
-  return allConnections.value.filter(
-    (c) => c.from.category !== c.to.category
-  )
-})
 </script>
 
 <style scoped>

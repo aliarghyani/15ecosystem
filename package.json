@@ -22,6 +22,7 @@
     "@oxc-minify/binding-win32-x64-msvc": "^0.96.0",
     "@oxc-parser/binding-win32-x64-msvc": "^0.96.0",
     "@oxc-transform/binding-win32-x64-msvc": "^0.96.0",
+    "@panzoom/panzoom": "^4.6.0",
     "mermaid": "^11.12.1",
     "nuxt": "^4.2.1"
   },

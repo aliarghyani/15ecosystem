@@ -453,15 +453,38 @@ So that I understand the "ecosystem" concept.
 
 **Acceptance Criteria:**
 
-**Given** I view the landing page or a skill page
+**Given** I view the landing page
 **When** I see the relationship diagram
 **Then** I see:
-- Visual representation of skill connections
-- Progression flow: Health → Focus → Learning → Creativity → Brand/Income
-- Simple arrows or lines showing relationships
-- Clear, understandable visualization
+- Visual representation of skill connections organized by category
+- Three categories (Health, Identity, Career) with skills displayed
+- Skills organized in rows by category
+- Foundation scores displayed on skills
+- Clickable skills linking to skill pages
 
 **Prerequisites:** Story 3.1
+
+### Story 5.3: Skill Page Relationship Diagrams
+
+As a user viewing a skill page,
+I want to see a comprehensive diagram showing which skills are prerequisites (parents) and which skills this skill enables (children),
+So that I understand the complete relationship network for this specific skill.
+
+**Acceptance Criteria:**
+
+**Given** I am viewing a skill detail page (e.g., `/skills/1`)
+**When** I scroll to the relationship section
+**Then** I see:
+- A clear Mermaid diagram showing:
+  - **Prerequisites Section (Top)**: Skills that are required/enable this skill (parent skills)
+  - **Current Skill (Center)**: The skill I'm viewing, highlighted prominently
+  - **Enabled Skills Section (Bottom)**: Skills that this skill enables (child skills)
+- Interactive zoom/pan controls (arrow keys, mouse wheel, drag)
+- Diagram auto-fits to viewport on initial load
+- All connections clearly labeled and visually distinct
+- Bilingual support (Persian/English)
+
+**Prerequisites:** Story 3.3, Updated skill relationships from investigation
 
 **Technical Notes:**
 - Create relationship diagram component

@@ -35,7 +35,11 @@ export const skills: Skill[] = [
       5,
       6,
       7,
-      9
+      8,
+      9,
+      10,
+      13,
+      14
     ]
   },
   {
@@ -72,7 +76,13 @@ export const skills: Skill[] = [
     "relatedSkills": [
       1,
       3,
-      9
+      4,
+      7,
+      8,
+      9,
+      10,
+      13,
+      14
     ]
   },
   {
@@ -109,7 +119,11 @@ export const skills: Skill[] = [
     "relatedSkills": [
       1,
       2,
-      4
+      4,
+      5,
+      7,
+      9,
+      13
     ]
   },
   {
@@ -147,7 +161,12 @@ export const skills: Skill[] = [
       1,
       2,
       3,
-      5
+      5,
+      6,
+      7,
+      9,
+      13,
+      15
     ]
   },
   {
@@ -167,8 +186,15 @@ export const skills: Skill[] = [
     },
     "books": [],
     "relatedSkills": [
+      1,
+      3,
       4,
-      6
+      6,
+      7,
+      11,
+      12,
+      13,
+      15
     ]
   },
   {
@@ -205,7 +231,11 @@ export const skills: Skill[] = [
     "relatedSkills": [
       1,
       4,
-      5
+      5,
+      7,
+      9,
+      13,
+      15
     ]
   },
   {
@@ -233,9 +263,17 @@ export const skills: Skill[] = [
       }
     ],
     "relatedSkills": [
+      1,
       2,
+      3,
+      4,
+      5,
+      6,
       8,
-      9
+      9,
+      11,
+      13,
+      14
     ]
   },
   {
@@ -263,9 +301,15 @@ export const skills: Skill[] = [
       }
     ],
     "relatedSkills": [
+      1,
+      2,
       7,
       9,
-      10
+      10,
+      11,
+      13,
+      14,
+      15
     ]
   },
   {
@@ -293,10 +337,17 @@ export const skills: Skill[] = [
       }
     ],
     "relatedSkills": [
+      1,
       2,
+      3,
+      4,
+      6,
       7,
       8,
-      10
+      10,
+      13,
+      14,
+      15
     ]
   },
   {
@@ -316,9 +367,14 @@ export const skills: Skill[] = [
     },
     "books": [],
     "relatedSkills": [
+      1,
+      2,
       8,
       9,
-      11
+      11,
+      13,
+      14,
+      15
     ]
   },
   {
@@ -338,11 +394,13 @@ export const skills: Skill[] = [
     },
     "books": [],
     "relatedSkills": [
+      5,
       7,
       8,
       10,
       12,
-      13
+      13,
+      15
     ]
   },
   {
@@ -362,8 +420,10 @@ export const skills: Skill[] = [
     },
     "books": [],
     "relatedSkills": [
+      5,
       11,
-      13
+      13,
+      15
     ]
   },
   {
@@ -383,11 +443,20 @@ export const skills: Skill[] = [
     },
     "books": [],
     "relatedSkills": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
       7,
       8,
+      9,
+      10,
       11,
       12,
-      14
+      14,
+      15
     ]
   },
   {
@@ -415,8 +484,12 @@ export const skills: Skill[] = [
       }
     ],
     "relatedSkills": [
+      1,
+      2,
+      7,
       8,
       9,
+      10,
       13,
       15
     ]
@@ -438,6 +511,12 @@ export const skills: Skill[] = [
     },
     "books": [],
     "relatedSkills": [
+      4,
+      5,
+      6,
+      8,
+      9,
+      10,
       11,
       12,
       13,
