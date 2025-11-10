@@ -81,14 +81,14 @@ So that I can store and retrieve video information consistently.
 
 ## Tasks
 
-- [ ] Task 1: Define Video interface in `app/types/index.ts`
-- [ ] Task 2: Define Playlist interface in `app/types/index.ts`
-- [ ] Task 3: Create `app/utils/videos.ts` with utility functions
-- [ ] Task 4: Create `app/utils/playlists.ts` with utility functions
-- [ ] Task 5: Add slug generation functions
-- [ ] Task 6: Add validation for skill IDs (1-15)
-- [ ] Task 7: Add validation for category IDs (health, identity, career)
-- [ ] Task 8: Write unit tests for utility functions
+- [x] Task 1: Define Video interface in `app/types/index.ts`
+- [x] Task 2: Define Playlist interface in `app/types/index.ts`
+- [x] Task 3: Create `app/utils/videos.ts` with utility functions
+- [x] Task 4: Create `app/utils/playlists.ts` with utility functions
+- [x] Task 5: Add slug generation functions
+- [x] Task 6: Add validation for skill IDs (1-15)
+- [x] Task 7: Add validation for category IDs (health, identity, career)
+- [ ] Task 8: Write unit tests for utility functions (future)
 
 ## Implementation Notes
 

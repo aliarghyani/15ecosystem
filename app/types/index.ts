@@ -84,4 +84,51 @@ export interface Tag {
   category?: 'skill' | 'book' | 'writer' | 'category' | 'general' // Tag category
 }
 
+export interface Video {
+  id: string // Unique video identifier (YouTube video ID)
+  youtubeUrl: string // Full YouTube URL (e.g., https://youtu.be/hxnS40NolrA?si=...)
+  youtubeId: string // YouTube video ID (extracted from URL, e.g., hxnS40NolrA)
+  title: {
+    fa: string
+    en: string
+  }
+  description?: {
+    fa: string
+    en: string
+  }
+  thumbnail: string // YouTube thumbnail URL (can be generated from video ID)
+  duration?: number // Optional duration in seconds
+  publishedAt?: string // Optional ISO date string
+  viewCount?: number // Optional view count
+  playlistId?: string // Optional playlist ID
+  skillIds: number[] // Related skill IDs (1-15)
+  categoryIds: string[] // Related category IDs (health, identity, career)
+  tags: string[] // Tags for categorization (array of tag slugs)
+  writerId?: string // Optional writer ID if video features a writer
+  bookIds?: string[] // Optional related book IDs
+  channelId: string // YouTube channel ID (KhashayarTalks)
+  channelName: string // Channel name
+}
+
+export interface Playlist {
+  id: string // Unique playlist identifier (YouTube playlist ID)
+  youtubeId: string // YouTube playlist ID
+  title: {
+    fa: string
+    en: string
+  }
+  description?: {
+    fa: string
+    en: string
+  }
+  thumbnail: string // Playlist thumbnail URL
+  videoCount: number // Number of videos in playlist
+  videoIds: string[] // Array of video IDs in playlist
+  skillIds: number[] // Related skill IDs
+  categoryIds: string[] // Related category IDs
+  tags: string[] // Tags (array of tag slugs)
+  channelId: string // YouTube channel ID
+  channelName: string // Channel name
+}
+
 

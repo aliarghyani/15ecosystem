@@ -88,7 +88,7 @@ development_status:
 
   # Epic 7: YouTube Videos Integration
   epic-7: backlog
-  7-1-video-data-structure-types: drafted
+  7-1-video-data-structure-types: done
   7-2-video-data-entry-yaml-structure: backlog
   7-3-video-components-card-player-list: backlog
   7-4-videos-list-page: backlog
