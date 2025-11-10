@@ -1,19 +1,7 @@
 <template>
   <div v-if="category" class="max-w-6xl mx-auto pt-24 px-4 pb-16">
     <!-- Breadcrumb Navigation -->
-    <nav class="mb-8 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-      <NuxtLink :to="localePath('/')" class="hover:text-primary-600 dark:hover:text-primary-400">
-        {{ $t('breadcrumb.home') }}
-      </NuxtLink>
-      <span>/</span>
-      <NuxtLink :to="localePath('/categories')" class="hover:text-primary-600 dark:hover:text-primary-400">
-        {{ $t('breadcrumb.categories') }}
-      </NuxtLink>
-      <span>/</span>
-      <span class="text-gray-800 dark:text-gray-200 font-medium">
-        {{ category.name[locale] }}
-      </span>
-    </nav>
+    <Breadcrumb :items="breadcrumbItems" />
 
     <!-- Category Header -->
     <div class="text-center mb-12">
@@ -129,10 +117,11 @@ import { getSkillsByCategory } from '~/utils/skills'
 import { getTagsForCategory } from '~/utils/tags'
 import SkillCard from '~/components/skills/SkillCard.vue'
 import TagBadge from '~/components/tags/TagBadge.vue'
+import Breadcrumb from '~/components/common/Breadcrumb.vue'
 import type { Category, Tag } from '~/types'
 
 const route = useRoute()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
 // Get category slug from route
@@ -161,6 +150,32 @@ const categoryTags = computed(() => {
     return []
   }
   return getTagsForCategory(category.value.id, locale.value as 'fa' | 'en')
+})
+
+// Breadcrumb items
+const breadcrumbItems = computed(() => {
+  const items: Array<{ label: string; to?: string; icon?: string }> = [
+    {
+      label: t('breadcrumb.home'),
+      to: '/',
+      icon: 'i-heroicons-home'
+    }
+  ]
+  
+  items.push({
+    label: t('breadcrumb.categories'),
+    to: '/categories',
+    icon: 'i-heroicons-squares-2x2'
+  })
+  
+  if (category.value) {
+    items.push({
+      label: category.value.name[locale.value]
+      // to and icon omitted for current page
+    })
+  }
+  
+  return items
 })
 
 // Calculate position for skill indicators in diagram

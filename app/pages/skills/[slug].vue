@@ -1,27 +1,7 @@
 <template>
   <div v-if="skill" class="max-w-4xl mx-auto pt-24 px-4 pb-16">
     <!-- Breadcrumb Navigation -->
-    <nav class="mb-8 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-      <NuxtLink :to="localePath('/')" class="hover:text-primary-600 dark:hover:text-primary-400">
-        {{ $t('breadcrumb.home') }}
-      </NuxtLink>
-      <span>/</span>
-      <NuxtLink :to="localePath('/categories')" class="hover:text-primary-600 dark:hover:text-primary-400">
-        {{ $t('breadcrumb.categories') }}
-      </NuxtLink>
-      <span>/</span>
-      <NuxtLink
-        v-if="category"
-        :to="localePath(`/categories/${category.id}`)"
-        class="hover:text-primary-600 dark:hover:text-primary-400"
-      >
-        {{ category.name[locale] }}
-      </NuxtLink>
-      <span v-if="category">/</span>
-      <span class="text-gray-800 dark:text-gray-200 font-medium">
-        {{ $t('skills.skillNumber', { number: skill.id }) }}
-      </span>
-    </nav>
+    <Breadcrumb :items="breadcrumbItems" />
 
     <!-- Skill Header -->
     <div class="mb-12">
@@ -184,11 +164,12 @@ import SkillCard from '~/components/skills/SkillCard.vue'
 import SkillNavigation from '~/components/skills/SkillNavigation.vue'
 import VueFlowDiagram from '~/components/common/VueFlowDiagram.client.vue'
 import TagBadge from '~/components/tags/TagBadge.vue'
+import Breadcrumb from '~/components/common/Breadcrumb.vue'
 import type { Skill, Category, Tag } from '~/types'
 import type { Node, Edge } from '@vue-flow/core'
 
 const route = useRoute()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
 
 // Get skill slug from route (can be ID or slug)
@@ -255,6 +236,40 @@ watch([skillId, locale], () => {
     diagramData.value = null
   }
 }, { immediate: true })
+
+// Breadcrumb items
+const breadcrumbItems = computed(() => {
+  const items: Array<{ label: string; to?: string; icon?: string }> = [
+    {
+      label: t('breadcrumb.home'),
+      to: '/',
+      icon: 'i-heroicons-home'
+    }
+  ]
+  
+  items.push({
+    label: t('breadcrumb.categories'),
+    to: '/categories',
+    icon: 'i-heroicons-squares-2x2'
+  })
+  
+  if (category.value) {
+    items.push({
+      label: category.value.name[locale.value],
+      to: `/categories/${category.value.id}`,
+      icon: undefined
+    })
+  }
+
+  if (skill.value) {
+    items.push({
+      label: t('skills.skillNumber', { number: skill.value.id })
+      // to and icon omitted for current page
+    })
+  }
+  
+  return items
+})
 
 // Set page title - use computed to avoid infinite loops
 const pageTitle = computed(() => {

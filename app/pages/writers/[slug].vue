@@ -11,19 +11,7 @@
   <!-- Writer Detail Page -->
   <div v-else-if="writer" class="max-w-4xl mx-auto pt-24 px-4 pb-16">
     <!-- Breadcrumb Navigation -->
-    <nav class="mb-8 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-      <NuxtLink :to="localePath('/')" class="hover:text-primary-600 dark:hover:text-primary-400">
-        {{ $t('breadcrumb.home') }}
-      </NuxtLink>
-      <span>/</span>
-      <NuxtLink :to="localePath('/writers')" class="hover:text-primary-600 dark:hover:text-primary-400">
-        {{ $t('writers.title') }}
-      </NuxtLink>
-      <span>/</span>
-      <span class="text-gray-800 dark:text-gray-200 font-medium">
-        {{ writer.name }}
-      </span>
-    </nav>
+    <Breadcrumb :items="breadcrumbItems" />
 
     <!-- Writer Header -->
     <div class="mb-12">
@@ -50,7 +38,7 @@
             {{ locale === 'fa' ? writer.tagline.fa : writer.tagline.en }}
           </p>
           <!-- Category Badges -->
-          <div v-if="writer.categoryIds.length > 0" class="flex flex-wrap gap-2">
+          <div v-if="writer.categoryIds && writer.categoryIds.length > 0" class="flex flex-wrap gap-2">
             <UBadge
               v-for="categoryId in writer.categoryIds"
               :key="categoryId"
@@ -159,18 +147,20 @@
         >
           Instagram
         </UButton>
-        <UButton
-          v-for="link in writer.links.other"
-          :key="link.url"
-          :href="link.url"
-          target="_blank"
-          rel="noopener noreferrer"
-          color="neutral"
-          variant="soft"
-          icon="i-heroicons-link"
-        >
-          {{ link.label }}
-        </UButton>
+        <template v-if="writer.links.other && writer.links.other.length > 0">
+          <UButton
+            v-for="link in writer.links.other"
+            :key="link.url"
+            :href="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            color="neutral"
+            variant="soft"
+            icon="i-heroicons-link"
+          >
+            {{ link.label }}
+          </UButton>
+        </template>
       </div>
     </UCard>
 
@@ -242,12 +232,12 @@ import BookCard from '~/components/books/BookCard.vue'
 import SkillCard from '~/components/skills/SkillCard.vue'
 import ClickableContent from '~/components/content/ClickableContent.vue'
 import TagBadge from '~/components/tags/TagBadge.vue'
+import Breadcrumb from '~/components/common/Breadcrumb.vue'
 import type { Writer, Skill, Tag } from '~/types'
 
 const route = useRoute()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
-const { t } = useI18n()
 
 // Get writer slug from route
 const slug = computed(() => {
@@ -304,6 +294,31 @@ const hasResources = computed(() => {
   if (!writer.value) return false
   const links = writer.value.links
   return !!(links.youtube || links.website || links.twitter || links.linkedin || links.instagram || (links.other && links.other.length > 0))
+})
+
+// Breadcrumb items
+const breadcrumbItems = computed(() => {
+  const items: Array<{ label: string; to?: string; icon?: string }> = [
+    {
+      label: t('breadcrumb.home'),
+      to: '/',
+      icon: 'i-heroicons-home'
+    },
+    {
+      label: t('writers.title'),
+      to: '/writers',
+      icon: 'i-heroicons-user-group'
+    }
+  ]
+  
+  if (writer.value) {
+    items.push({
+      label: writer.value.name
+      // to and icon omitted for current page
+    })
+  }
+  
+  return items
 })
 
 // Get category name

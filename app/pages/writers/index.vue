@@ -1,15 +1,7 @@
 <template>
   <div class="max-w-6xl mx-auto pt-24 px-4 pb-16">
     <!-- Breadcrumb Navigation -->
-    <nav class="mb-8 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-      <NuxtLink :to="localePath('/')" class="hover:text-primary-600 dark:hover:text-primary-400">
-        {{ $t('breadcrumb.home') }}
-      </NuxtLink>
-      <span>/</span>
-      <span class="text-gray-800 dark:text-gray-200 font-medium">
-        {{ $t('writers.title') }}
-      </span>
-    </nav>
+    <Breadcrumb :items="breadcrumbItems" />
 
     <!-- Page Header -->
     <div class="mb-12 text-center">
@@ -117,8 +109,25 @@ import { getAllWriters, getWritersByCategory } from '~/utils/writers'
 import { getCategoryById } from '~/utils/categories'
 import WriterCard from '~/components/writers/WriterCard.vue'
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
+
+// Breadcrumb items
+const breadcrumbItems = computed(() => {
+  const items: Array<{ label: string; to?: string; icon?: string }> = [
+    {
+      label: t('breadcrumb.home'),
+      to: '/',
+      icon: 'i-heroicons-home'
+    },
+    {
+      label: t('writers.title'),
+      icon: 'i-heroicons-user-group'
+      // to omitted for current page
+    }
+  ]
+  return items
+})
 
 // Get writers by category
 const healthWriters = computed(() => getWritersByCategory('health', locale.value as 'fa' | 'en'))

@@ -11,19 +11,7 @@
   <!-- Book Detail Page -->
   <div v-else-if="book" class="max-w-4xl mx-auto pt-24 px-4 pb-16">
     <!-- Breadcrumb Navigation -->
-    <nav class="mb-8 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-      <NuxtLink :to="localePath('/')" class="hover:text-primary-600 dark:hover:text-primary-400">
-        {{ $t('breadcrumb.home') }}
-      </NuxtLink>
-      <span>/</span>
-      <NuxtLink :to="localePath('/books')" class="hover:text-primary-600 dark:hover:text-primary-400">
-        {{ $t('books.title') }}
-      </NuxtLink>
-      <span>/</span>
-      <span class="text-gray-800 dark:text-gray-200 font-medium">
-        {{ book.title }}
-      </span>
-    </nav>
+    <Breadcrumb :items="breadcrumbItems" />
 
     <!-- Book Header -->
     <div class="mb-12">
@@ -113,12 +101,12 @@ import { getSkillsByIds } from '~/utils/skills'
 import { getTagsForBook } from '~/utils/tags'
 import SkillCard from '~/components/skills/SkillCard.vue'
 import TagBadge from '~/components/tags/TagBadge.vue'
+import Breadcrumb from '~/components/common/Breadcrumb.vue'
 import type { Book, Skill, Tag } from '~/types'
 
 const route = useRoute()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
-const { t } = useI18n()
 
 // Get book slug from route
 const slug = computed(() => {
@@ -173,6 +161,31 @@ const pageDescription = computed(() => {
     return `${t('books.byAuthor')} ${book.value.author} - ${t('books.relatedSkills')}`
   }
   return t('books.notFound')
+})
+
+// Breadcrumb items
+const breadcrumbItems = computed(() => {
+  const items: Array<{ label: string; to?: string; icon?: string }> = [
+    {
+      label: t('breadcrumb.home'),
+      to: '/',
+      icon: 'i-heroicons-home'
+    },
+    {
+      label: t('books.title'),
+      to: '/books',
+      icon: 'i-heroicons-book-open'
+    }
+  ]
+  
+  if (book.value) {
+    items.push({
+      label: book.value.title
+      // to and icon omitted for current page
+    })
+  }
+  
+  return items
 })
 
 useHead({

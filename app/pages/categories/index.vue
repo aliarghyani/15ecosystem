@@ -1,15 +1,7 @@
 <template>
   <div class="max-w-7xl mx-auto pt-24 px-4 pb-16">
     <!-- Breadcrumb Navigation -->
-    <nav class="mb-8 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-      <NuxtLink :to="localePath('/')" class="hover:text-primary-600 dark:hover:text-primary-400">
-        {{ $t('breadcrumb.home') }}
-      </NuxtLink>
-      <span>/</span>
-      <span class="text-gray-800 dark:text-gray-200 font-medium">
-        {{ $t('breadcrumb.categories') }}
-      </span>
-    </nav>
+    <Breadcrumb :items="breadcrumbItems" />
 
     <!-- Page Header -->
     <div class="mb-12 text-center">
@@ -74,8 +66,25 @@
 import { getAllCategories } from '~/utils/categories'
 import type { Category } from '~/types'
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
+
+// Breadcrumb items
+const breadcrumbItems = computed(() => {
+  const items: Array<{ label: string; to?: string; icon?: string }> = [
+    {
+      label: t('breadcrumb.home'),
+      to: '/',
+      icon: 'i-heroicons-home'
+    },
+    {
+      label: t('breadcrumb.categories'),
+      icon: 'i-heroicons-squares-2x2'
+      // to omitted for current page
+    }
+  ]
+  return items
+})
 
 // Get all categories
 const allCategories = computed<Category[]>(() => {
