@@ -989,7 +989,111 @@ So that I can easily find video content.
 
 ## Epic 8: Video Transcript Data Analysis & Analytics
 
-**Goal:** Create a comprehensive data analysis system for analyzing the full text transcripts of all 127 videos from KhashayarTalks channel. Provide interactive analytics dashboard with various report types including word frequency, mentions, trends, and insights.
+**Goal:** Create a comprehensive data analysis system for analyzing the full text transcripts and summaries of all 127 videos from KhashayarTalks channel. Import video data from Excel, enrich with skill/category mappings, integrate transcripts and summaries, and provide interactive analytics dashboard with various report types including word frequency, mentions, trends, and insights.
+
+### Story 8.0: Excel Import & Video Data Extraction
+
+As a developer,
+I want to import all 127 videos from the Excel file into the system,
+So that I can process and enrich the video data for analysis.
+
+**Acceptance Criteria:**
+
+**Given** I have an Excel file with 127 videos organized by playlists
+**When** I run the import script
+**Then** I have:
+- All 127 videos extracted with basic metadata (title, URL, views, upload date)
+- All playlists extracted with playlist URLs and video associations
+- Video IDs extracted from YouTube URLs
+- View counts parsed from format like "101K" to numbers
+- Upload dates converted from relative format ("1 year ago") to ISO dates
+- Structured output (JSON/YAML) ready for data enrichment
+- Validation of video URLs and IDs
+
+**Prerequisites:** Epic 7 (Video integration)
+
+**Technical Notes:**
+- Create `scripts/import-excel-videos.ts`
+- Use Excel parsing library (`xlsx` or `exceljs`)
+- Parse each sheet (playlist) separately
+- Extract playlist URL from cell A1 of each sheet
+- Extract video data from rows 4+ (Title, URL, Upload Date, Views)
+- Parse view counts: "101K" → 101000, "1.5M" → 1500000
+- Convert relative dates: "1 year ago" → approximate ISO date
+- Extract YouTube video IDs from URLs
+- Generate playlist metadata
+- Output structured data (JSON/YAML) for next step
+- Handle edge cases (missing data, invalid URLs, etc.)
+
+### Story 8.0a: Video Summary Data Structure & Storage
+
+As a developer,
+I want a structured way to store and access video summaries,
+So that I can provide extended summaries alongside transcripts for analysis.
+
+**Acceptance Criteria:**
+
+**Given** I have extended summaries for 127 videos
+**When** I structure the data
+**Then** I have:
+- VideoSummary type with video ID, summary text, metadata
+- Storage structure for all 127 video summaries
+- Efficient access methods for querying summaries
+- Support for both Persian and English summaries
+- Summary metadata (video ID, length, word count, key points, topics)
+- TypeScript types defined
+- Utility functions for summary operations
+
+**Prerequisites:** Story 8.0
+
+**Technical Notes:**
+- Define `VideoSummary` interface in `app/types/summaries.ts`
+- Store summaries in `app/data/summaries/` directory
+- Structure: `app/data/summaries/fa/` and `app/data/summaries/en/`
+- Each summary file maps to video ID
+- Include metadata: word count, character count, key points, topics, reading time estimate
+- Create `app/utils/summaries.ts` for summary operations
+- Support lazy loading for performance (load on demand)
+- Summary structure similar to transcripts but with additional metadata fields
+
+### Story 8.0b: Excel Data Enrichment & Skill/Category Mapping
+
+As a developer,
+I want to enrich video data with skill/category mappings and metadata,
+So that videos are properly categorized and searchable.
+
+**Acceptance Criteria:**
+
+**Given** I have imported video data from Excel
+**When** I enrich the data
+**Then** I have:
+- Videos mapped to skills (1-15) based on title analysis and content
+- Videos mapped to categories (health/identity/career) derived from skill mappings
+- Tags extracted from titles and content
+- Writers identified from titles (e.g., "Andrew Huberman", "Peter Attia")
+- Book references identified (if mentioned)
+- English translations for Persian titles
+- Thumbnail URLs generated from video IDs
+- Playlist associations maintained
+- Validation of skill IDs and category IDs
+
+**Prerequisites:** Story 8.0
+
+**Technical Notes:**
+- Create `scripts/enrich-video-data.ts`
+- Implement title-based keyword matching for initial skill mapping
+- Use keyword dictionaries for skill identification:
+  - Skill 1 (Sleep): ['خواب', 'sleep', 'bedtime']
+  - Skill 5 (Focus): ['تمرکز', 'focus', 'concentration']
+  - Skill 13 (Financial Literacy): ['سواد مالی', 'financial', 'money']
+  - etc.
+- Extract tags from titles (topics, experts mentioned, etc.)
+- Identify writers from title patterns (name mentions)
+- Generate thumbnail URLs using existing utility
+- Translate titles (manual or API-assisted)
+- Refine mappings once transcripts are available (Story 8.1)
+- Output enriched video data files
+- Create mapping documentation for manual review
 
 ### Story 8.1: Video Transcript Data Structure & Storage
 
@@ -1009,28 +1113,31 @@ So that I can perform analysis on the full text of all videos.
 - Transcript metadata (video ID, length, word count, etc.)
 - TypeScript types defined
 - Utility functions for transcript operations
+- Content-based skill/category mapping refinement (using transcript analysis)
 
-**Prerequisites:** Epic 7 (Video integration)
+**Prerequisites:** Story 8.0b (Data enrichment)
 
 **Technical Notes:**
-- Define `VideoTranscript` interface in `app/types/index.ts`
+- Define `VideoTranscript` interface in `app/types/transcripts.ts` (already exists)
 - Store transcripts in `app/data/transcripts/` directory
 - Structure: `app/data/transcripts/fa/` and `app/data/transcripts/en/`
 - Each transcript file maps to video ID
 - Include metadata: word count, character count, video ID reference
-- Create `app/utils/transcripts.ts` for transcript operations
+- Create `app/utils/transcripts.ts` for transcript operations (already exists)
 - Support lazy loading for performance (load on demand)
 - Consider indexing for fast search (future enhancement)
+- Once transcripts are available, refine skill/category mappings from Story 8.0b using content analysis
+- Use transcript content to improve writer and book identification
 
 ### Story 8.2: Text Analysis Utilities & Core Functions
 
 As a developer,
-I want text analysis utilities for processing video transcripts,
+I want text analysis utilities for processing video transcripts and summaries,
 So that I can generate various analytics reports.
 
 **Acceptance Criteria:**
 
-**Given** I have video transcripts
+**Given** I have video transcripts and summaries
 **When** I use analysis utilities
 **Then** I have:
 - Word frequency analysis (count occurrences of words/phrases)
@@ -1041,11 +1148,13 @@ So that I can generate various analytics reports.
 - Stop word filtering (optional)
 - Stemming support (optional, for advanced analysis)
 - Performance optimized for large text corpus (127 videos)
+- Support for analyzing both transcripts and summaries
+- Content-based skill/category mapping refinement
 
-**Prerequisites:** Story 8.1
+**Prerequisites:** Story 8.1, Story 8.0a (Summaries)
 
 **Technical Notes:**
-- Create `app/utils/text-analysis.ts` with core analysis functions
+- Create `app/utils/text-analysis.ts` with core analysis functions (already exists)
 - Functions:
   - `countWordOccurrences(text: string, word: string, options?: AnalysisOptions): number`
   - `countPhraseOccurrences(text: string, phrase: string, options?: AnalysisOptions): number`
@@ -1056,6 +1165,8 @@ So that I can generate various analytics reports.
 - Handle Persian text properly (RTL, character normalization)
 - Optimize for performance (consider memoization, indexing)
 - Add JSDoc comments for all functions
+- Extend functions to work with both transcripts and summaries
+- Use analysis to refine skill/category mappings from Story 8.0b
 
 ### Story 8.3: Analysis Report Types & Data Models
 
