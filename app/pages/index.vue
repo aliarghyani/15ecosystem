@@ -37,6 +37,7 @@
           color="primary"
           variant="solid"
           icon="i-heroicons-squares-2x2"
+          class="min-h-[44px] w-full sm:w-auto"
         >
           {{ $t('home.exploreCategories') }}
         </UButton>
@@ -46,6 +47,7 @@
           color="primary"
           variant="outline"
           icon="i-heroicons-academic-cap"
+          class="min-h-[44px] w-full sm:w-auto"
         >
           {{ $t('home.viewAllSkills') }}
         </UButton>

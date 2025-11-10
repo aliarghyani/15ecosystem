@@ -6,7 +6,7 @@
   >
     <UCard
       :class="[
-        'hover-minimal dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm transition-all duration-300 cursor-pointer hover:shadow-lg h-full',
+        'hover-minimal dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm transition-all duration-300 ease-out cursor-pointer hover:shadow-xl hover:scale-[1.02] hover:-translate-y-0.5 h-full',
         variant === 'compact' ? 'p-3' : 'p-4'
       ]"
     >

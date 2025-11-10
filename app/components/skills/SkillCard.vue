@@ -5,7 +5,7 @@
   >
     <UCard
       :class="[
-        'skill-card hover-minimal dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm transition-all duration-300 hover:shadow-lg cursor-pointer flex flex-col h-full',
+        'skill-card hover-minimal dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm transition-all duration-300 ease-out hover:shadow-xl hover:scale-[1.02] hover:-translate-y-0.5 cursor-pointer flex flex-col h-full',
         variant === 'compact' ? 'p-4' : ''
       ]"
     >
@@ -48,8 +48,8 @@
           variant="soft"
           color="primary"
           block
-          size="xs"
-          class="w-full pointer-events-none"
+          size="sm"
+          class="w-full pointer-events-none min-h-[44px]"
         >
           {{ $t('skills.viewDetails') }}
         </UButton>

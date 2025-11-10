@@ -10,7 +10,7 @@
         color="primary"
         :icon="locale === 'fa' ? 'i-heroicons-arrow-right' : 'i-heroicons-arrow-left'"
         :icon-position="locale === 'fa' ? 'right' : 'left'"
-        class="flex-1 sm:flex-initial"
+        class="flex-1 sm:flex-initial min-h-[44px]"
       >
         <span class="hidden sm:inline">{{ $t('skills.previousSkill') }}</span>
         <span class="sm:hidden">{{ $t('skills.previous') }}</span>
@@ -24,7 +24,7 @@
         variant="outline"
         color="primary"
         icon="i-heroicons-arrow-up"
-        class="flex-1 sm:flex-initial"
+        class="flex-1 sm:flex-initial min-h-[44px]"
       >
         {{ $t('skills.backToCategory') }}
       </UButton>
@@ -37,7 +37,7 @@
         color="primary"
         :icon="locale === 'fa' ? 'i-heroicons-arrow-left' : 'i-heroicons-arrow-right'"
         icon-position="right"
-        class="flex-1 sm:flex-initial"
+        class="flex-1 sm:flex-initial min-h-[44px]"
       >
         <span class="hidden sm:inline">{{ $t('skills.nextSkill') }}</span>
         <span class="sm:hidden">{{ $t('skills.next') }}</span>
@@ -54,6 +54,7 @@
         color="primary"
         icon="i-heroicons-list-bullet"
         size="sm"
+        class="min-h-[44px]"
       >
         {{ $t('skills.allSkills') }}
       </UButton>

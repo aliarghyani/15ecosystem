@@ -57,6 +57,21 @@ const minimapMaskColor = computed(() => colorMode.value === 'dark' ? 'rgba(15, 2
   background: white;
 }
 
+/* Mobile responsive height */
+@media (max-width: 768px) {
+  .vue-flow-diagram-container {
+    height: 500px;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 640px) {
+  .vue-flow-diagram-container {
+    height: 450px;
+    min-height: 350px;
+  }
+}
+
 .dark .vue-flow-diagram-container {
   background: rgb(15 23 42); /* slate-900 */
 }
@@ -77,6 +92,12 @@ const minimapMaskColor = computed(() => colorMode.value === 'dark' ? 'rgba(15, 2
   font-weight: 700 !important;
 }
 
+@media (max-width: 640px) {
+  :deep(.vue-flow__edge-label) {
+    font-size: 11px !important;
+  }
+}
+
 /* Minimap styling - make it more visible */
 :deep(.vue-flow__minimap) {
   background: rgba(255, 255, 255, 0.9);
@@ -85,9 +106,26 @@ const minimapMaskColor = computed(() => colorMode.value === 'dark' ? 'rgba(15, 2
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Hide minimap on very small screens */
+@media (max-width: 640px) {
+  :deep(.vue-flow__minimap) {
+    display: none;
+  }
+}
+
 .dark :deep(.vue-flow__minimap) {
   background: rgba(15, 23, 42, 0.9);
   border-color: #475569;
+}
+
+/* Ensure controls are touch-friendly on mobile */
+:deep(.vue-flow__controls) {
+  touch-action: none;
+}
+
+:deep(.vue-flow__controls-button) {
+  min-width: 44px;
+  min-height: 44px;
 }
 </style>
 
