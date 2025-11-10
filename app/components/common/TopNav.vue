@@ -58,6 +58,19 @@
                 </button>
               </div>
 
+              <!-- Videos -->
+              <div class="flex items-center gap-1.5">
+                <UTooltip :text="$t('nav.videos')">
+                  <UButton class="cursor-pointer" :class="[isActive('videos') ? activeClass : inactiveClass]"
+                    variant="soft" square icon="i-twemoji-video-camera" :aria-label="$t('nav.videos')"
+                    @click="goTo('videos')" />
+                </UTooltip>
+                <button type="button" class="text-sm font-medium transition-colors"
+                  :class="[isActive('videos') ? labelActiveClass : labelInactiveClass]" @click="goTo('videos')">
+                  {{ $t('nav.videos') }}
+                </button>
+              </div>
+
               <!-- Writers -->
               <div class="flex items-center gap-1.5">
                 <UTooltip :text="$t('nav.writers')">
@@ -171,6 +184,15 @@
                   @click="goTo('books'); closeMobileMenu()"
                 >
                   {{ $t('nav.books') }}
+                </UButton>
+                <UButton
+                  :class="[isActive('videos') ? activeClass : inactiveClass]"
+                  variant="soft"
+                  block
+                  :icon="'i-twemoji-video-camera'"
+                  @click="goTo('videos'); closeMobileMenu()"
+                >
+                  {{ $t('nav.videos') }}
                 </UButton>
                 <UButton
                   :class="[isActive('writers') ? activeClass : inactiveClass]"

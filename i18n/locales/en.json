@@ -15,6 +15,7 @@
     "categories": "Categories",
     "skills": "Skills",
     "books": "Books",
+    "videos": "Videos",
     "writers": "Writers",
     "transcript": "Transcript",
     "summary": "Summary",
@@ -163,12 +164,17 @@
     "views": "views",
     "videos": "video(s)",
     "noVideosFound": "No videos found",
+    "noVideosDescription": "Videos will be added soon.",
     "noVideosInCategory": "No videos in this category",
     "filteredBySkill": "Filtered by skill",
     "relatedVideos": "Related Videos",
     "relatedVideosDescription": "Videos related to this skill",
     "backToVideos": "Back to Videos",
     "notFound": "Video not found"
+  },
+  "common": {
+    "relatedTo": "related to",
+    "clearFilter": "Clear Filter"
   }
 }
 

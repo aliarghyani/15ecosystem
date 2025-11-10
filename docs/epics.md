@@ -987,6 +987,493 @@ So that I can easily find video content.
 
 ---
 
+## Epic 8: Video Transcript Data Analysis & Analytics
+
+**Goal:** Create a comprehensive data analysis system for analyzing the full text transcripts of all 127 videos from KhashayarTalks channel. Provide interactive analytics dashboard with various report types including word frequency, mentions, trends, and insights.
+
+### Story 8.1: Video Transcript Data Structure & Storage
+
+As a developer,
+I want a structured way to store and access video transcripts,
+So that I can perform analysis on the full text of all videos.
+
+**Acceptance Criteria:**
+
+**Given** I have video transcripts from 127 videos
+**When** I structure the data
+**Then** I have:
+- VideoTranscript type with video ID, transcript text, metadata
+- Storage structure for all 127 video transcripts
+- Efficient access methods for querying transcripts
+- Support for both Persian and English transcripts
+- Transcript metadata (video ID, length, word count, etc.)
+- TypeScript types defined
+- Utility functions for transcript operations
+
+**Prerequisites:** Epic 7 (Video integration)
+
+**Technical Notes:**
+- Define `VideoTranscript` interface in `app/types/index.ts`
+- Store transcripts in `app/data/transcripts/` directory
+- Structure: `app/data/transcripts/fa/` and `app/data/transcripts/en/`
+- Each transcript file maps to video ID
+- Include metadata: word count, character count, video ID reference
+- Create `app/utils/transcripts.ts` for transcript operations
+- Support lazy loading for performance (load on demand)
+- Consider indexing for fast search (future enhancement)
+
+### Story 8.2: Text Analysis Utilities & Core Functions
+
+As a developer,
+I want text analysis utilities for processing video transcripts,
+So that I can generate various analytics reports.
+
+**Acceptance Criteria:**
+
+**Given** I have video transcripts
+**When** I use analysis utilities
+**Then** I have:
+- Word frequency analysis (count occurrences of words/phrases)
+- Case-insensitive and case-sensitive search options
+- Phrase/name mention counting (e.g., "Andrew Huberman", "health")
+- Multi-word phrase detection
+- Text normalization (remove punctuation, handle Persian/English)
+- Stop word filtering (optional)
+- Stemming support (optional, for advanced analysis)
+- Performance optimized for large text corpus (127 videos)
+
+**Prerequisites:** Story 8.1
+
+**Technical Notes:**
+- Create `app/utils/text-analysis.ts` with core analysis functions
+- Functions:
+  - `countWordOccurrences(text: string, word: string, options?: AnalysisOptions): number`
+  - `countPhraseOccurrences(text: string, phrase: string, options?: AnalysisOptions): number`
+  - `getWordFrequency(text: string, options?: FrequencyOptions): WordFrequency[]`
+  - `findMentions(text: string, searchTerms: string[]): MentionResult[]`
+  - `normalizeText(text: string, locale: 'fa' | 'en'): string`
+- Support both Persian and English text analysis
+- Handle Persian text properly (RTL, character normalization)
+- Optimize for performance (consider memoization, indexing)
+- Add JSDoc comments for all functions
+
+### Story 8.3: Analysis Report Types & Data Models
+
+As a developer,
+I want defined report types and data models,
+So that I can structure analysis results consistently.
+
+**Acceptance Criteria:**
+
+**Given** I need to generate reports
+**When** I define report types
+**Then** I have:
+- WordFrequencyReport type (word, count, percentage, videos)
+- MentionReport type (term, count, videos, timestamps)
+- TrendReport type (term, count over time, video dates)
+- ComparisonReport type (compare multiple terms)
+- TopWordsReport type (most frequent words)
+- CategoryAnalysisReport type (analysis by skill/category)
+- TypeScript interfaces for all report types
+- Report metadata (generated date, filters applied, etc.)
+
+**Prerequisites:** Story 8.2
+
+**Technical Notes:**
+- Define report types in `app/types/analytics.ts`
+- Include:
+  - `WordFrequencyReport`, `MentionReport`, `TrendReport`
+  - `ComparisonReport`, `TopWordsReport`, `CategoryAnalysisReport`
+  - `AnalysisOptions`, `ReportMetadata`
+- Each report includes video references (which videos contain the term)
+- Support filtering by video, category, skill, date range
+- Include percentage calculations and relative frequencies
+
+### Story 8.4: Report Generation Engine
+
+As a developer,
+I want a report generation engine,
+So that I can create various analysis reports from video transcripts.
+
+**Acceptance Criteria:**
+
+**Given** I have transcripts and analysis utilities
+**When** I generate reports
+**Then** I can create:
+- Word frequency reports (single word or phrase)
+- Mention reports (names, concepts, topics)
+- Top N words/phrases reports
+- Comparison reports (compare multiple terms)
+- Category-based reports (analyze by skill/category)
+- Time-based trend reports (if video dates available)
+- Custom search reports (user-defined queries)
+- Export reports (JSON, CSV formats)
+
+**Prerequisites:** Story 8.2, 8.3
+
+**Technical Notes:**
+- Create `app/utils/report-generator.ts`
+- Functions:
+  - `generateWordFrequencyReport(term: string, options?: ReportOptions): WordFrequencyReport`
+  - `generateMentionReport(terms: string[], options?: ReportOptions): MentionReport[]`
+  - `generateTopWordsReport(limit: number, options?: ReportOptions): TopWordsReport`
+  - `generateComparisonReport(terms: string[], options?: ReportOptions): ComparisonReport`
+  - `generateCategoryReport(categoryId: string, term: string, options?: ReportOptions): CategoryAnalysisReport`
+- Support filtering by video IDs, categories, skills, date ranges
+- Cache results for performance (memoization)
+- Handle large datasets efficiently (127 videos worth of text)
+- Support both Persian and English analysis
+
+### Story 8.5: Analytics Dashboard Page Structure
+
+As a user,
+I want an analytics dashboard page,
+So that I can access and view various analysis reports.
+
+**Acceptance Criteria:**
+
+**Given** I visit the analytics page
+**When** I view the dashboard
+**Then** I see:
+- Dashboard header with title and description
+- Report type selector (Word Frequency, Mentions, Trends, etc.)
+- Search/query input for custom analysis
+- Filter options (by category, skill, video, date range)
+- Report display area with results
+- Export options (JSON, CSV download)
+- Loading states during analysis
+- Error handling for invalid queries
+- Bilingual support (Persian/English)
+
+**Prerequisites:** Story 8.4
+
+**Technical Notes:**
+- Create `app/pages/analytics/index.vue`
+- Use Nuxt UI components for consistent design
+- Implement report type tabs or dropdown
+- Add search input with autocomplete suggestions
+- Create filter components (category, skill, date picker)
+- Display results in cards or tables
+- Add export buttons with download functionality
+- Use Vue composables for state management
+- Implement loading skeletons
+- Add error messages for invalid inputs
+- Follow modern, compact design patterns
+
+### Story 8.6: Word Frequency Report Component
+
+As a user,
+I want to see word frequency analysis reports,
+So that I can understand how often specific words or phrases appear across videos.
+
+**Acceptance Criteria:**
+
+**Given** I search for a word or phrase (e.g., "health", "Andrew Huberman")
+**When** I view the word frequency report
+**Then** I see:
+- Total occurrence count across all videos
+- Occurrence count per video (list of videos with counts)
+- Percentage of videos containing the term
+- Visual representation (bar chart, word cloud, or list)
+- Clickable video links to view transcript context
+- Option to see context around each mention
+- Filter by video, category, or skill
+- Sort by frequency or video date
+
+**Prerequisites:** Story 8.5
+
+**Technical Notes:**
+- Create `app/components/analytics/WordFrequencyReport.vue`
+- Display results in a table or card layout
+- Use Nuxt UI components (UTable, UCard)
+- Add charts using a charting library (Chart.js, Recharts, or similar)
+- Show video cards with occurrence counts
+- Link to video detail pages or transcript sections
+- Implement pagination for large result sets
+- Add copy-to-clipboard for counts
+- Support both Persian and English display
+
+### Story 8.7: Mention Report Component
+
+As a user,
+I want to see mention reports for names, concepts, or topics,
+So that I can track how often specific people or ideas are referenced.
+
+**Acceptance Criteria:**
+
+**Given** I search for mentions (e.g., "Andrew Huberman", "sleep", "dopamine")
+**When** I view the mention report
+**Then** I see:
+- Total mention count for each term
+- List of videos containing each mention
+- Number of times mentioned per video
+- Visual comparison (bar chart comparing multiple terms)
+- Option to search multiple terms at once
+- Context snippets showing where mentions occur
+- Links to video transcripts with highlighted mentions
+- Filter by video, category, or skill
+
+**Prerequisites:** Story 8.5
+
+**Technical Notes:**
+- Create `app/components/analytics/MentionReport.vue`
+- Support multiple term search
+- Display comparison charts
+- Show video list with mention counts
+- Highlight mentions in context snippets
+- Use Nuxt UI components for consistent design
+- Add export functionality
+- Implement search suggestions (autocomplete)
+- Support case-insensitive and exact match options
+
+### Story 8.8: Top Words Report Component
+
+As a user,
+I want to see the most frequently used words across all videos,
+So that I can understand the main topics and themes.
+
+**Acceptance Criteria:**
+
+**Given** I view the top words report
+**When** I see the results
+**Then** I see:
+- Top N most frequent words (configurable N, default 50)
+- Word frequency counts
+- Option to exclude common stop words
+- Visual representation (word cloud or bar chart)
+- Filter by category or skill
+- Option to see word usage over time (if dates available)
+- Click on word to see detailed frequency report
+- Support for both single words and phrases
+
+**Prerequisites:** Story 8.5
+
+**Technical Notes:**
+- Create `app/components/analytics/TopWordsReport.vue`
+- Implement word cloud visualization (use library like wordcloud2.js or D3)
+- Add stop word filtering (common words in Persian/English)
+- Create interactive word cloud (click to drill down)
+- Show bar chart as alternative view
+- Add filters for minimum word length, exclude numbers, etc.
+- Support phrase analysis (bigrams, trigrams)
+- Optimize performance for large word lists
+
+### Story 8.9: Comparison Report Component
+
+As a user,
+I want to compare multiple terms side by side,
+So that I can understand relative frequency and usage patterns.
+
+**Acceptance Criteria:**
+
+**Given** I want to compare multiple terms (e.g., "health" vs "career" vs "identity")
+**When** I generate a comparison report
+**Then** I see:
+- Side-by-side comparison of term frequencies
+- Visual comparison chart (bar chart, line chart)
+- Percentage breakdowns
+- Videos containing each term
+- Overlap analysis (videos containing multiple terms)
+- Statistical summary (total, average, max, min)
+- Export comparison data
+
+**Prerequisites:** Story 8.5
+
+**Technical Notes:**
+- Create `app/components/analytics/ComparisonReport.vue`
+- Support 2-10 terms comparison
+- Use charting library for visualizations
+- Display Venn diagram for overlap (if 2-3 terms)
+- Show statistical summaries
+- Add interactive filters
+- Support different comparison metrics (count, percentage, per video average)
+
+### Story 8.10: Category & Skill-Based Analysis
+
+As a user,
+I want to analyze transcripts filtered by category or skill,
+So that I can understand topic distribution within specific areas.
+
+**Acceptance Criteria:**
+
+**Given** I select a category (Health, Identity, Career) or skill (1-15)
+**When** I analyze transcripts for that category/skill
+**Then** I see:
+- Analysis limited to videos in that category/skill
+- Word frequency for that subset
+- Top words/phrases for that category/skill
+- Comparison with other categories/skills
+- Category-specific insights
+- Visual breakdown by category/skill
+- Option to compare across categories
+
+**Prerequisites:** Story 8.5
+
+**Technical Notes:**
+- Extend report generator to support category/skill filtering
+- Create `app/components/analytics/CategoryAnalysis.vue`
+- Filter videos by categoryIds or skillIds
+- Show category breakdown charts
+- Add category comparison views
+- Link to category/skill detail pages
+- Show insights specific to each category
+
+### Story 8.11: Advanced Search & Custom Queries
+
+As a user,
+I want to perform advanced searches with custom queries,
+So that I can find specific patterns or combinations of terms.
+
+**Acceptance Criteria:**
+
+**Given** I want to search for complex patterns
+**When** I use advanced search
+**Then** I can:
+- Search for multiple terms (AND, OR, NOT operators)
+- Use wildcards or regex patterns (optional)
+- Search within specific video ranges
+- Filter by video metadata (duration, date, category)
+- Save custom queries for reuse
+- View search history
+- Get search suggestions based on available data
+
+**Prerequisites:** Story 8.5
+
+**Technical Notes:**
+- Create `app/components/analytics/AdvancedSearch.vue`
+- Implement query builder UI
+- Support boolean operators (AND, OR, NOT)
+- Add query validation
+- Store recent searches in localStorage
+- Implement search autocomplete
+- Add query examples/templates
+- Support regex patterns (with validation)
+
+### Story 8.12: Report Export & Sharing
+
+As a user,
+I want to export and share analysis reports,
+So that I can use the data in other tools or share insights.
+
+**Acceptance Criteria:**
+
+**Given** I have generated a report
+**When** I want to export it
+**Then** I can:
+- Export as JSON (structured data)
+- Export as CSV (spreadsheet format)
+- Export as PDF (formatted report, optional)
+- Copy report data to clipboard
+- Share report via URL (with query parameters)
+- Include report metadata in exports
+- Choose export format and options
+
+**Prerequisites:** Story 8.5
+
+**Technical Notes:**
+- Create `app/utils/report-export.ts`
+- Implement JSON export (structured data)
+- Implement CSV export (table format)
+- Add PDF export (use library like jsPDF, optional)
+- Create shareable URLs with query parameters
+- Add copy-to-clipboard functionality
+- Include metadata (generation date, filters, etc.)
+- Optimize export for large datasets
+
+### Story 8.13: Analytics Navigation Integration
+
+As a user,
+I want to access analytics from the main navigation,
+So that I can easily find the analysis features.
+
+**Acceptance Criteria:**
+
+**Given** I view the navigation menu
+**When** I see the menu items
+**Then** I see:
+- "Analytics" or "Data Analysis" menu item
+- Active state highlighting when on analytics page
+- Mobile menu support
+- Breadcrumb navigation on analytics pages
+- Link from video pages to analytics (optional)
+
+**Prerequisites:** Story 8.5
+
+**Technical Notes:**
+- Update `app/components/common/TopNav.vue`
+- Add "Analytics" menu item
+- Update i18n translations
+- Add breadcrumb support
+- Ensure mobile menu works correctly
+- Add route handling for analytics pages
+
+### Story 8.14: Performance Optimization & Caching
+
+As a developer,
+I want optimized performance for analytics operations,
+So that analysis of 127 videos runs efficiently.
+
+**Acceptance Criteria:**
+
+**Given** I perform analysis on large datasets
+**When** reports are generated
+**Then**:
+- Analysis completes in reasonable time (<5 seconds for common queries)
+- Results are cached for repeated queries
+- Large datasets are processed efficiently
+- UI remains responsive during analysis
+- Loading states are shown appropriately
+- Memory usage is optimized
+- Lazy loading for transcript data
+
+**Prerequisites:** Story 8.4
+
+**Technical Notes:**
+- Implement memoization for report generation
+- Cache analysis results (use Vue composable or Pinia store)
+- Optimize text processing algorithms
+- Use Web Workers for heavy processing (optional)
+- Implement pagination for large result sets
+- Lazy load transcripts (load on demand)
+- Add performance monitoring
+- Optimize bundle size (code splitting)
+
+### Story 8.15: Analytics Dashboard Polish & UX
+
+As a user,
+I want a polished and intuitive analytics experience,
+So that I can easily discover insights from video transcripts.
+
+**Acceptance Criteria:**
+
+**Given** I use the analytics dashboard
+**When** I interact with features
+**Then**:
+- UI is modern, clean, and intuitive
+- Reports are visually appealing
+- Charts and visualizations are clear and informative
+- Mobile-responsive design works well
+- Loading states are smooth
+- Error messages are helpful
+- Tooltips and help text guide users
+- Keyboard navigation works
+- Accessibility standards met (WCAG AA)
+
+**Prerequisites:** All previous stories in Epic 8
+
+**Technical Notes:**
+- Polish all analytics components
+- Add tooltips and help text
+- Improve visualizations (colors, spacing, typography)
+- Ensure mobile responsiveness
+- Add smooth animations and transitions
+- Test keyboard navigation
+- Add accessibility attributes (ARIA labels)
+- Conduct UX review and improvements
+- Add example queries and tutorials
+
+---
+
 ## Implementation Notes
 
 ### MVP Scope Summary

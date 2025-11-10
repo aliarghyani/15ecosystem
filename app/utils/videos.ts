@@ -3,9 +3,8 @@
  */
 
 import type { Video } from '~/types'
-// Import will be added when data files are created
-// import { videos as videosFa } from '~/data/fa/videos'
-// import { videos as videosEn } from '~/data/en/videos'
+import { videos as videosFa } from '~/data/fa/videos'
+import { videos as videosEn } from '~/data/en/videos'
 
 /**
  * Extract YouTube video ID from various URL formats
@@ -110,20 +109,7 @@ export function generateVideoSlug(video: Video, locale: 'fa' | 'en' = 'fa'): str
  * @returns Array of all videos
  */
 export function getAllVideos(locale: 'fa' | 'en' = 'fa'): Video[] {
-  // Dynamic import to avoid circular dependencies
-  try {
-    if (locale === 'fa') {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { videos } = require('~/data/fa/videos')
-      return videos || []
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { videos } = require('~/data/en/videos')
-      return videos || []
-    }
-  } catch {
-    return []
-  }
+  return locale === 'fa' ? videosFa : videosEn
 }
 
 /**

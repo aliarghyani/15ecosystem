@@ -15,6 +15,7 @@
     "categories": "دسته‌بندی‌ها",
     "skills": "مهارت‌ها",
     "books": "کتاب‌ها",
+    "videos": "ویدیوها",
     "writers": "نویسندگان",
     "transcript": "متن کامل",
     "summary": "خلاصه",
@@ -163,12 +164,17 @@
     "views": "بازدید",
     "videos": "ویدیو",
     "noVideosFound": "هیچ ویدیویی یافت نشد",
+    "noVideosDescription": "ویدیوها به زودی اضافه خواهند شد.",
     "noVideosInCategory": "هیچ ویدیویی در این دسته‌بندی وجود ندارد",
     "filteredBySkill": "فیلتر شده بر اساس مهارت",
     "relatedVideos": "ویدیوهای مرتبط",
     "relatedVideosDescription": "ویدیوهای مرتبط با این مهارت",
     "backToVideos": "بازگشت به ویدیوها",
     "notFound": "ویدیو یافت نشد"
+  },
+  "common": {
+    "relatedTo": "مرتبط با",
+    "clearFilter": "پاک کردن فیلتر"
   }
 }
 
