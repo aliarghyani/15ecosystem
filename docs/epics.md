@@ -745,6 +745,248 @@ So that I have an excellent experience and the platform is maintainable.
 
 ---
 
+## Epic 7: YouTube Videos Integration
+
+**Goal:** Integrate YouTube videos from KhashayarTalks channel into the platform, organized by skills, categories, and playlists. Provide video browsing, detail pages, and integration with existing skill/book/writer pages.
+
+### Story 7.1: Video Data Structure & Types
+
+As a developer,
+I want a well-defined data structure for videos and playlists,
+So that I can store and retrieve video information consistently.
+
+**Acceptance Criteria:**
+
+**Given** I need to store video information
+**When** I define the data structure
+**Then** I have:
+- Video type with all required fields (id, title, description, thumbnail, duration, etc.)
+- Playlist type with video relationships
+- Skill and category relationships
+- Bilingual support (fa/en)
+- TypeScript types defined
+- Utility functions for video operations
+
+**Prerequisites:** None
+
+**Technical Notes:**
+- Define Video and Playlist interfaces in `app/types/index.ts`
+- Create utility functions in `app/utils/videos.ts` and `app/utils/playlists.ts`
+- Follow same patterns as books and writers
+- Support skill IDs (1-15) and category IDs (health, identity, career)
+- Include YouTube video ID and embed information
+
+### Story 7.2: Video Data Entry & YAML Structure
+
+As a content manager,
+I want to define videos in YAML files,
+So that I can easily add and manage video content.
+
+**Acceptance Criteria:**
+
+**Given** I need to add video content
+**When** I create YAML files
+**Then** I have:
+- YAML structure for videos (en/fa)
+- YAML structure for playlists (en/fa)
+- Video metadata (title, description, YouTube ID, etc.)
+- Skill mappings for each video
+- Category assignments
+- Data parsing script to TypeScript
+- Validation of skill/category relationships
+
+**Prerequisites:** Story 7.1
+
+**Technical Notes:**
+- Create `content/videos/` directory structure
+- Define YAML schema for videos
+- Create parsing script similar to books/writers
+- Generate TypeScript data files at build time
+- Validate skill IDs and category IDs
+
+### Story 7.3: Video Components (Card, List)
+
+As a developer,
+I want reusable video components,
+So that I can display videos consistently across the platform.
+
+**Acceptance Criteria:**
+
+**Given** I need to display videos
+**When** I use video components
+**Then** I have:
+- VideoCard component (similar to BookCard)
+- VideoList component (with filtering)
+- Thumbnail display with YouTube-style play icon overlay
+- Click to open YouTube video in new tab
+- Responsive design
+- Lazy loading for thumbnails
+- Bilingual support
+- Accessibility features
+
+**Prerequisites:** Story 7.1, 7.2
+
+**Technical Notes:**
+- Create `app/components/videos/` directory
+- Use Nuxt UI components for consistency
+- Display YouTube thumbnails (generate URL from video ID)
+- Click opens YouTube URL in new tab (`target="_blank"`)
+- Add play icon overlay on thumbnail (YouTube-style)
+- Optimize thumbnails with @nuxt/image
+- Add lazy loading for performance
+- Ensure 44x44px touch targets
+- Follow same design patterns as BookCard
+- Extract video ID from YouTube URL format
+
+### Story 7.4: Videos List Page
+
+As a user,
+I want to browse all videos organized by category,
+So that I can discover content related to my interests.
+
+**Acceptance Criteria:**
+
+**Given** I visit the videos page
+**When** I view the list
+**Then** I see:
+- Videos grouped by category (Health, Identity, Career)
+- Video cards with thumbnails, titles, durations
+- Related skills displayed on each card
+- Filter by skill dropdown
+- Search functionality (optional)
+- Breadcrumb navigation
+- Bilingual content
+
+**Prerequisites:** Story 7.3
+
+**Technical Notes:**
+- Create `app/pages/videos/index.vue`
+- Group videos by category
+- Implement filtering by skill
+- Use VideoCard component
+- Add breadcrumb navigation
+- Follow same structure as books page
+
+### Story 7.5: Video Detail Page
+
+As a user,
+I want to see video information and related content,
+So that I can learn more about a topic and watch the video.
+
+**Acceptance Criteria:**
+
+**Given** I click on a video
+**When** I view the detail page
+**Then** I see:
+- Large video thumbnail (clickable, opens YouTube in new tab)
+- "Watch on YouTube" button
+- Video title and description
+- Related skills section (with links)
+- Related books section (if any)
+- Related writers section (if any)
+- Tags section
+- Breadcrumb navigation
+- Previous/next video navigation (optional)
+
+**Prerequisites:** Story 7.3
+
+**Technical Notes:**
+- Create `app/pages/videos/[slug].vue`
+- Display large thumbnail with play icon overlay
+- Click thumbnail or button opens YouTube URL in new tab
+- Load related skills, books, writers
+- Generate SEO-friendly slugs
+- Add meta tags for video (with thumbnail)
+- Implement breadcrumb navigation
+- No video embedding - all videos open on YouTube
+
+### Story 7.6: Skill Page Video Integration
+
+As a user,
+I want to see videos related to a skill,
+So that I can learn more about that skill.
+
+**Acceptance Criteria:**
+
+**Given** I view a skill detail page
+**When** I scroll down
+**Then** I see:
+- "Related Videos" section
+- Video cards for videos related to the skill
+- Link to videos list page filtered by skill
+- Videos grouped by playlist (if applicable)
+
+**Prerequisites:** Story 7.3, 7.4
+
+**Technical Notes:**
+- Update `app/pages/skills/[slug].vue`
+- Add "Related Videos" section after books section
+- Use VideoCard component
+- Filter videos by skill ID
+- Link to videos page with skill filter
+
+### Story 7.7: Playlists Support
+
+As a user,
+I want to browse playlists and see all videos in a playlist,
+So that I can follow structured learning paths.
+
+**Acceptance Criteria:**
+
+**Given** I visit the playlists page
+**When** I view playlists
+**Then** I see:
+- Playlist cards with thumbnails and video counts
+- Playlists grouped by category
+- Filter by skill
+- Click to view playlist detail page
+
+**Given** I view a playlist detail page
+**When** I see the playlist
+**Then** I see:
+- Playlist header with title and description
+- List of all videos in playlist
+- Related skills
+- Related categories
+- Breadcrumb navigation
+
+**Prerequisites:** Story 7.3, 7.4
+
+**Technical Notes:**
+- Create `app/components/playlists/PlaylistCard.vue`
+- Create `app/pages/playlists/index.vue`
+- Create `app/pages/playlists/[slug].vue`
+- Group playlists by category
+- Display videos in playlist
+- Link playlists to skills and categories
+
+### Story 7.8: Navigation Integration
+
+As a user,
+I want to access videos from the main navigation,
+So that I can easily find video content.
+
+**Acceptance Criteria:**
+
+**Given** I view the navigation menu
+**When** I see the menu items
+**Then** I see:
+- "Videos" menu item
+- "Playlists" menu item (optional)
+- Active state highlighting
+- Mobile menu support
+
+**Prerequisites:** Story 7.4, 7.7
+
+**Technical Notes:**
+- Update `app/components/common/TopNav.vue`
+- Add "Videos" menu item
+- Add route handling for videos
+- Update i18n translations
+- Ensure mobile menu works correctly
+
+---
+
 ## Implementation Notes
 
 ### MVP Scope Summary
