@@ -1,7 +1,7 @@
 # Story 5.3: Skill Page Relationship Diagrams
 
 **Epic:** Epic 5 - Visual Diagrams  
-**Status:** backlog  
+**Status:** in-progress  
 **Story ID:** 5-3-skill-page-relationship-diagrams
 
 ## User Story
@@ -68,18 +68,18 @@ So that I understand the complete relationship network for this specific skill.
 
 ## Tasks
 
-- [ ] Add diagram section to skill page component
-- [ ] Import and use `generateSkillRelationshipDiagram()` utility
-- [ ] Integrate `MermaidDiagram` component with interactive features
-- [ ] Add i18n translations for diagram section
-- [ ] Style diagram sections (prerequisites, current, enabled)
-- [ ] Test auto-fit functionality
-- [ ] Test keyboard navigation (arrow keys)
-- [ ] Test mouse wheel zoom
-- [ ] Test drag to pan
-- [ ] Verify all 15 skills show correct relationships
-- [ ] Test bilingual display (Persian/English)
-- [ ] Ensure responsive design works on mobile
+- [x] Add diagram section to skill page component
+- [x] Import and use `generateSkillRelationshipDiagram()` utility
+- [x] Integrate `MermaidDiagram` component with interactive features
+- [x] Add i18n translations for diagram section
+- [x] Style diagram sections (prerequisites, current, enabled)
+- [x] Test auto-fit functionality
+- [x] Test keyboard navigation (arrow keys)
+- [x] Test mouse wheel zoom
+- [x] Test drag to pan
+- [x] Verify all 15 skills show correct relationships
+- [x] Test bilingual display (Persian/English)
+- [x] Ensure responsive design works on mobile
 
 ## Technical Notes
 

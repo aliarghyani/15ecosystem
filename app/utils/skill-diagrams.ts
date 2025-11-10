@@ -1,30 +1,34 @@
 /**
- * Utility functions for generating skill-specific relationship diagrams
+ * Utility functions for generating skill-specific relationship diagrams using Vue Flow
  * These diagrams show "mother" (enables) and "child" (prerequisites) relationships
  */
 
 import type { Skill } from '~/types'
 import { getAllSkills } from './skills'
+import type { Node, Edge } from '@vue-flow/core'
+
+interface DiagramData {
+  nodes: Node[]
+  edges: Edge[]
+}
 
 /**
- * Generate Mermaid flowchart showing a skill's relationships
+ * Generate Vue Flow nodes and edges showing a skill's relationships
  * Shows: Prerequisites (parents) → Current Skill → Enabled Skills (children)
  */
 export function generateSkillRelationshipDiagram(
   skillId: number,
   locale: 'fa' | 'en' = 'fa'
-): string {
+): DiagramData {
   const allSkills = getAllSkills(locale)
   const currentSkill = allSkills.find((s) => s.id === skillId)
 
   if (!currentSkill) {
-    return ''
+    return { nodes: [], edges: [] }
   }
 
-  // Helper to escape text
-  function escapeText(text: string): string {
-    return text.replace(/"/g, '&quot;').replace(/\n/g, ' ')
-  }
+  const nodes: Node[] = []
+  const edges: Edge[] = []
 
   // Find prerequisites (skills that enable this skill)
   const prerequisites: Skill[] = []
@@ -45,48 +49,126 @@ export function generateSkillRelationshipDiagram(
     })
   }
 
-  const skillName = escapeText(currentSkill.name[locale] || currentSkill.name.fa)
+  const skillName = currentSkill.name[locale] || currentSkill.name.fa
 
-  // Build Mermaid flowchart
-  let mermaid = 'flowchart TD\n'
+  // Layout configuration
+  const nodeWidth = 200
+  const nodeHeight = 80
+  const horizontalSpacing = 250
+  const verticalSpacing = 150
+
+  // Calculate positions
+  let yOffset = 0
 
   // Prerequisites section (top)
   if (prerequisites.length > 0) {
-    mermaid += '  subgraph Prerequisites["Prerequisites - Required Skills"]\n'
-    prerequisites.forEach((skill) => {
-      const name = escapeText(skill.name[locale] || skill.name.fa)
-      mermaid += `    P${skill.id}["${skill.id}. ${name}"]\n`
+    const prerequisitesPerRow = Math.min(prerequisites.length, 4)
+    const startX = -(prerequisitesPerRow - 1) * horizontalSpacing / 2
+
+    prerequisites.forEach((skill, index) => {
+      const row = Math.floor(index / prerequisitesPerRow)
+      const col = index % prerequisitesPerRow
+      const x = startX + col * horizontalSpacing
+      const y = yOffset + row * verticalSpacing
+
+      nodes.push({
+        id: `prerequisite-${skill.id}`,
+        type: 'default',
+        position: { x, y },
+        data: {
+          label: `${skill.id}. ${skill.name[locale] || skill.name.fa}`,
+        },
+        style: {
+          background: '#e0f2fe',
+          color: '#0c4a6e',
+          border: '2px solid #0284c7',
+          borderRadius: '8px',
+          padding: '10px',
+          fontSize: '14px',
+          fontWeight: 500,
+        },
+      })
+
+      edges.push({
+        id: `edge-prerequisite-${skill.id}-current`,
+        source: `prerequisite-${skill.id}`,
+        target: 'current-skill',
+        label: locale === 'fa' ? 'فعال می‌کند' : 'enables',
+        type: 'smoothstep',
+        animated: true,
+        style: { stroke: '#0284c7', strokeWidth: 2 },
+        labelStyle: { fill: '#0284c7', fontWeight: 600 },
+      })
     })
-    mermaid += '  end\n\n'
+
+    yOffset += Math.ceil(prerequisites.length / prerequisitesPerRow) * verticalSpacing + 100
   }
 
   // Current skill (center)
-  mermaid += `  Current["${skillId}. ${skillName}"]:::current\n\n`
+  nodes.push({
+    id: 'current-skill',
+    type: 'default',
+    position: { x: -nodeWidth / 2, y: yOffset },
+    data: {
+      label: `${skillId}. ${skillName}`,
+    },
+    style: {
+      background: '#fbbf24',
+      color: '#000',
+      border: '4px solid #f59e0b',
+      borderRadius: '8px',
+      padding: '15px',
+      fontSize: '16px',
+      fontWeight: 700,
+      minWidth: nodeWidth,
+    },
+  })
+
+  yOffset += verticalSpacing + 50
 
   // Enabled skills section (bottom)
   if (enabledSkills.length > 0) {
-    mermaid += '  subgraph Enabled["Enabled Skills - This Skill Helps"]\n'
-    enabledSkills.forEach((skill) => {
-      const name = escapeText(skill.name[locale] || skill.name.fa)
-      mermaid += `    E${skill.id}["${skill.id}. ${name}"]\n`
+    const enabledPerRow = Math.min(enabledSkills.length, 4)
+    const startX = -(enabledPerRow - 1) * horizontalSpacing / 2
+
+    enabledSkills.forEach((skill, index) => {
+      const row = Math.floor(index / enabledPerRow)
+      const col = index % enabledPerRow
+      const x = startX + col * horizontalSpacing
+      const y = yOffset + row * verticalSpacing
+
+      nodes.push({
+        id: `enabled-${skill.id}`,
+        type: 'default',
+        position: { x, y },
+        data: {
+          label: `${skill.id}. ${skill.name[locale] || skill.name.fa}`,
+        },
+        style: {
+          background: '#dcfce7',
+          color: '#14532d',
+          border: '2px solid #16a34a',
+          borderRadius: '8px',
+          padding: '10px',
+          fontSize: '14px',
+          fontWeight: 500,
+        },
+      })
+
+      edges.push({
+        id: `edge-current-enabled-${skill.id}`,
+        source: 'current-skill',
+        target: `enabled-${skill.id}`,
+        label: locale === 'fa' ? 'فعال می‌کند' : 'enables',
+        type: 'smoothstep',
+        animated: true,
+        style: { stroke: '#16a34a', strokeWidth: 2 },
+        labelStyle: { fill: '#16a34a', fontWeight: 600 },
+      })
     })
-    mermaid += '  end\n\n'
   }
 
-  // Add connections from prerequisites to current
-  prerequisites.forEach((skill) => {
-    mermaid += `  P${skill.id} -->|"enables"| Current\n`
-  })
-
-  // Add connections from current to enabled
-  enabledSkills.forEach((skill) => {
-    mermaid += `  Current -->|"enables"| E${skill.id}\n`
-  })
-
-  // Add styling
-  mermaid += '\n  classDef current fill:#fbbf24,stroke:#f59e0b,stroke-width:4px,color:#000\n'
-
-  return mermaid
+  return { nodes, edges }
 }
 
 /**
@@ -96,18 +178,16 @@ export function generateSkillRelationshipDiagram(
 export function generateSkillNetworkDiagram(
   skillId: number,
   locale: 'fa' | 'en' = 'fa'
-): string {
+): DiagramData {
   const allSkills = getAllSkills(locale)
   const currentSkill = allSkills.find((s) => s.id === skillId)
 
   if (!currentSkill) {
-    return ''
+    return { nodes: [], edges: [] }
   }
 
-  // Helper to escape text
-  function escapeText(text: string): string {
-    return text.replace(/"/g, '&quot;').replace(/\n/g, ' ')
-  }
+  const nodes: Node[] = []
+  const edges: Edge[] = []
 
   // Get all related skills
   const relatedSkills: Skill[] = []
@@ -121,33 +201,70 @@ export function generateSkillNetworkDiagram(
   }
 
   if (relatedSkills.length === 0) {
-    return ''
+    return { nodes: [], edges: [] }
   }
 
-  const skillName = escapeText(currentSkill.name[locale] || currentSkill.name.fa)
+  const skillName = currentSkill.name[locale] || currentSkill.name.fa
 
-  // Build Mermaid graph
-  let mermaid = 'graph LR\n'
+  // Layout: current skill in center, related skills in a circle around it
+  const radius = 200
+  const centerX = 0
+  const centerY = 0
 
   // Current skill (center)
-  mermaid += `  Current["${skillId}. ${skillName}"]:::current\n\n`
-
-  // Add all related skills
-  relatedSkills.forEach((skill) => {
-    const name = escapeText(skill.name[locale] || skill.name.fa)
-    mermaid += `  S${skill.id}["${skill.id}. ${name}"]\n`
+  nodes.push({
+    id: 'current-skill',
+    type: 'default',
+    position: { x: centerX - 100, y: centerY - 40 },
+    data: {
+      label: `${skillId}. ${skillName}`,
+    },
+    style: {
+      background: '#fbbf24',
+      color: '#000',
+      border: '4px solid #f59e0b',
+      borderRadius: '8px',
+      padding: '15px',
+      fontSize: '16px',
+      fontWeight: 700,
+      minWidth: 200,
+    },
   })
 
-  mermaid += '\n'
+  // Related skills in a circle
+  relatedSkills.forEach((skill, index) => {
+    const angle = (2 * Math.PI * index) / relatedSkills.length
+    const x = centerX + radius * Math.cos(angle) - 100
+    const y = centerY + radius * Math.sin(angle) - 40
 
-  // Add bidirectional connections
-  relatedSkills.forEach((skill) => {
-    mermaid += `  Current <--> S${skill.id}\n`
+    nodes.push({
+      id: `related-${skill.id}`,
+      type: 'default',
+      position: { x, y },
+      data: {
+        label: `${skill.id}. ${skill.name[locale] || skill.name.fa}`,
+      },
+      style: {
+        background: '#e0e7ff',
+        color: '#312e81',
+        border: '2px solid #6366f1',
+        borderRadius: '8px',
+        padding: '10px',
+        fontSize: '14px',
+        fontWeight: 500,
+      },
+    })
+
+    // Bidirectional edge
+    edges.push({
+      id: `edge-current-related-${skill.id}`,
+      source: 'current-skill',
+      target: `related-${skill.id}`,
+      type: 'smoothstep',
+      animated: true,
+      style: { stroke: '#6366f1', strokeWidth: 2 },
+    })
   })
 
-  // Add styling
-  mermaid += '\n  classDef current fill:#fbbf24,stroke:#f59e0b,stroke-width:4px,color:#000\n'
-
-  return mermaid
+  return { nodes, edges }
 }
-

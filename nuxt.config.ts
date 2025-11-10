@@ -56,6 +56,14 @@ export default defineNuxtConfig({
         propsDestructure: true,
       },
     },
+    optimizeDeps: {
+      include: ['@vue-flow/core', '@vue-flow/controls', '@vue-flow/minimap'],
+    },
+  },
+  
+  // Build Configuration
+  build: {
+    transpile: ['@vue-flow/core', '@vue-flow/controls', '@vue-flow/minimap'],
   },
 
   // i18n Configuration
