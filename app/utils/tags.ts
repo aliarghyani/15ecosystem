@@ -2,7 +2,7 @@
  * Utility functions for accessing and querying tag data
  */
 
-import type { Tag, Skill, Book, Writer, Category } from '~/types'
+import type { Tag, Skill, Book, Writer, Category, Video } from '~/types'
 import { tags as tagsFa } from '~/data/fa/tags'
 import { tags as tagsEn } from '~/data/en/tags'
 import { videos as videosFa } from '~/data/fa/videos'
@@ -13,6 +13,7 @@ import { getAllSkills } from './skills'
 import { getAllBooks, getBookBySlug } from './books'
 import { getAllWriters } from './writers'
 import { getAllCategories } from './categories'
+import { getAllVideos } from './videos'
 
 /**
  * Generate a URL-friendly slug from tag name
@@ -139,7 +140,82 @@ export function getTagsForCategory(categoryId: string, locale: 'fa' | 'en' = 'fa
 }
 
 /**
- * Get content by tag
+ * Tag-to-model mapping for inference when explicit tags are not assigned
+ * Maps tag slugs to related model identifiers
+ */
+const TAG_TO_MODEL_MAPPING: Record<string, {
+  skillIds?: number[]
+  bookTitles?: string[]
+  writerSlugs?: string[]
+  categoryIds?: string[]
+  relatedTags?: string[] // Tags that are related to this tag
+}> = {
+  'productivity': {
+    skillIds: [2], // Focus - essential for productivity
+    bookTitles: ['Deep Work', 'Indistractable'], // Productivity-focused books
+    writerSlugs: ['cal-newport', 'nir-eyal'], // Productivity writers
+    relatedTags: ['focus', 'learning'] // Related tags
+  },
+  'focus': {
+    skillIds: [2], // Focus skill
+    bookTitles: ['Deep Work', 'Indistractable'],
+    writerSlugs: ['cal-newport', 'nir-eyal'],
+    relatedTags: ['productivity']
+  },
+  'sleep': {
+    skillIds: [1], // Quality Sleep skill
+    bookTitles: ['Why We Sleep'],
+    writerSlugs: ['matthew-walker'],
+    relatedTags: ['health', 'wellness']
+  },
+  'longevity': {
+    skillIds: [6], // Healthy Longevity skill
+    bookTitles: ['Outlive', 'Lifespan'],
+    writerSlugs: ['peter-attia', 'david-sinclair'],
+    relatedTags: ['health', 'wellness']
+  },
+  'health': {
+    skillIds: [1, 2, 3, 4, 5, 6], // All health category skills
+    categoryIds: ['health'],
+    relatedTags: ['wellness', 'longevity', 'sleep']
+  },
+  'learning': {
+    skillIds: [9], // Effective and Continuous Learning
+    bookTitles: ['The Art of Learning', 'Mastery'],
+    writerSlugs: ['josh-waitzkin', 'robert-greene'],
+    relatedTags: ['productivity', 'creativity']
+  },
+  'creativity': {
+    skillIds: [7], // Creativity skill
+    bookTitles: ['Steal Like an Artist'],
+    writerSlugs: ['austin-kleon'],
+    relatedTags: ['learning']
+  },
+  'mindfulness': {
+    skillIds: [4], // Stress Management (includes mindfulness)
+    bookTitles: ['Waking Up', 'Good Anxiety'],
+    writerSlugs: ['sam-harris', 'wendy-suzuki'],
+    relatedTags: ['health', 'wellness']
+  },
+  'wellness': {
+    skillIds: [1, 3, 4, 5, 6], // Health-related skills
+    relatedTags: ['health', 'longevity', 'sleep']
+  },
+  'career': {
+    skillIds: [13, 14, 15], // Career category skills
+    categoryIds: ['career'],
+    relatedTags: ['learning', 'productivity']
+  },
+  'ai': {
+    skillIds: [14], // AI Literacy
+    bookTitles: ['The Coming Wave'],
+    writerSlugs: ['mustafa-suleyman'],
+    relatedTags: ['career', 'learning']
+  }
+}
+
+/**
+ * Get content by tag with smart inference
  * @param tagSlug - Tag slug
  * @param locale - Locale to use ('fa' | 'en'), defaults to 'fa'
  * @returns Object containing all content with this tag
@@ -149,17 +225,63 @@ export function getContentByTag(tagSlug: string, locale: 'fa' | 'en' = 'fa'): {
   books: Book[]
   writers: Writer[]
   categories: Category[]
+  videos: Video[]
 } {
   const allSkills = getAllSkills(locale)
   const allBooks = getAllBooks(locale)
   const allWriters = getAllWriters(locale)
   const allCategories = getAllCategories(locale)
+  const allVideos = getAllVideos(locale)
+  
+  // Get explicit tags first
+  const explicitSkills = allSkills.filter((skill) => skill.tags?.includes(tagSlug))
+  const explicitBooks = allBooks.filter((book) => book.tags?.includes(tagSlug))
+  const explicitWriters = allWriters.filter((writer) => writer.tags?.includes(tagSlug))
+  const explicitCategories = allCategories.filter((category) => category.tags?.includes(tagSlug))
+  const explicitVideos = allVideos.filter((video) => video.tags?.includes(tagSlug))
+  
+  // Get inferred content from mapping
+  const mapping = TAG_TO_MODEL_MAPPING[tagSlug] || {}
+  const inferredSkills = mapping.skillIds 
+    ? allSkills.filter((skill) => mapping.skillIds!.includes(skill.id))
+    : []
+  const inferredBooks = mapping.bookTitles
+    ? allBooks.filter((book) => mapping.bookTitles!.includes(book.title))
+    : []
+  const inferredWriters = mapping.writerSlugs
+    ? allWriters.filter((writer) => mapping.writerSlugs!.includes(writer.slug))
+    : []
+  const inferredCategories = mapping.categoryIds
+    ? allCategories.filter((category) => mapping.categoryIds!.includes(category.id))
+    : []
+  
+  // Also check related tags for videos (videos already have tags assigned)
+  const relatedTagVideos = mapping.relatedTags
+    ? allVideos.filter((video) => 
+        video.tags && mapping.relatedTags!.some(relatedTag => video.tags!.includes(relatedTag))
+      )
+    : []
+  
+  // Combine explicit and inferred, removing duplicates
+  const combineUnique = <T>(arr1: T[], arr2: T[], keyFn: (item: T) => any): T[] => {
+    const seen = new Set()
+    const result: T[] = []
+    for (const item of [...arr1, ...arr2]) {
+      const key = keyFn(item)
+      if (!seen.has(key)) {
+        seen.add(key)
+        result.push(item)
+      }
+    }
+    return result
+  }
   
   return {
-    skills: allSkills.filter((skill) => skill.tags?.includes(tagSlug)),
-    books: allBooks.filter((book) => book.tags?.includes(tagSlug)),
-    writers: allWriters.filter((writer) => writer.tags?.includes(tagSlug)),
-    categories: allCategories.filter((category) => category.tags?.includes(tagSlug))
+    skills: combineUnique(explicitSkills, inferredSkills, (s) => s.id),
+    books: combineUnique(explicitBooks, inferredBooks, (b) => `${b.title}-${b.author}`),
+    writers: combineUnique(explicitWriters, inferredWriters, (w) => w.slug),
+    categories: combineUnique(explicitCategories, inferredCategories, (c) => c.id),
+    videos: combineUnique(explicitVideos, relatedTagVideos, (v) => v.id)
   }
 }
 
@@ -207,6 +329,6 @@ export function getTagsForPlaylist(playlistId: string, locale: 'fa' | 'en' = 'fa
  */
 export function getTagCount(tagSlug: string, locale: 'fa' | 'en' = 'fa'): number {
   const content = getContentByTag(tagSlug, locale)
-  return content.skills.length + content.books.length + content.writers.length + content.categories.length
+  return content.skills.length + content.books.length + content.writers.length + content.categories.length + content.videos.length
 }
 

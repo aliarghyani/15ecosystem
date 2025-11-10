@@ -421,8 +421,9 @@ export function generatePlaylistSlug(playlist: Playlist, locale: 'fa' | 'en'): s
 ## Future Enhancements
 
 1. **Dynamic Fetching:**
-   - YouTube Data API integration
+   - YouTube Data API integration (see [YouTube API Integration Plan](./youtube-api-integration-plan.md))
    - Real-time video metadata
+   - Automated video link and statistics fetching
 
 2. **Video Analytics:**
    - View tracking

@@ -51,6 +51,22 @@
         </div>
       </div>
 
+      <!-- Videos Section -->
+      <div v-if="content.videos.length > 0">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+          {{ $t('tags.videos') }} ({{ content.videos.length }})
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          <VideoCard
+            v-for="video in content.videos"
+            :key="video.id"
+            :video="video"
+            :show-description="true"
+            variant="default"
+          />
+        </div>
+      </div>
+
       <!-- Books Section -->
       <div v-if="content.books.length > 0">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
@@ -143,6 +159,7 @@ import TagBadge from '~/components/tags/TagBadge.vue'
 import SkillCard from '~/components/skills/SkillCard.vue'
 import BookCard from '~/components/books/BookCard.vue'
 import WriterCard from '~/components/writers/WriterCard.vue'
+import VideoCard from '~/components/videos/VideoCard.vue'
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
 import type { Tag } from '~/types'
 
@@ -164,14 +181,15 @@ const content = ref({
   skills: [] as any[],
   books: [] as any[],
   writers: [] as any[],
-  categories: [] as any[]
+  categories: [] as any[],
+  videos: [] as any[]
 })
 
 // Load data when route changes
 watch([slug, locale], () => {
   if (!slug.value) {
     tag.value = undefined
-    content.value = { skills: [], books: [], writers: [], categories: [] }
+    content.value = { skills: [], books: [], writers: [], categories: [], videos: [] }
     return
   }
   
@@ -182,12 +200,12 @@ watch([slug, locale], () => {
     if (tag.value) {
       content.value = getContentByTag(tag.value.slug, currentLocale)
     } else {
-      content.value = { skills: [], books: [], writers: [], categories: [] }
+      content.value = { skills: [], books: [], writers: [], categories: [], videos: [] }
     }
   } catch (error) {
     console.error('Error loading tag:', error)
     tag.value = undefined
-    content.value = { skills: [], books: [], writers: [], categories: [] }
+    content.value = { skills: [], books: [], writers: [], categories: [], videos: [] }
   }
 }, { immediate: true })
 
@@ -199,7 +217,7 @@ const tagName = computed(() => {
 
 // Calculate total content count
 const totalContentCount = computed(() => {
-  return content.value.skills.length + content.value.books.length + content.value.writers.length + content.value.categories.length
+  return content.value.skills.length + content.value.books.length + content.value.writers.length + content.value.categories.length + content.value.videos.length
 })
 
 // Navigate to category
