@@ -110,6 +110,9 @@ export interface Video {
   channelName: string // Channel name
 }
 
+// Export transcript types
+export type { VideoTranscript, TranscriptMetadata } from './transcripts'
+
 export interface Playlist {
   id: string // Unique playlist identifier (YouTube playlist ID)
   youtubeId: string // YouTube playlist ID
