@@ -93,7 +93,7 @@
 
     <!-- Navigation -->
     <div class="flex justify-center mt-12">
-      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-heroicons-home">
+      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-twemoji-house">
         {{ $t('category.backToHome') }}
       </UButton>
     </div>
@@ -118,11 +118,11 @@ const breadcrumbItems = computed(() => {
     {
       label: t('breadcrumb.home'),
       to: '/',
-      icon: 'i-heroicons-home'
+      icon: 'i-twemoji-house'
     },
     {
       label: t('writers.title'),
-      icon: 'i-heroicons-user-group'
+      icon: 'i-twemoji-busts-in-silhouette'
       // to omitted for current page
     }
   ]

@@ -43,7 +43,7 @@
 
     <!-- Navigation -->
     <div class="flex justify-center mt-12">
-      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-heroicons-home">
+      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-twemoji-house">
         {{ $t('category.backToHome') }}
       </UButton>
     </div>

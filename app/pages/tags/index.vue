@@ -18,7 +18,7 @@
       <UInput
         v-model="searchQuery"
         :placeholder="$t('tags.searchPlaceholder')"
-        icon="i-heroicons-magnifying-glass"
+        icon="i-twemoji-magnifying-glass-tilted-left"
         size="lg"
         class="max-w-md mx-auto"
       />
@@ -66,7 +66,7 @@
 
     <!-- Navigation -->
     <div class="flex justify-center mt-12">
-      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-heroicons-home">
+      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-twemoji-house">
         {{ $t('category.backToHome') }}
       </UButton>
     </div>
@@ -92,11 +92,11 @@ const breadcrumbItems = computed(() => {
     {
       label: t('breadcrumb.home'),
       to: '/',
-      icon: 'i-heroicons-home'
+      icon: 'i-twemoji-house'
     },
     {
       label: t('tags.title'),
-      icon: 'i-heroicons-tag'
+      icon: 'i-twemoji-label'
       // to omitted for current page
     }
   ]

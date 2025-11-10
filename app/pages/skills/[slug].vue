@@ -102,7 +102,7 @@
                 <span>{{ locale === 'fa' ? 'مهارت‌های فعال شده' : 'Enabled Skills' }}</span>
               </div>
               <div class="flex items-center gap-2">
-                <UIcon name="i-heroicons-map" class="w-4 h-4" />
+                <UIcon name="i-twemoji-world-map" class="w-4 h-4" />
                 <span>{{ locale === 'fa' ? 'نقشه کلی: نمای کلی از تمام روابط' : 'Minimap: Overview of all relationships' }}</span>
               </div>
             </div>
@@ -243,14 +243,14 @@ const breadcrumbItems = computed(() => {
     {
       label: t('breadcrumb.home'),
       to: '/',
-      icon: 'i-heroicons-home'
+      icon: 'i-twemoji-house'
     }
   ]
   
   items.push({
     label: t('breadcrumb.categories'),
     to: '/categories',
-    icon: 'i-heroicons-squares-2x2'
+    icon: 'i-twemoji-grid'
   })
   
   if (category.value) {

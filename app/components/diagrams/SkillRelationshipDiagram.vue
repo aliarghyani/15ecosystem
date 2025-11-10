@@ -88,7 +88,7 @@
             <div class="flex items-center gap-2">
               <div class="h-px w-16 bg-gradient-to-r from-transparent via-primary-400 to-transparent dark:via-primary-500"></div>
               <UIcon
-                name="i-heroicons-arrow-down"
+                name="i-twemoji-down-arrow"
                 class="text-2xl text-primary-500 dark:text-primary-400"
               />
               <div class="h-px w-16 bg-gradient-to-r from-transparent via-primary-400 to-transparent dark:via-primary-500"></div>

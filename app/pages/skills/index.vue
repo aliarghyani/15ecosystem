@@ -111,11 +111,11 @@ const breadcrumbItems = computed(() => {
     {
       label: t('breadcrumb.home'),
       to: '/',
-      icon: 'i-heroicons-home'
+      icon: 'i-twemoji-house'
     },
     {
       label: t('breadcrumb.skills'),
-      icon: 'i-heroicons-academic-cap'
+      icon: 'i-twemoji-graduation-cap'
       // to omitted for current page
     }
   ]

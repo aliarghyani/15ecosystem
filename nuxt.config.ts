@@ -117,6 +117,16 @@ export default defineNuxtConfig({
       xl: 1280,
       '2xl': 1536,
     },
+    // Enable lazy loading by default
+    loading: 'lazy',
+    // Optimize for performance
+    densities: [1, 2],
+    // Provider configuration
+    providers: {
+      default: {
+        provider: 'ipx',
+      },
+    },
   },
 
   // TypeScript Configuration
@@ -168,5 +178,16 @@ export default defineNuxtConfig({
         },
       ],
     },
+  },
+
+  // Performance optimizations
+  experimental: {
+    payloadExtraction: false, // Reduce payload size
+  },
+
+  // Route rules for caching
+  routeRules: {
+    '/': { prerender: true, headers: { 'Cache-Control': 's-maxage=3600' } },
+    '/**': { prerender: true, headers: { 'Cache-Control': 's-maxage=3600' } },
   },
 })

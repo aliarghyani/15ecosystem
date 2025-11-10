@@ -49,7 +49,7 @@
               <div class="flex items-center gap-1.5">
                 <UTooltip :text="$t('nav.books')">
                   <UButton class="cursor-pointer" :class="[isActive('books') ? activeClass : inactiveClass]"
-                    variant="soft" square icon="i-heroicons-book-open" :aria-label="$t('nav.books')"
+                    variant="soft" square icon="i-twemoji-open-book" :aria-label="$t('nav.books')"
                     @click="goTo('books')" />
                 </UTooltip>
                 <button type="button" class="text-sm font-medium transition-colors"
@@ -62,7 +62,7 @@
               <div class="flex items-center gap-1.5">
                 <UTooltip :text="$t('nav.writers')">
                   <UButton class="cursor-pointer" :class="[isActive('writers') ? activeClass : inactiveClass]"
-                    variant="soft" square icon="i-heroicons-user-group" :aria-label="$t('nav.writers')"
+                    variant="soft" square icon="i-twemoji-busts-in-silhouette" :aria-label="$t('nav.writers')"
                     @click="goTo('writers')" />
                 </UTooltip>
                 <button type="button" class="text-sm font-medium transition-colors"
@@ -75,7 +75,7 @@
               <div class="flex items-center gap-1.5">
                 <UTooltip :text="$t('nav.transcript')">
                   <UButton class="cursor-pointer" :class="[isActive('transcript') ? activeClass : inactiveClass]"
-                    variant="soft" square icon="i-heroicons-document-text" :aria-label="$t('nav.transcript')"
+                    variant="soft" square icon="i-twemoji-scroll" :aria-label="$t('nav.transcript')"
                     @click="goTo('transcript')" />
                 </UTooltip>
                 <button type="button" class="text-sm font-medium transition-colors"
@@ -88,7 +88,7 @@
               <div class="flex items-center gap-1.5">
                 <UTooltip :text="$t('nav.summary')">
                   <UButton class="cursor-pointer" :class="[isActive('summary') ? activeClass : inactiveClass]"
-                    variant="soft" square icon="i-heroicons-clipboard-document-list" :aria-label="$t('nav.summary')"
+                    variant="soft" square icon="i-twemoji-clipboard" :aria-label="$t('nav.summary')"
                     @click="goTo('summary')" />
                 </UTooltip>
                 <button type="button" class="text-sm font-medium transition-colors"
@@ -109,7 +109,7 @@
             <div class="flex items-center gap-2">
               <!-- Hamburger Menu Button -->
               <UButton
-                :icon="isMobileMenuOpen ? 'i-heroicons-x-mark' : 'i-heroicons-bars-3'"
+                :icon="isMobileMenuOpen ? 'i-twemoji-cross-mark' : 'i-twemoji-hamburger'"
                 variant="soft"
                 square
                 :aria-label="isMobileMenuOpen ? $t('nav.closeMenu') : $t('nav.openMenu')"
@@ -167,7 +167,7 @@
                   :class="[isActive('books') ? activeClass : inactiveClass]"
                   variant="soft"
                   block
-                  :icon="'i-heroicons-book-open'"
+                  :icon="'i-twemoji-open-book'"
                   @click="goTo('books'); closeMobileMenu()"
                 >
                   {{ $t('nav.books') }}
@@ -176,7 +176,7 @@
                   :class="[isActive('writers') ? activeClass : inactiveClass]"
                   variant="soft"
                   block
-                  :icon="'i-heroicons-user-group'"
+                  :icon="'i-twemoji-busts-in-silhouette'"
                   @click="goTo('writers'); closeMobileMenu()"
                 >
                   {{ $t('nav.writers') }}
@@ -185,7 +185,7 @@
                   :class="[isActive('transcript') ? activeClass : inactiveClass]"
                   variant="soft"
                   block
-                  :icon="'i-heroicons-document-text'"
+                  :icon="'i-twemoji-scroll'"
                   @click="goTo('transcript'); closeMobileMenu()"
                 >
                   {{ $t('nav.transcript') }}
@@ -194,7 +194,7 @@
                   :class="[isActive('summary') ? activeClass : inactiveClass]"
                   variant="soft"
                   block
-                  :icon="'i-heroicons-clipboard-document-list'"
+                  :icon="'i-twemoji-clipboard'"
                   @click="goTo('summary'); closeMobileMenu()"
                 >
                   {{ $t('nav.summary') }}

@@ -84,7 +84,7 @@
         :to="localePath('/')"
         variant="soft"
         color="primary"
-        icon="i-heroicons-home"
+        icon="i-twemoji-house"
       >
         {{ $t('category.backToHome') }}
       </UButton>
@@ -92,7 +92,7 @@
         :to="localePath('/categories')"
         variant="outline"
         color="primary"
-        icon="i-heroicons-squares-2x2"
+        icon="i-twemoji-grid"
       >
         {{ $t('category.viewAllCategories') }}
       </UButton>
@@ -158,14 +158,14 @@ const breadcrumbItems = computed(() => {
     {
       label: t('breadcrumb.home'),
       to: '/',
-      icon: 'i-heroicons-home'
+      icon: 'i-twemoji-house'
     }
   ]
   
   items.push({
     label: t('breadcrumb.categories'),
     to: '/categories',
-    icon: 'i-heroicons-squares-2x2'
+    icon: 'i-twemoji-grid'
   })
   
   if (category.value) {

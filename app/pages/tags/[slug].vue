@@ -2,7 +2,7 @@
   <!-- Loading State -->
   <div v-if="!tag && slug" class="max-w-4xl mx-auto pt-24 px-4 pb-16 text-center">
     <div class="py-12">
-      <UIcon name="i-heroicons-arrow-path" class="w-12 h-12 text-primary-500 animate-spin mx-auto mb-4" />
+      <UIcon name="i-twemoji-arrows-counterclockwise" class="w-12 h-12 text-primary-500 animate-spin mx-auto mb-4" />
       <p class="text-gray-600 dark:text-gray-400">Loading tag...</p>
     </div>
   </div>
@@ -112,10 +112,10 @@
 
     <!-- Navigation -->
     <div class="flex justify-center gap-4 mt-12">
-      <UButton :to="localePath('/tags')" variant="soft" color="primary" icon="i-heroicons-arrow-left">
+      <UButton :to="localePath('/tags')" variant="soft" color="primary" icon="i-twemoji-left-arrow">
         {{ $t('tags.backToTags') }}
       </UButton>
-      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-heroicons-home">
+      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-twemoji-house">
         {{ $t('category.backToHome') }}
       </UButton>
     </div>
@@ -239,12 +239,12 @@ const breadcrumbItems = computed(() => {
     {
       label: t('breadcrumb.home'),
       to: '/',
-      icon: 'i-heroicons-home'
+      icon: 'i-twemoji-house'
     },
     {
       label: t('tags.title'),
       to: '/tags',
-      icon: 'i-heroicons-tag'
+      icon: 'i-twemoji-label'
     }
   ]
   

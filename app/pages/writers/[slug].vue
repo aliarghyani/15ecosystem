@@ -2,7 +2,7 @@
   <!-- Loading State -->
   <div v-if="!writer && slug" class="max-w-4xl mx-auto pt-24 px-4 pb-16 text-center">
     <div class="py-12">
-      <UIcon name="i-heroicons-arrow-path" class="w-12 h-12 text-primary-500 animate-spin mx-auto mb-4" />
+      <UIcon name="i-twemoji-arrows-counterclockwise" class="w-12 h-12 text-primary-500 animate-spin mx-auto mb-4" />
       <p class="text-gray-600 dark:text-gray-400">Loading writer...</p>
       <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">Slug: {{ slug }}</p>
     </div>
@@ -21,13 +21,13 @@
             v-if="writer.photo"
             class="w-32 h-32 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center overflow-hidden shadow-lg"
           >
-            <img :src="writer.photo" :alt="writer.name" class="w-full h-full object-cover" />
+            <NuxtImg :src="writer.photo" :alt="writer.name" class="w-full h-full object-cover" loading="lazy" />
           </div>
           <div
             v-else
             class="w-32 h-32 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg"
           >
-            <UIcon name="i-heroicons-user" class="text-white text-5xl" />
+            <UIcon name="i-twemoji-bust-in-silhouette" class="text-white text-5xl" />
           </div>
         </div>
         <div class="flex-1">
@@ -99,7 +99,7 @@
           rel="noopener noreferrer"
           color="red"
           variant="soft"
-          icon="i-heroicons-play"
+          icon="i-twemoji-play-button"
         >
           YouTube
         </UButton>
@@ -110,7 +110,7 @@
           rel="noopener noreferrer"
           color="primary"
           variant="soft"
-          icon="i-heroicons-globe-alt"
+          icon="i-twemoji-globe-showing-americas"
         >
           {{ $t('writers.website') }}
         </UButton>
@@ -156,7 +156,7 @@
             rel="noopener noreferrer"
             color="neutral"
             variant="soft"
-            icon="i-heroicons-link"
+            icon="i-twemoji-link"
           >
             {{ link.label }}
           </UButton>
@@ -199,10 +199,10 @@
 
     <!-- Navigation -->
     <div class="flex justify-center gap-4 mt-12">
-      <UButton :to="localePath('/writers')" variant="soft" color="primary" icon="i-heroicons-arrow-left">
+      <UButton :to="localePath('/writers')" variant="soft" color="primary" icon="i-twemoji-left-arrow">
         {{ $t('writers.backToWriters') }}
       </UButton>
-      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-heroicons-home">
+      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-twemoji-house">
         {{ $t('category.backToHome') }}
       </UButton>
     </div>
@@ -302,12 +302,12 @@ const breadcrumbItems = computed(() => {
     {
       label: t('breadcrumb.home'),
       to: '/',
-      icon: 'i-heroicons-home'
+      icon: 'i-twemoji-house'
     },
     {
       label: t('writers.title'),
       to: '/writers',
-      icon: 'i-heroicons-user-group'
+      icon: 'i-twemoji-busts-in-silhouette'
     }
   ]
   

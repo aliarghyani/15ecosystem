@@ -91,8 +91,8 @@ So that I have an excellent experience everywhere.
 - [x] Task 4: Optimize typography for mobile readability
 - [x] Task 5: Add smooth animations and transitions
 - [x] Task 6: Polish modern design elements (shadows, glassmorphism, spacing)
-- [ ] Task 7: Test and fix accessibility issues
-- [ ] Task 8: Optimize images and implement lazy loading
+- [x] Task 7: Test and fix accessibility issues
+- [x] Task 8: Optimize images and implement lazy loading
 - [ ] Task 9: Run Lighthouse audit and optimize performance
 - [ ] Task 10: Test on real mobile devices
 

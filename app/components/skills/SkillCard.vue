@@ -22,7 +22,7 @@
             {{ skill.id }}
           </span>
           <UIcon
-            name="i-heroicons-arrow-left"
+            name="i-twemoji-left-arrow"
             :class="[
               'text-gray-400 dark:text-gray-500 transition-transform text-sm',
               locale === 'fa' ? 'rotate-180' : ''

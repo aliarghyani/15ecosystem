@@ -36,7 +36,7 @@
           size="lg"
           color="primary"
           variant="solid"
-          icon="i-heroicons-squares-2x2"
+          icon="i-twemoji-grid"
           class="min-h-[44px] w-full sm:w-auto"
         >
           {{ $t('home.exploreCategories') }}
@@ -46,7 +46,7 @@
           size="lg"
           color="primary"
           variant="outline"
-          icon="i-heroicons-academic-cap"
+          icon="i-twemoji-graduation-cap"
           class="min-h-[44px] w-full sm:w-auto"
         >
           {{ $t('home.viewAllSkills') }}

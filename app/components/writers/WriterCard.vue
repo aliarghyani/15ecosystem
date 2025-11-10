@@ -18,13 +18,13 @@
               v-if="writer.photo"
               class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center overflow-hidden"
             >
-              <img :src="writer.photo" :alt="writer.name" class="w-full h-full object-cover" />
+              <NuxtImg :src="writer.photo" :alt="writer.name" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <div
               v-else
               class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center"
             >
-              <UIcon name="i-heroicons-user" class="text-white text-2xl" />
+              <UIcon name="i-twemoji-bust-in-silhouette" class="text-white text-2xl" />
             </div>
           </div>
           <div class="flex-1 min-w-0">
@@ -45,7 +45,7 @@
         <!-- Books Count and Skills -->
         <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-200 dark:border-gray-700">
           <div v-if="showBooksCount" class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-            <UIcon name="i-heroicons-book-open" class="w-4 h-4" />
+            <UIcon name="i-twemoji-open-book" class="w-4 h-4" />
             <span>{{ writer.books.length }} {{ writer.books.length === 1 ? (locale === 'fa' ? 'کتاب' : 'book') : (locale === 'fa' ? 'کتاب' : 'books') }}</span>
           </div>
           <div v-if="showSkills && writer.skillIds.length > 0" class="flex flex-wrap gap-1">
@@ -92,7 +92,7 @@
             v-else
             class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center"
           >
-            <UIcon name="i-heroicons-user" class="text-white text-2xl" />
+            <UIcon name="i-twemoji-bust-in-silhouette" class="text-white text-2xl" />
           </div>
         </div>
         <div class="flex-1 min-w-0">
@@ -113,7 +113,7 @@
       <!-- Books Count and Skills -->
       <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-200 dark:border-gray-700">
         <div v-if="showBooksCount" class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-          <UIcon name="i-heroicons-book-open" class="w-4 h-4" />
+          <UIcon name="i-twemoji-open-book" class="w-4 h-4" />
           <span>{{ writer.books.length }} {{ writer.books.length === 1 ? (locale === 'fa' ? 'کتاب' : 'book') : (locale === 'fa' ? 'کتاب' : 'books') }}</span>
         </div>
         <div v-if="showSkills && writer.skillIds.length > 0" class="flex flex-wrap gap-1">

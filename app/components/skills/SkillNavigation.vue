@@ -8,7 +8,7 @@
         :to="localePath(`/skills/${previousSkill.id}`)"
         variant="soft"
         color="primary"
-        :icon="locale === 'fa' ? 'i-heroicons-arrow-right' : 'i-heroicons-arrow-left'"
+        :icon="locale === 'fa' ? 'i-twemoji-right-arrow' : 'i-twemoji-left-arrow'"
         :icon-position="locale === 'fa' ? 'right' : 'left'"
         class="flex-1 sm:flex-initial min-h-[44px]"
       >
@@ -23,7 +23,7 @@
         :to="localePath(`/categories/${categoryId}`)"
         variant="outline"
         color="primary"
-        icon="i-heroicons-arrow-up"
+        icon="i-twemoji-up-arrow"
         class="flex-1 sm:flex-initial min-h-[44px]"
       >
         {{ $t('skills.backToCategory') }}
@@ -35,7 +35,7 @@
         :to="localePath(`/skills/${nextSkill.id}`)"
         variant="soft"
         color="primary"
-        :icon="locale === 'fa' ? 'i-heroicons-arrow-left' : 'i-heroicons-arrow-right'"
+        :icon="locale === 'fa' ? 'i-twemoji-left-arrow' : 'i-twemoji-right-arrow'"
         icon-position="right"
         class="flex-1 sm:flex-initial min-h-[44px]"
       >
@@ -52,7 +52,7 @@
         :to="localePath('/skills')"
         variant="ghost"
         color="primary"
-        icon="i-heroicons-list-bullet"
+        icon="i-twemoji-clipboard"
         size="sm"
         class="min-h-[44px]"
       >

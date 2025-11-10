@@ -54,7 +54,7 @@
         :to="localePath('/')"
         variant="outline"
         color="primary"
-        icon="i-heroicons-home"
+        icon="i-twemoji-house"
       >
         {{ $t('category.backToHome') }}
       </UButton>
@@ -75,11 +75,11 @@ const breadcrumbItems = computed(() => {
     {
       label: t('breadcrumb.home'),
       to: '/',
-      icon: 'i-heroicons-home'
+      icon: 'i-twemoji-house'
     },
     {
       label: t('breadcrumb.categories'),
-      icon: 'i-heroicons-squares-2x2'
+      icon: 'i-twemoji-grid'
       // to omitted for current page
     }
   ]

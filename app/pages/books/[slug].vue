@@ -2,7 +2,7 @@
   <!-- Loading State -->
   <div v-if="!book && slug" class="max-w-4xl mx-auto pt-24 px-4 pb-16 text-center">
     <div class="py-12">
-      <UIcon name="i-heroicons-arrow-path" class="w-12 h-12 text-primary-500 animate-spin mx-auto mb-4" />
+      <UIcon name="i-twemoji-arrows-counterclockwise" class="w-12 h-12 text-primary-500 animate-spin mx-auto mb-4" />
       <p class="text-gray-600 dark:text-gray-400">Loading book...</p>
       <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">Slug: {{ slug }}</p>
     </div>
@@ -18,7 +18,7 @@
       <div class="flex items-start gap-6 mb-6">
         <div class="flex-shrink-0">
           <div class="w-24 h-24 rounded-xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center shadow-lg">
-            <UIcon name="i-heroicons-book-open" class="text-primary-600 dark:text-primary-400 text-4xl" />
+            <UIcon name="i-twemoji-open-book" class="text-primary-600 dark:text-primary-400 text-4xl" />
           </div>
         </div>
         <div class="flex-1">
@@ -70,10 +70,10 @@
 
     <!-- Navigation -->
     <div class="flex justify-center gap-4 mt-12">
-      <UButton :to="localePath('/books')" variant="soft" color="primary" icon="i-heroicons-arrow-left">
+      <UButton :to="localePath('/books')" variant="soft" color="primary" icon="i-twemoji-left-arrow">
         {{ $t('books.backToBooks') }}
       </UButton>
-      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-heroicons-home">
+      <UButton :to="localePath('/')" variant="soft" color="primary" icon="i-twemoji-house">
         {{ $t('category.backToHome') }}
       </UButton>
     </div>
@@ -169,12 +169,12 @@ const breadcrumbItems = computed(() => {
     {
       label: t('breadcrumb.home'),
       to: '/',
-      icon: 'i-heroicons-home'
+      icon: 'i-twemoji-house'
     },
     {
       label: t('books.title'),
       to: '/books',
-      icon: 'i-heroicons-book-open'
+      icon: 'i-twemoji-open-book'
     }
   ]
   
