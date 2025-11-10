@@ -1,10 +1,8 @@
 <template>
-  <a
-    :href="video.youtubeUrl"
-    target="_blank"
-    rel="noopener noreferrer"
+  <NuxtLink
+    :to="videoDetailUrl"
     class="block no-underline h-full"
-    :aria-label="`${$t('videos.watchVideo')}: ${video.title[locale] || video.title.fa}`"
+    :aria-label="`${$t('videos.viewVideoDetails')}: ${video.title[locale] || video.title.fa}`"
   >
     <UCard
       :class="[
@@ -69,12 +67,13 @@
         {{ formatViewCount(video.viewCount) }} {{ $t('videos.views') }}
       </div>
     </UCard>
-  </a>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
 import type { Video } from '~/types'
 import { getSkillById } from '~/utils/skills'
+import { generateVideoSlug } from '~/utils/videos'
 
 interface Props {
   video: Video
@@ -88,6 +87,13 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const { locale, t } = useI18n()
+const localePath = useLocalePath()
+
+// Generate video detail page URL
+const videoDetailUrl = computed(() => {
+  const slug = generateVideoSlug(props.video, locale.value as 'fa' | 'en')
+  return localePath(`/videos/${slug}`)
+})
 
 // Get skill label for badge
 const getSkillLabel = (skillId: number): string => {

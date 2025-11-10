@@ -13,9 +13,10 @@
       </p>
     </div>
 
-    <!-- Filter by Skill (if query param present) -->
-    <div v-if="skillFilter" class="mb-8">
-      <UCard class="dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm">
+    <!-- Filter Indicators -->
+    <div v-if="skillFilter || writerFilter || bookFilter" class="mb-8 space-y-4">
+      <!-- Filter by Skill -->
+      <UCard v-if="skillFilter" class="dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
@@ -23,6 +24,54 @@
             </p>
             <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">
               {{ getSkillLabel(skillFilter) }}
+            </p>
+          </div>
+          <UButton
+            :to="localePath('/videos')"
+            variant="ghost"
+            color="primary"
+            size="sm"
+            icon="i-twemoji-cross-mark"
+            class="min-h-[44px]"
+          >
+            {{ $t('common.clearFilter') || 'Clear Filter' }}
+          </UButton>
+        </div>
+      </UCard>
+
+      <!-- Filter by Writer -->
+      <UCard v-if="writerFilter" class="dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+              {{ $t('videos.filteredByWriter') || 'Filtered by Writer' }}
+            </p>
+            <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              {{ getWriterLabel(writerFilter) }}
+            </p>
+          </div>
+          <UButton
+            :to="localePath('/videos')"
+            variant="ghost"
+            color="primary"
+            size="sm"
+            icon="i-twemoji-cross-mark"
+            class="min-h-[44px]"
+          >
+            {{ $t('common.clearFilter') || 'Clear Filter' }}
+          </UButton>
+        </div>
+      </UCard>
+
+      <!-- Filter by Book -->
+      <UCard v-if="bookFilter" class="dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+              {{ $t('videos.filteredByBook') || 'Filtered by Book' }}
+            </p>
+            <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              {{ getBookLabel(bookFilter) }}
             </p>
           </div>
           <UButton
@@ -134,9 +183,11 @@
 </template>
 
 <script setup lang="ts">
-import { getAllVideos, getVideosByCategoryId } from '~/utils/videos'
-import { getCategoryById, getAllCategories } from '~/utils/categories'
+import { getAllVideos } from '~/utils/videos'
+import { getCategoryById } from '~/utils/categories'
 import { getSkillById } from '~/utils/skills'
+import { getWriterBySlug } from '~/utils/writers'
+import { getBookBySlug } from '~/utils/books'
 import VideoList from '~/components/videos/VideoList.vue'
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
 
@@ -160,6 +211,30 @@ const skillFilter = computed(() => {
   return null
 })
 
+// Get writer filter from query params
+const writerFilter = computed(() => {
+  const writerSlug = route.query.writer
+  if (writerSlug && typeof writerSlug === 'string') {
+    const writer = getWriterBySlug(writerSlug, locale.value as 'fa' | 'en')
+    if (writer) {
+      return writerSlug
+    }
+  }
+  return null
+})
+
+// Get book filter from query params
+const bookFilter = computed(() => {
+  const bookSlug = route.query.book
+  if (bookSlug && typeof bookSlug === 'string') {
+    const book = getBookBySlug(bookSlug, locale.value as 'fa' | 'en')
+    if (book) {
+      return bookSlug
+    }
+  }
+  return null
+})
+
 // Get all videos
 const allVideos = computed(() => {
   let videos = getAllVideos(locale.value as 'fa' | 'en')
@@ -167,6 +242,18 @@ const allVideos = computed(() => {
   // Filter by skill if query param present
   if (skillFilter.value) {
     videos = videos.filter((video) => video.skillIds.includes(skillFilter.value!))
+  }
+  
+  // Filter by writer if query param present
+  if (writerFilter.value) {
+    videos = videos.filter((video) => video.writerId === writerFilter.value)
+  }
+  
+  // Filter by book if query param present
+  if (bookFilter.value) {
+    videos = videos.filter((video) => 
+      video.bookIds && video.bookIds.includes(bookFilter.value!)
+    )
   }
   
   return videos
@@ -203,6 +290,24 @@ function getSkillLabel(skillId: number): string {
     return locale.value === 'fa' ? skill.name.fa : skill.name.en
   }
   return locale.value === 'fa' ? `مهارت ${skillId}` : `Skill ${skillId}`
+}
+
+// Get writer label
+function getWriterLabel(writerSlug: string): string {
+  const writer = getWriterBySlug(writerSlug, locale.value as 'fa' | 'en')
+  if (writer) {
+    return writer.name
+  }
+  return writerSlug
+}
+
+// Get book label
+function getBookLabel(bookSlug: string): string {
+  const book = getBookBySlug(bookSlug, locale.value as 'fa' | 'en')
+  if (book) {
+    return book.title
+  }
+  return bookSlug
 }
 
 // Breadcrumb items
