@@ -1,0 +1,199 @@
+{
+  "enrichedAt": "2025-11-10T19:25:14.783Z",
+  "totalVideos": 74,
+  "statistics": {
+    "videosWithSkills": 40,
+    "videosWithoutSkills": 34,
+    "videosWithWriters": 17,
+    "skillDistribution": {
+      "1": 4,
+      "2": 5,
+      "3": 6,
+      "4": 1,
+      "5": 3,
+      "6": 13,
+      "7": 1,
+      "8": 4,
+      "9": 4,
+      "14": 1,
+      "15": 1
+    },
+    "categoryDistribution": {
+      "health": 30,
+      "identity": 9,
+      "career": 2
+    }
+  },
+  "videosNeedingManualReview": [
+    {
+      "id": "vC2RSE8fN8k",
+      "title": "چطور قدرت اراده خودمان را قوی‌تر کنیم؟",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "60W-ZcbNQVE",
+      "title": "چطور وزن‌مان را کاهش دهیم؟",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "LhnFtaBF0eE",
+      "title": "مصاحبه گاگینز و هیوبرمن (ترجمه و تحلیل)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "NMZaK9q6Eyk",
+      "title": "چرا باید مدیتیشن کنیم؟",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "hz_24We_Tyg",
+      "title": "همه چیز درباره مجیک ماشروم",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "DxspXvNM5B4",
+      "title": "ساختن عادت‌های خوب، شکستن عادت‌های بد",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "RJMyHmmWx7I",
+      "title": "راز پوست جوان و شفاف",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "RhZ_JWlr0nE",
+      "title": "با خودت بازی نکن!",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "WXBuHJdr2sE",
+      "title": "چطور عضله‌سازی کنیم؟",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "6cmx1YybQAY",
+      "title": "هورمون‌های مردانه‌ات را نابود نکن!",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "g_QRTG4_F2s",
+      "title": "ماری‌جوانا (گُل) را بهتر بشناسید (خلاصه و ترجمه Andrew Huberman)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "v5uXT5QB1-c",
+      "title": "چطور نفس بکشیم که مغز و بدن‌مان درست کار کند؟ (ترجمه Andrew Huberman)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "nk6bL_PEHws",
+      "title": "نیکوتین، سیگار و ویپ را بهتر بشناسید!",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "OD9u3Ng8_W4",
+      "title": "فَستینگ چیست و چطور انجام دهیم؟ (ترجمه دکتر Andrew Huberman)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "Nx_oWVaHFdo",
+      "title": "چطور مسیر اصلی شغلی‌مان را پیدا کنیم؟ (ترجمه فارسی GaryVee)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "ogH8D95Y9b4",
+      "title": "نظرم در مورد رقابت کردن عوض شد! (خلاصه کتاب Zero to One)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "r7yR4xmPP9s",
+      "title": "چطور بدون شانس ثروتمند شویم؟ (ترجمه Naval Ravikant)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "DxgN7BM_J-A",
+      "title": "بهترین راه استفاده از پول چیست؟ (ترجمه و خلاصه کتاب psychology of money)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "r7yR4xmPP9s",
+      "title": "چطور بدون شانس ثروتمند شویم؟ (ترجمه Naval Ravikant)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "OD9u3Ng8_W4",
+      "title": "فَستینگ چیست و چطور انجام دهیم؟ (ترجمه دکتر Andrew Huberman)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "WXBuHJdr2sE",
+      "title": "چطور عضله‌سازی کنیم؟",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "60W-ZcbNQVE",
+      "title": "چطور وزن‌مان را کاهش دهیم؟",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "bNnUgAr_Vt8",
+      "title": "چطور انرژی را به مغز و بدن‌مان برگردانیم؟ (ترجمه دکتر Christopher Palmer)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "zgvxbiydhHc",
+      "title": "موثرترین رژیم غذایی برای کاهش وزن و عضله‌سازی! (ترجمه Alan Aragon)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "c2LK6sa6Vtw",
+      "title": "قهوه را بهتر بشناسید! (ترجمه و خلاصه دکتر Andrew Huberman)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "ZOWSm4CY2_4",
+      "title": "الکل را بهتر بشناسید ! (ترجمه و خلاصه دکتر Huberman)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "KYwhlhc2aAs",
+      "title": "چطور انرژی خود را تنظیم کنیم؟",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "Ndv-ayRNb_s",
+      "title": "چرا همیشه در برابر شبکه‌های مجازی بازنده‌ای؟",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "ZiPl-oKGOd4",
+      "title": "یاد بگیریم که چطور یاد بگیریم",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "_p4N7nnnI1A",
+      "title": "اینطوری ۸ ساعت درس رو تو۲ ساعت بخون!",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "kZo3snwmxyg",
+      "title": "مهمترین عامل خوشبختی چیست؟ (نتیجه طولانی‌ترین آزمایش دنیا)",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "susMKCYHbj4",
+      "title": "چطور کارهای‌مان را به تعویق نیاندازیم؟",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "07Uez7-tZ0c",
+      "title": "چطور به بزرگترین اهداف خود برسیم؟",
+      "playlistName": "Unknown"
+    },
+    {
+      "id": "EXfOtbd5UIQ",
+      "title": "گفتگوی هیوبرمن و استیون بارتلت (ترجمه و خلاصه)",
+      "playlistName": "Unknown"
+    }
+  ]
+}
