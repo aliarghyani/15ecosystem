@@ -101,7 +101,7 @@ development_status:
   # Epic 8: Video Transcript Data Analysis & Analytics
   epic-8: backlog
   8-1-video-transcript-data-structure-storage: done
-  8-2-text-analysis-utilities-core-functions: backlog
+  8-2-text-analysis-utilities-core-functions: done
   8-3-analysis-report-types-data-models: backlog
   8-4-report-generation-engine: backlog
   8-5-analytics-dashboard-page-structure: backlog
