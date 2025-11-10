@@ -108,6 +108,24 @@
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
               {{ $t('skills.skillRelationshipsDescription') }}
             </p>
+            <div class="mt-3 flex flex-wrap gap-4 text-xs text-gray-600 dark:text-gray-400">
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded bg-blue-200 dark:bg-blue-800 border-2 border-blue-500 dark:border-blue-400"></div>
+                <span>{{ locale === 'fa' ? 'پیش‌نیازها (مهارت‌های مورد نیاز)' : 'Prerequisites (Required Skills)' }}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded bg-amber-300 dark:bg-amber-600 border-2 border-amber-500 dark:border-amber-400"></div>
+                <span>{{ locale === 'fa' ? 'مهارت فعلی' : 'Current Skill' }}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded bg-green-200 dark:bg-green-800 border-2 border-green-500 dark:border-green-400"></div>
+                <span>{{ locale === 'fa' ? 'مهارت‌های فعال شده' : 'Enabled Skills' }}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-heroicons-map" class="w-4 h-4" />
+                <span>{{ locale === 'fa' ? 'نقشه کلی: نمای کلی از تمام روابط' : 'Minimap: Overview of all relationships' }}</span>
+              </div>
+            </div>
           </div>
         </template>
         <VueFlowDiagram

@@ -51,18 +51,18 @@ export function generateSkillRelationshipDiagram(
 
   const skillName = currentSkill.name[locale] || currentSkill.name.fa
 
-  // Layout configuration
-  const nodeWidth = 200
-  const nodeHeight = 80
-  const horizontalSpacing = 250
-  const verticalSpacing = 150
+  // Layout configuration - larger nodes for better readability
+  const nodeWidth = 280
+  const nodeHeight = 100
+  const horizontalSpacing = 320
+  const verticalSpacing = 200
 
   // Calculate positions
   let yOffset = 0
 
   // Prerequisites section (top)
   if (prerequisites.length > 0) {
-    const prerequisitesPerRow = Math.min(prerequisites.length, 4)
+    const prerequisitesPerRow = Math.min(prerequisites.length, 3) // Reduced to 3 per row for larger nodes
     const startX = -(prerequisitesPerRow - 1) * horizontalSpacing / 2
 
     prerequisites.forEach((skill, index) => {
@@ -81,11 +81,16 @@ export function generateSkillRelationshipDiagram(
         style: {
           background: '#e0f2fe',
           color: '#0c4a6e',
-          border: '2px solid #0284c7',
-          borderRadius: '8px',
-          padding: '10px',
-          fontSize: '14px',
-          fontWeight: 500,
+          border: '3px solid #0284c7',
+          borderRadius: '12px',
+          padding: '16px 20px',
+          fontSize: '16px',
+          fontWeight: 600,
+          minWidth: nodeWidth,
+          minHeight: nodeHeight,
+          textAlign: 'center',
+          whiteSpace: 'normal',
+          wordWrap: 'break-word',
         },
       })
 
@@ -93,18 +98,26 @@ export function generateSkillRelationshipDiagram(
         id: `edge-prerequisite-${skill.id}-current`,
         source: `prerequisite-${skill.id}`,
         target: 'current-skill',
-        label: locale === 'fa' ? 'فعال می‌کند' : 'enables',
+        label: locale === 'fa' ? 'پیش‌نیاز' : 'Prerequisite',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: '#0284c7', strokeWidth: 2 },
-        labelStyle: { fill: '#0284c7', fontWeight: 600 },
+        style: { stroke: '#0284c7', strokeWidth: 3 },
+        labelStyle: { 
+          fill: '#0284c7', 
+          fontWeight: 700,
+          fontSize: '14px',
+          background: '#ffffff',
+          padding: '4px 8px',
+          borderRadius: '4px',
+        },
+        labelBgStyle: { fill: '#ffffff', fillOpacity: 0.9 },
       })
     })
 
-    yOffset += Math.ceil(prerequisites.length / prerequisitesPerRow) * verticalSpacing + 100
+    yOffset += Math.ceil(prerequisites.length / prerequisitesPerRow) * verticalSpacing + 120
   }
 
-  // Current skill (center)
+  // Current skill (center) - larger and more prominent
   nodes.push({
     id: 'current-skill',
     type: 'default',
@@ -115,20 +128,23 @@ export function generateSkillRelationshipDiagram(
     style: {
       background: '#fbbf24',
       color: '#000',
-      border: '4px solid #f59e0b',
-      borderRadius: '8px',
-      padding: '15px',
-      fontSize: '16px',
-      fontWeight: 700,
-      minWidth: nodeWidth,
+      border: '5px solid #f59e0b',
+      borderRadius: '12px',
+      padding: '20px 24px',
+      fontSize: '20px',
+      fontWeight: 800,
+      minWidth: nodeWidth + 40,
+      minHeight: nodeHeight + 20,
+      textAlign: 'center',
+      boxShadow: '0 4px 12px rgba(251, 191, 36, 0.4)',
     },
   })
 
-  yOffset += verticalSpacing + 50
+  yOffset += verticalSpacing + 80
 
   // Enabled skills section (bottom)
   if (enabledSkills.length > 0) {
-    const enabledPerRow = Math.min(enabledSkills.length, 4)
+    const enabledPerRow = Math.min(enabledSkills.length, 3) // Reduced to 3 per row
     const startX = -(enabledPerRow - 1) * horizontalSpacing / 2
 
     enabledSkills.forEach((skill, index) => {
@@ -147,11 +163,16 @@ export function generateSkillRelationshipDiagram(
         style: {
           background: '#dcfce7',
           color: '#14532d',
-          border: '2px solid #16a34a',
-          borderRadius: '8px',
-          padding: '10px',
-          fontSize: '14px',
-          fontWeight: 500,
+          border: '3px solid #16a34a',
+          borderRadius: '12px',
+          padding: '16px 20px',
+          fontSize: '16px',
+          fontWeight: 600,
+          minWidth: nodeWidth,
+          minHeight: nodeHeight,
+          textAlign: 'center',
+          whiteSpace: 'normal',
+          wordWrap: 'break-word',
         },
       })
 
@@ -159,11 +180,19 @@ export function generateSkillRelationshipDiagram(
         id: `edge-current-enabled-${skill.id}`,
         source: 'current-skill',
         target: `enabled-${skill.id}`,
-        label: locale === 'fa' ? 'فعال می‌کند' : 'enables',
+        label: locale === 'fa' ? 'فعال می‌کند' : 'Enables',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: '#16a34a', strokeWidth: 2 },
-        labelStyle: { fill: '#16a34a', fontWeight: 600 },
+        style: { stroke: '#16a34a', strokeWidth: 3 },
+        labelStyle: { 
+          fill: '#16a34a', 
+          fontWeight: 700,
+          fontSize: '14px',
+          background: '#ffffff',
+          padding: '4px 8px',
+          borderRadius: '4px',
+        },
+        labelBgStyle: { fill: '#ffffff', fillOpacity: 0.9 },
       })
     })
   }
