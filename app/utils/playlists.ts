@@ -55,9 +55,20 @@ export function generatePlaylistSlug(playlist: Playlist, locale: 'fa' | 'en' = '
  * @returns Array of all playlists
  */
 export function getAllPlaylists(locale: 'fa' | 'en' = 'fa'): Playlist[] {
-  // TODO: Import and return playlists when data files are created
-  // return locale === 'fa' ? playlistsFa : playlistsEn
-  return []
+  // Dynamic import to avoid circular dependencies
+  try {
+    if (locale === 'fa') {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const { playlists } = require('~/data/fa/playlists')
+      return playlists || []
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const { playlists } = require('~/data/en/playlists')
+      return playlists || []
+    }
+  } catch {
+    return []
+  }
 }
 
 /**

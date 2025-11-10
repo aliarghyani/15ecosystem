@@ -106,13 +106,24 @@ export function generateVideoSlug(video: Video, locale: 'fa' | 'en' = 'fa'): str
 
 /**
  * Get all videos
- * @param _locale - Locale to use ('fa' | 'en'), defaults to 'fa'
+ * @param locale - Locale to use ('fa' | 'en'), defaults to 'fa'
  * @returns Array of all videos
  */
-export function getAllVideos(_locale: 'fa' | 'en' = 'fa'): Video[] {
-  // TODO: Import and return videos when data files are created
-  // return _locale === 'fa' ? videosFa : videosEn
-  return []
+export function getAllVideos(locale: 'fa' | 'en' = 'fa'): Video[] {
+  // Dynamic import to avoid circular dependencies
+  try {
+    if (locale === 'fa') {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const { videos } = require('~/data/fa/videos')
+      return videos || []
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const { videos } = require('~/data/en/videos')
+      return videos || []
+    }
+  } catch {
+    return []
+  }
 }
 
 /**
