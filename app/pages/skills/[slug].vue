@@ -67,7 +67,7 @@
       <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
         {{ $t('skills.bookReferences') }}
       </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
         <BookCard v-for="book in books" :key="`${book.title}-${book.author}`" :book="book" />
       </div>
     </div>

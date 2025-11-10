@@ -33,10 +33,10 @@
             {{ $t('books.categoryDescription', { count: healthBooks.length, category: getCategoryName('health') }) }}
           </p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
           <div v-for="book in healthBooks" :key="`${book.title}-${book.author}`" class="relative">
             <BookCard :book="book" />
-            <div v-if="book.skillIds.length > 0" class="mt-2 flex flex-wrap gap-2">
+            <div v-if="book.skillIds.length > 0" class="mt-3 flex flex-wrap gap-2 justify-center">
               <NuxtLink
                 v-for="skillId in book.skillIds"
                 :key="skillId"
@@ -60,10 +60,10 @@
             {{ $t('books.categoryDescription', { count: identityBooks.length, category: getCategoryName('identity') }) }}
           </p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
           <div v-for="book in identityBooks" :key="`${book.title}-${book.author}`" class="relative">
             <BookCard :book="book" />
-            <div v-if="book.skillIds.length > 0" class="mt-2 flex flex-wrap gap-2">
+            <div v-if="book.skillIds.length > 0" class="mt-3 flex flex-wrap gap-2 justify-center">
               <NuxtLink
                 v-for="skillId in book.skillIds"
                 :key="skillId"
@@ -87,10 +87,10 @@
             {{ $t('books.categoryDescription', { count: careerBooks.length, category: getCategoryName('career') }) }}
           </p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
           <div v-for="book in careerBooks" :key="`${book.title}-${book.author}`" class="relative">
             <BookCard :book="book" />
-            <div v-if="book.skillIds.length > 0" class="mt-2 flex flex-wrap gap-2">
+            <div v-if="book.skillIds.length > 0" class="mt-3 flex flex-wrap gap-2 justify-center">
               <NuxtLink
                 v-for="skillId in book.skillIds"
                 :key="skillId"

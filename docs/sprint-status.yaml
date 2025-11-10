@@ -65,6 +65,9 @@ development_status:
   4-1-transcript-page: review
   4-2-summary-page: review
   4-3-books-page: review
+  4-4-inspira-book-component: in-progress
+  4-5-writers-page: backlog
+  4-6-tags-system: backlog
   epic-4-retrospective: optional
 
   # Epic 5: Visual Diagrams

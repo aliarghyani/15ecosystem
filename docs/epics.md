@@ -409,6 +409,84 @@ So that I can find resources to learn more.
 - Organize by category or skill
 - Add links to skill pages
 
+### Story 4.5: Writers Page
+
+As a user,
+I want to see all writers/authors mentioned in the video,
+So that I can explore their work, biographies, and resources.
+
+**Acceptance Criteria:**
+
+**Given** I navigate to writers page
+**When** I view the page
+**Then** I see:
+- List of all writers organized by category
+- Each writer shows: name, photo (if available), brief bio excerpt
+- Number of books by each writer
+- Related skills for each writer
+- Links to writer detail pages
+
+**Given** I click on a writer
+**When** I navigate to writer detail page
+**Then** I see:
+- Writer name and photo
+- Complete biography with special design
+- Related books (using Inspira Book components)
+- External links (YouTube, website, social media)
+- Related skills
+- Tags (if available)
+- Clickable mentions in biography (skills, books, categories)
+
+**Prerequisites:** Story 4.3, Story 4.4
+
+**Technical Notes:**
+- Create `Writer` type definition
+- Extract unique writers from books data
+- Create `app/pages/writers/index.vue` (list page)
+- Create `app/pages/writers/[slug].vue` (detail page)
+- Create `WriterCard` component
+- Implement `ClickableContent` component for biography parsing
+- Add external links (YouTube, website, social media)
+
+### Story 4.6: Tags System
+
+As a user,
+I want to browse content by tags,
+So that I can discover related skills, books, writers, and categories.
+
+**Acceptance Criteria:**
+
+**Given** I navigate to tags page
+**When** I view the page
+**Then** I see:
+- List of all available tags
+- Tag badges with names and colors
+- Count of items for each tag
+- Search/filter functionality
+
+**Given** I click on a tag
+**When** I navigate to tag detail page
+**Then** I see:
+- Tag name and description
+- All content with this tag (skills, books, writers, categories)
+- Content organized by type
+
+**Given** I view a detail page (skill, book, writer, category)
+**When** I see tags section
+**Then** tags are displayed as badges
+**And** tags are clickable
+**And** clicking navigates to tag detail page
+
+**Prerequisites:** Story 4.3, Story 4.5
+
+**Technical Notes:**
+- Create `Tag` type definition
+- Update existing types (Skill, Book, Writer, Category) to include tags
+- Create `app/pages/tags/index.vue` (list page)
+- Create `app/pages/tags/[slug].vue` (detail page)
+- Create `TagBadge` component
+- Add tags to all detail pages (skills, books, writers, categories)
+
 ---
 
 ## Epic 5: Visual Diagrams
