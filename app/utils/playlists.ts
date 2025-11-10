@@ -3,9 +3,8 @@
  */
 
 import type { Playlist } from '~/types'
-// Import will be added when data files are created
-// import { playlists as playlistsFa } from '~/data/fa/playlists'
-// import { playlists as playlistsEn } from '~/data/en/playlists'
+import { playlists as playlistsFa } from '~/data/fa/playlists'
+import { playlists as playlistsEn } from '~/data/en/playlists'
 
 /**
  * Generate a URL-friendly slug from playlist title
@@ -55,20 +54,7 @@ export function generatePlaylistSlug(playlist: Playlist, locale: 'fa' | 'en' = '
  * @returns Array of all playlists
  */
 export function getAllPlaylists(locale: 'fa' | 'en' = 'fa'): Playlist[] {
-  // Dynamic import to avoid circular dependencies
-  try {
-    if (locale === 'fa') {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { playlists } = require('~/data/fa/playlists')
-      return playlists || []
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { playlists } = require('~/data/en/playlists')
-      return playlists || []
-    }
-  } catch {
-    return []
-  }
+  return locale === 'fa' ? playlistsFa : playlistsEn
 }
 
 /**

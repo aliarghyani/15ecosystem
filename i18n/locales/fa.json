@@ -170,7 +170,32 @@
     "relatedVideos": "ویدیوهای مرتبط",
     "relatedVideosDescription": "ویدیوهای مرتبط با این مهارت",
     "backToVideos": "بازگشت به ویدیوها",
-    "notFound": "ویدیو یافت نشد"
+    "notFound": "ویدیو یافت نشد",
+    "loading": "در حال بارگذاری ویدیو...",
+    "relatedSkills": "مهارت‌های مرتبط",
+    "relatedSkillsDescription": "مهارت‌های مرتبط با این ویدیو",
+    "relatedBooks": "کتاب‌های مرتبط",
+    "relatedBooksDescription": "کتاب‌های مرتبط با این ویدیو",
+    "relatedWriter": "نویسنده مرتبط",
+    "relatedWriterDescription": "نویسنده مرتبط با این ویدیو"
+  },
+  "playlists": {
+    "title": "پلی‌لیست‌ها",
+    "description": "همه پلی‌لیست‌های مرتبط با مهارت‌ها",
+    "viewPlaylist": "مشاهده پلی‌لیست",
+    "playlists": "پلی‌لیست",
+    "videos": "ویدیو",
+    "noPlaylistsFound": "هیچ پلی‌لیستی یافت نشد",
+    "noPlaylistsDescription": "پلی‌لیست‌ها به زودی اضافه خواهند شد.",
+    "filteredBySkill": "فیلتر شده بر اساس مهارت",
+    "relatedSkills": "مهارت‌های مرتبط",
+    "relatedSkillsDescription": "مهارت‌های مرتبط با این پلی‌لیست",
+    "relatedCategories": "دسته‌بندی‌های مرتبط",
+    "videosInPlaylist": "ویدیوهای پلی‌لیست",
+    "videosInPlaylistDescription": "همه ویدیوهای این پلی‌لیست",
+    "backToPlaylists": "بازگشت به پلی‌لیست‌ها",
+    "notFound": "پلی‌لیست یافت نشد",
+    "loading": "در حال بارگذاری پلی‌لیست..."
   },
   "common": {
     "relatedTo": "مرتبط با",

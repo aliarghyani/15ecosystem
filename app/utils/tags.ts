@@ -5,6 +5,10 @@
 import type { Tag, Skill, Book, Writer, Category } from '~/types'
 import { tags as tagsFa } from '~/data/fa/tags'
 import { tags as tagsEn } from '~/data/en/tags'
+import { videos as videosFa } from '~/data/fa/videos'
+import { videos as videosEn } from '~/data/en/videos'
+import { playlists as playlistsFa } from '~/data/fa/playlists'
+import { playlists as playlistsEn } from '~/data/en/playlists'
 import { getAllSkills } from './skills'
 import { getAllBooks, getBookBySlug } from './books'
 import { getAllWriters } from './writers'
@@ -157,6 +161,42 @@ export function getContentByTag(tagSlug: string, locale: 'fa' | 'en' = 'fa'): {
     writers: allWriters.filter((writer) => writer.tags?.includes(tagSlug)),
     categories: allCategories.filter((category) => category.tags?.includes(tagSlug))
   }
+}
+
+/**
+ * Get tags for a video
+ * @param videoId - Video ID (YouTube video ID)
+ * @param locale - Locale to use ('fa' | 'en'), defaults to 'fa'
+ * @returns Array of tags for this video
+ */
+export function getTagsForVideo(videoId: string, locale: 'fa' | 'en' = 'fa'): Tag[] {
+  const videos = locale === 'fa' ? videosFa : videosEn
+  const video = videos.find((v) => v.id === videoId)
+  
+  if (!video || !video.tags || video.tags.length === 0) return []
+  
+  const allTags = getAllTags(locale)
+  return video.tags
+    .map((tagSlug: string) => allTags.find((tag) => tag.slug === tagSlug))
+    .filter((tag) => tag !== undefined) as Tag[]
+}
+
+/**
+ * Get tags for a playlist
+ * @param playlistId - Playlist ID (YouTube playlist ID)
+ * @param locale - Locale to use ('fa' | 'en'), defaults to 'fa'
+ * @returns Array of tags for this playlist
+ */
+export function getTagsForPlaylist(playlistId: string, locale: 'fa' | 'en' = 'fa'): Tag[] {
+  const playlists = locale === 'fa' ? playlistsFa : playlistsEn
+  const playlist = playlists.find((p) => p.id === playlistId)
+  
+  if (!playlist || !playlist.tags || playlist.tags.length === 0) return []
+  
+  const allTags = getAllTags(locale)
+  return playlist.tags
+    .map((tagSlug: string) => allTags.find((tag) => tag.slug === tagSlug))
+    .filter((tag) => tag !== undefined) as Tag[]
 }
 
 /**

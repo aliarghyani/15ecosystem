@@ -60,6 +60,47 @@
       </p>
     </div>
 
+    <!-- Related Videos Section -->
+    <div v-if="relatedVideos.length > 0" class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+          {{ $t('videos.relatedVideos') }}
+        </h2>
+        <UButton
+          :to="localePath(`/videos?skill=${skill.id}`)"
+          variant="ghost"
+          color="primary"
+          size="sm"
+          icon="i-twemoji-video-camera"
+          class="min-h-[44px]"
+        >
+          {{ $t('videos.viewAll') }}
+        </UButton>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+        {{ $t('videos.relatedVideosDescription') }}
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <VideoCard
+          v-for="video in relatedVideos.slice(0, 4)"
+          :key="video.id"
+          :video="video"
+          :show-description="false"
+          variant="default"
+        />
+      </div>
+      <div v-if="relatedVideos.length > 4" class="mt-6 text-center">
+        <UButton
+          :to="localePath(`/videos?skill=${skill.id}`)"
+          variant="soft"
+          color="primary"
+          class="min-h-[44px]"
+        >
+          {{ $t('videos.viewAllVideos', { count: relatedVideos.length }) }}
+        </UButton>
+      </div>
+    </div>
+
     <!-- Related Skills Section -->
     <div v-if="relatedSkills.length > 0" class="mb-8">
       <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
@@ -159,13 +200,15 @@ import { getBooksBySkillId } from '~/utils/books'
 import { getCategoryById } from '~/utils/categories'
 import { generateSkillRelationshipDiagram } from '~/utils/skill-diagrams'
 import { getTagsForSkill } from '~/utils/tags'
+import { getVideosBySkillId } from '~/utils/videos'
 import BookCard from '~/components/books/BookCard.vue'
 import SkillCard from '~/components/skills/SkillCard.vue'
+import VideoCard from '~/components/videos/VideoCard.vue'
 import SkillNavigation from '~/components/skills/SkillNavigation.vue'
 import VueFlowDiagram from '~/components/common/VueFlowDiagram.client.vue'
 import TagBadge from '~/components/tags/TagBadge.vue'
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
-import type { Skill, Category, Tag } from '~/types'
+import type { Skill, Category, Tag, Video } from '~/types'
 import type { Node, Edge } from '@vue-flow/core'
 
 const route = useRoute()
@@ -193,6 +236,7 @@ const skillId = computed(() => {
 const skill = ref<Skill | undefined>(undefined)
 const category = ref<Category | undefined>(undefined)
 const books = ref<ReturnType<typeof getBooksBySkillId>>([])
+const relatedVideos = ref<Video[]>([])
 const relatedSkills = ref<ReturnType<typeof getRelatedSkills>>([])
 const skillTags = ref<Tag[]>([])
 const diagramData = ref<{ nodes: Node[]; edges: Edge[] } | null>(null)
@@ -203,7 +247,9 @@ watch([skillId, locale], () => {
     skill.value = undefined
     category.value = undefined
     books.value = []
+    relatedVideos.value = []
     relatedSkills.value = []
+    skillTags.value = []
     diagramData.value = null
     return
   }
@@ -215,6 +261,7 @@ watch([skillId, locale], () => {
     if (skill.value) {
       category.value = getCategoryById(skill.value.category, currentLocale)
       books.value = getBooksBySkillId(skill.value.id, currentLocale)
+      relatedVideos.value = getVideosBySkillId(skill.value.id, currentLocale)
       relatedSkills.value = getRelatedSkills(skill.value.id, currentLocale)
       skillTags.value = getTagsForSkill(skill.value.id, currentLocale)
       // Generate relationship diagram using Vue Flow
@@ -222,6 +269,7 @@ watch([skillId, locale], () => {
     } else {
       category.value = undefined
       books.value = []
+      relatedVideos.value = []
       relatedSkills.value = []
       skillTags.value = []
       diagramData.value = null
@@ -231,6 +279,7 @@ watch([skillId, locale], () => {
     skill.value = undefined
     category.value = undefined
     books.value = []
+    relatedVideos.value = []
     relatedSkills.value = []
     skillTags.value = []
     diagramData.value = null

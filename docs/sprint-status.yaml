@@ -92,9 +92,9 @@ development_status:
   7-2-video-data-entry-yaml-structure: done
   7-3-video-components-card-player-list: done
   7-4-videos-list-page: done
-  7-5-video-detail-page: backlog
-  7-6-skill-page-video-integration: backlog
-  7-7-playlists-support: backlog
+  7-5-video-detail-page: done
+  7-6-skill-page-video-integration: done
+  7-7-playlists-support: done
   7-8-navigation-integration: backlog
   epic-7-retrospective: optional
 
