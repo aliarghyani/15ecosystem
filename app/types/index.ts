@@ -113,6 +113,9 @@ export interface Video {
 // Export transcript types
 export type { VideoTranscript, TranscriptMetadata } from './transcripts'
 
+// Export summary types
+export type { VideoSummary, SummaryMetadata } from './summaries'
+
 // Export report types
 export type {
   WordFrequencyReport,

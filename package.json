@@ -14,7 +14,8 @@
     "format:write": "prettier --write .",
     "generate:content": "tsx scripts/generate-content-data.ts",
     "import:excel": "tsx scripts/import-excel-videos.ts",
-    "enrich:videos": "tsx scripts/enrich-video-data.ts"
+    "enrich:videos": "tsx scripts/enrich-video-data.ts",
+    "generate:transcripts": "tsx scripts/generate-transcripts-from-yaml.ts"
   },
   "dependencies": {
     "@nuxt/image": "^1.11.0",

@@ -3,6 +3,10 @@
  * 
  * This file exports all English video transcripts.
  * Transcripts are loaded on-demand for performance.
+ * 
+ * AUTO-GENERATED from YAML files in app/data/transcripts/en/
+ * Files are named by video title (Persian/English).
+ * DO NOT EDIT MANUALLY - Regenerate using: pnpm generate:transcripts
  */
 
 import type { VideoTranscript } from '~/types/transcripts'
@@ -11,24 +15,8 @@ import type { VideoTranscript } from '~/types/transcripts'
  * All English video transcripts
  * 
  * Structure: Map videoId -> VideoTranscript
- * 
- * Example:
- * {
- *   'hxnS40NolrA': {
- *     videoId: 'hxnS40NolrA',
- *     transcript: '...',
- *     wordCount: 1234,
- *     characterCount: 5678,
- *     characterCountNoSpaces: 4567,
- *     locale: 'en',
- *     updatedAt: '2024-01-01T00:00:00Z'
- *   }
- * }
  */
-export const transcripts: Record<string, VideoTranscript> = {
-  // Transcripts will be added here
-  // Format: videoId -> VideoTranscript
-}
+export const transcripts: Record<string, VideoTranscript> = {}
 
 /**
  * Get transcript by video ID
@@ -60,4 +48,3 @@ export function getAllTranscriptMetadata(): Array<{
     updatedAt: transcript.updatedAt,
   }))
 }
-

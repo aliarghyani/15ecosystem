@@ -100,9 +100,9 @@ development_status:
 
   # Epic 8: Video Transcript Data Analysis & Analytics
   epic-8: backlog
-  8-0-excel-import-video-data-extraction: backlog
-  8-0a-video-summary-data-structure-storage: backlog
-  8-0b-excel-data-enrichment-skill-category-mapping: backlog
+  8-0-excel-import-video-data-extraction: done
+  8-0a-video-summary-data-structure-storage: done
+  8-0b-excel-data-enrichment-skill-category-mapping: done
   8-1-video-transcript-data-structure-storage: done
   8-2-text-analysis-utilities-core-functions: done
   8-3-analysis-report-types-data-models: done
