@@ -124,9 +124,8 @@
 </template>
 
 <script setup lang="ts">
-// Ensure this page only matches /books exactly, not /books/*
 definePageMeta({
-  // This page should only match /books, not /books/*
+  // This page matches /books exactly
 })
 
 import { getBooksByCategory } from '~/utils/books'
