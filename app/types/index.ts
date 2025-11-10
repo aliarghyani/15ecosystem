@@ -113,6 +113,19 @@ export interface Video {
 // Export transcript types
 export type { VideoTranscript, TranscriptMetadata } from './transcripts'
 
+// Export report types
+export type {
+  WordFrequencyReport,
+  MentionReport,
+  TrendReport,
+  ComparisonReport,
+  TopWordsReport,
+  CategoryAnalysisReport,
+  SkillAnalysisReport,
+  ReportOptions,
+  ReportMetadata
+} from './reports'
+
 export interface Playlist {
   id: string // Unique playlist identifier (YouTube playlist ID)
   youtubeId: string // YouTube playlist ID
