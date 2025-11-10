@@ -58,6 +58,19 @@
                 </button>
               </div>
 
+              <!-- Writers -->
+              <div class="flex items-center gap-1.5">
+                <UTooltip :text="$t('nav.writers')">
+                  <UButton class="cursor-pointer" :class="[isActive('writers') ? activeClass : inactiveClass]"
+                    variant="soft" square icon="i-heroicons-user-group" :aria-label="$t('nav.writers')"
+                    @click="goTo('writers')" />
+                </UTooltip>
+                <button type="button" class="text-sm font-medium transition-colors"
+                  :class="[isActive('writers') ? labelActiveClass : labelInactiveClass]" @click="goTo('writers')">
+                  {{ $t('nav.writers') }}
+                </button>
+              </div>
+
               <!-- Transcript -->
               <div class="flex items-center gap-1.5">
                 <UTooltip :text="$t('nav.transcript')">
@@ -158,6 +171,15 @@
                   @click="goTo('books'); closeMobileMenu()"
                 >
                   {{ $t('nav.books') }}
+                </UButton>
+                <UButton
+                  :class="[isActive('writers') ? activeClass : inactiveClass]"
+                  variant="soft"
+                  block
+                  :icon="'i-heroicons-user-group'"
+                  @click="goTo('writers'); closeMobileMenu()"
+                >
+                  {{ $t('nav.writers') }}
                 </UButton>
                 <UButton
                   :class="[isActive('transcript') ? activeClass : inactiveClass]"

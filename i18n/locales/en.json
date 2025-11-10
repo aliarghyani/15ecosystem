@@ -15,6 +15,7 @@
     "categories": "Categories",
     "skills": "Skills",
     "books": "Books",
+    "writers": "Writers",
     "transcript": "Transcript",
     "summary": "Summary",
     "theme": "Theme",
@@ -106,6 +107,21 @@
     "relatedSkillsDescription": "This book is referenced in the following skills:",
     "backToBooks": "Back to Books",
     "notFound": "Book not found"
+  },
+  "writers": {
+    "title": "Writers",
+    "description": "All authors and thought leaders mentioned in the video",
+    "categoryDescription": "{count} writer(s) in {category}",
+    "biography": "Biography",
+    "relatedBooks": "Related Books",
+    "resources": "Resources",
+    "relatedSkills": "Related Skills",
+    "tags": "Tags",
+    "noWriters": "No writers found",
+    "noBooks": "No books available for this writer",
+    "website": "Website",
+    "backToWriters": "Back to Writers",
+    "notFound": "Writer not found"
   },
   "diagrams": {
     "skillRelationships": "Skill Relationships & Ecosystem",

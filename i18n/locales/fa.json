@@ -15,6 +15,7 @@
     "categories": "دسته‌بندی‌ها",
     "skills": "مهارت‌ها",
     "books": "کتاب‌ها",
+    "writers": "نویسندگان",
     "transcript": "متن کامل",
     "summary": "خلاصه",
     "theme": "تم",
@@ -106,6 +107,21 @@
     "relatedSkillsDescription": "این کتاب در مهارت‌های زیر ذکر شده است:",
     "backToBooks": "بازگشت به کتاب‌ها",
     "notFound": "کتاب یافت نشد"
+  },
+  "writers": {
+    "title": "نویسندگان",
+    "description": "همه نویسندگان و رهبران فکری ذکر شده در ویدیو",
+    "categoryDescription": "{count} نویسنده در {category}",
+    "biography": "زندگینامه",
+    "relatedBooks": "کتاب‌های مرتبط",
+    "resources": "منابع",
+    "relatedSkills": "مهارت‌های مرتبط",
+    "tags": "برچسب‌ها",
+    "noWriters": "نویسنده‌ای یافت نشد",
+    "noBooks": "هیچ کتابی برای این نویسنده در دسترس نیست",
+    "website": "وب‌سایت",
+    "backToWriters": "بازگشت به نویسندگان",
+    "notFound": "نویسنده یافت نشد"
   },
   "diagrams": {
     "skillRelationships": "روابط مهارت‌ها و اکوسیستم",
