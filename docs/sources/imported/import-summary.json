@@ -1,0 +1,108 @@
+{
+  "importedAt": "2025-11-10T19:23:14.311Z",
+  "totalPlaylists": 11,
+  "totalVideos": 74,
+  "playlists": [
+    {
+      "name": "اندرو هیوبرمن فارسی",
+      "id": "PLfENCQ8wu4rYMchVpCMVlFLX9AKvsNDB7",
+      "videoCount": 27
+    },
+    {
+      "name": "خلاقیت و دانش تخصصی",
+      "id": "PLfENCQ8wu4rZ5LQ5DLAw8rmid4dVMjIqy",
+      "videoCount": 5
+    },
+    {
+      "name": "طول عمر",
+      "id": "PLfENCQ8wu4raD8EiqTn6YU8Dz6RRp9UY_",
+      "videoCount": 1
+    },
+    {
+      "name": "تمرکز و حافظه",
+      "id": "PLfENCQ8wu4rZJOMj1Iq6Znf-ZU4NlsCc8",
+      "videoCount": 5
+    },
+    {
+      "name": "سواد مالی",
+      "id": "PLfENCQ8wu4rbjcfwp1vpbh7xpAtE7J5m5",
+      "videoCount": 4
+    },
+    {
+      "name": "تغذیه و تناسب اندام",
+      "id": "PLfENCQ8wu4rYhvLj3_kZ-tzuEjVkQK9XD",
+      "videoCount": 9
+    },
+    {
+      "name": "خواب و مدیریت انرژی",
+      "id": "PLfENCQ8wu4rYzfy4DsXclb61ZqG-Q1e5q",
+      "videoCount": 3
+    },
+    {
+      "name": "فضای مجازی",
+      "id": "PLfENCQ8wu4rZHEJ4DfLYvSGSmD0e82zh1",
+      "videoCount": 2
+    },
+    {
+      "name": "یادگیری و مطالعه",
+      "id": "PLfENCQ8wu4rYzP7iHJU1Yrh9hL7Oy_vEo",
+      "videoCount": 7
+    },
+    {
+      "name": "TED talks",
+      "id": "PLfENCQ8wu4rY2hjYUHulMM7u4pxhh8tKm",
+      "videoCount": 3
+    },
+    {
+      "name": "دوپامین، اعتیاد و انگیزه",
+      "id": "PLfENCQ8wu4rZ6jv8VMU7XAEDb7Zl_1aIw",
+      "videoCount": 8
+    }
+  ],
+  "videosByPlaylist": [
+    {
+      "playlist": "اندرو هیوبرمن فارسی",
+      "count": 27
+    },
+    {
+      "playlist": "خلاقیت و دانش تخصصی",
+      "count": 5
+    },
+    {
+      "playlist": "طول عمر",
+      "count": 1
+    },
+    {
+      "playlist": "تمرکز و حافظه",
+      "count": 5
+    },
+    {
+      "playlist": "سواد مالی",
+      "count": 4
+    },
+    {
+      "playlist": "تغذیه و تناسب اندام",
+      "count": 9
+    },
+    {
+      "playlist": "خواب و مدیریت انرژی",
+      "count": 3
+    },
+    {
+      "playlist": "فضای مجازی",
+      "count": 2
+    },
+    {
+      "playlist": "یادگیری و مطالعه",
+      "count": 7
+    },
+    {
+      "playlist": "TED talks",
+      "count": 3
+    },
+    {
+      "playlist": "دوپامین، اعتیاد و انگیزه",
+      "count": 8
+    }
+  ]
+}
