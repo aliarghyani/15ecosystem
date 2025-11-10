@@ -101,6 +101,28 @@
       </div>
     </div>
 
+    <!-- Related Writers Section -->
+    <div v-if="relatedWriters.length > 0" class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+        {{ $t('skills.relatedWriters') }}
+      </h2>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+        {{ $t('skills.relatedWritersDescription') }}
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <WriterCard
+          v-for="writer in relatedWriters"
+          :key="writer.slug"
+          :writer="writer"
+          :show-bio="false"
+          :show-tagline="true"
+          :show-books-count="true"
+          :show-skills="false"
+          variant="compact"
+        />
+      </div>
+    </div>
+
     <!-- Related Skills Section -->
     <div v-if="relatedSkills.length > 0" class="mb-8">
       <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
@@ -201,14 +223,16 @@ import { getCategoryById } from '~/utils/categories'
 import { generateSkillRelationshipDiagram } from '~/utils/skill-diagrams'
 import { getTagsForSkill } from '~/utils/tags'
 import { getVideosBySkillId } from '~/utils/videos'
+import { getWritersBySkill } from '~/utils/writers'
 import BookCard from '~/components/books/BookCard.vue'
 import SkillCard from '~/components/skills/SkillCard.vue'
 import VideoCard from '~/components/videos/VideoCard.vue'
+import WriterCard from '~/components/writers/WriterCard.vue'
 import SkillNavigation from '~/components/skills/SkillNavigation.vue'
 import VueFlowDiagram from '~/components/common/VueFlowDiagram.client.vue'
 import TagBadge from '~/components/tags/TagBadge.vue'
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
-import type { Skill, Category, Tag, Video } from '~/types'
+import type { Skill, Category, Tag, Video, Writer } from '~/types'
 import type { Node, Edge } from '@vue-flow/core'
 
 const route = useRoute()
@@ -237,6 +261,7 @@ const skill = ref<Skill | undefined>(undefined)
 const category = ref<Category | undefined>(undefined)
 const books = ref<ReturnType<typeof getBooksBySkillId>>([])
 const relatedVideos = ref<Video[]>([])
+const relatedWriters = ref<Writer[]>([])
 const relatedSkills = ref<ReturnType<typeof getRelatedSkills>>([])
 const skillTags = ref<Tag[]>([])
 const diagramData = ref<{ nodes: Node[]; edges: Edge[] } | null>(null)
@@ -248,6 +273,7 @@ watch([skillId, locale], () => {
     category.value = undefined
     books.value = []
     relatedVideos.value = []
+    relatedWriters.value = []
     relatedSkills.value = []
     skillTags.value = []
     diagramData.value = null
@@ -262,6 +288,7 @@ watch([skillId, locale], () => {
       category.value = getCategoryById(skill.value.category, currentLocale)
       books.value = getBooksBySkillId(skill.value.id, currentLocale)
       relatedVideos.value = getVideosBySkillId(skill.value.id, currentLocale)
+      relatedWriters.value = getWritersBySkill(skill.value.id, currentLocale)
       relatedSkills.value = getRelatedSkills(skill.value.id, currentLocale)
       skillTags.value = getTagsForSkill(skill.value.id, currentLocale)
       // Generate relationship diagram using Vue Flow
@@ -270,6 +297,7 @@ watch([skillId, locale], () => {
       category.value = undefined
       books.value = []
       relatedVideos.value = []
+      relatedWriters.value = []
       relatedSkills.value = []
       skillTags.value = []
       diagramData.value = null
@@ -280,6 +308,7 @@ watch([skillId, locale], () => {
     category.value = undefined
     books.value = []
     relatedVideos.value = []
+    relatedWriters.value = []
     relatedSkills.value = []
     skillTags.value = []
     diagramData.value = null

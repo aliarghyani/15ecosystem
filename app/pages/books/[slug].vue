@@ -52,6 +52,70 @@
       </div>
     </div>
 
+    <!-- Related Videos Section -->
+    <div v-if="relatedVideos.length > 0" class="mb-12">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          {{ $t('books.relatedVideos') }}
+        </h2>
+        <UButton
+          v-if="relatedVideos.length > 8"
+          :to="localePath(`/videos?book=${slug}`)"
+          variant="ghost"
+          color="primary"
+          size="sm"
+          icon="i-twemoji-video-camera"
+          class="min-h-[44px]"
+        >
+          {{ $t('videos.viewAll') }}
+        </UButton>
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        {{ $t('books.relatedVideosDescription') }}
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <VideoCard
+          v-for="video in relatedVideos.slice(0, 8)"
+          :key="video.id"
+          :video="video"
+          :show-description="false"
+          variant="default"
+        />
+      </div>
+      <div v-if="relatedVideos.length > 8" class="mt-6 text-center">
+        <UButton
+          :to="localePath(`/videos?book=${slug}`)"
+          variant="soft"
+          color="primary"
+          class="min-h-[44px]"
+        >
+          {{ $t('videos.viewAllVideos', { count: relatedVideos.length }) }}
+        </UButton>
+      </div>
+    </div>
+
+    <!-- Related Writers Section -->
+    <div v-if="relatedWriters.length > 0" class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+        {{ $t('books.relatedWriters') }}
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        {{ $t('books.relatedWritersDescription') }}
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <WriterCard
+          v-for="writer in relatedWriters"
+          :key="writer.slug"
+          :writer="writer"
+          :show-bio="false"
+          :show-tagline="true"
+          :show-books-count="true"
+          :show-skills="false"
+          variant="compact"
+        />
+      </div>
+    </div>
+
     <!-- Tags Section -->
     <div v-if="bookTags.length > 0" class="mb-12">
       <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
@@ -96,13 +160,15 @@ definePageMeta({
   // Ensure this page is handled correctly in SPA mode
 })
 
-import { getBookBySlug, getBookSlug } from '~/utils/books'
+import { getBookBySlug, getBookSlug, getVideosByBook, getWritersByBook } from '~/utils/books'
 import { getSkillsByIds } from '~/utils/skills'
 import { getTagsForBook } from '~/utils/tags'
 import SkillCard from '~/components/skills/SkillCard.vue'
+import VideoCard from '~/components/videos/VideoCard.vue'
+import WriterCard from '~/components/writers/WriterCard.vue'
 import TagBadge from '~/components/tags/TagBadge.vue'
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
-import type { Book, Skill, Tag } from '~/types'
+import type { Book, Skill, Tag, Video, Writer } from '~/types'
 
 const route = useRoute()
 const { locale, t } = useI18n()
@@ -118,6 +184,8 @@ const slug = computed(() => {
 // Get book data - use ref to avoid computed dependency issues
 const book = ref<Book | undefined>(undefined)
 const relatedSkills = ref<Skill[]>([])
+const relatedVideos = ref<Video[]>([])
+const relatedWriters = ref<Writer[]>([])
 const bookTags = ref<Tag[]>([])
 
 // Load data when route changes
@@ -125,6 +193,9 @@ watch([slug, locale], () => {
   if (!slug.value) {
     book.value = undefined
     relatedSkills.value = []
+    relatedVideos.value = []
+    relatedWriters.value = []
+    bookTags.value = []
     return
   }
   
@@ -133,17 +204,23 @@ watch([slug, locale], () => {
     book.value = getBookBySlug(slug.value, currentLocale)
     
     if (book.value) {
-      relatedSkills.value = getSkillsByIds(book.value.skillIds, currentLocale)
       const bookSlug = getBookSlug(book.value.title, book.value.author)
+      relatedSkills.value = getSkillsByIds(book.value.skillIds, currentLocale)
+      relatedVideos.value = getVideosByBook(bookSlug, currentLocale)
+      relatedWriters.value = getWritersByBook(bookSlug, currentLocale)
       bookTags.value = getTagsForBook(bookSlug, currentLocale)
     } else {
       relatedSkills.value = []
+      relatedVideos.value = []
+      relatedWriters.value = []
       bookTags.value = []
     }
   } catch (error) {
     console.error('Error loading book:', error)
     book.value = undefined
     relatedSkills.value = []
+    relatedVideos.value = []
+    relatedWriters.value = []
     bookTags.value = []
   }
 }, { immediate: true })

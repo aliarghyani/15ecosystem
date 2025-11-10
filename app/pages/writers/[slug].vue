@@ -84,6 +84,48 @@
       </p>
     </div>
 
+    <!-- Related Videos Section -->
+    <div v-if="relatedVideos.length > 0" class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+          {{ $t('writers.relatedVideos') }}
+        </h2>
+        <UButton
+          v-if="relatedVideos.length > 8"
+          :to="localePath(`/videos?writer=${writer.slug}`)"
+          variant="ghost"
+          color="primary"
+          size="sm"
+          icon="i-twemoji-video-camera"
+          class="min-h-[44px]"
+        >
+          {{ $t('videos.viewAll') }}
+        </UButton>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+        {{ $t('writers.relatedVideosDescription') }}
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <VideoCard
+          v-for="video in relatedVideos.slice(0, 8)"
+          :key="video.id"
+          :video="video"
+          :show-description="false"
+          variant="default"
+        />
+      </div>
+      <div v-if="relatedVideos.length > 8" class="mt-6 text-center">
+        <UButton
+          :to="localePath(`/videos?writer=${writer.slug}`)"
+          variant="soft"
+          color="primary"
+          class="min-h-[44px]"
+        >
+          {{ $t('videos.viewAllVideos', { count: relatedVideos.length }) }}
+        </UButton>
+      </div>
+    </div>
+
     <!-- Resources Section -->
     <UCard v-if="hasResources" class="mb-8">
       <template #header>
@@ -225,15 +267,16 @@ definePageMeta({
   // Ensure this page is handled correctly in SPA mode
 })
 
-import { getWriterBySlug, getWriterBooks, getWriterSkills } from '~/utils/writers'
+import { getWriterBySlug, getWriterBooks, getWriterSkills, getVideosByWriter } from '~/utils/writers'
 import { getCategoryById } from '~/utils/categories'
 import { getTagsForWriter } from '~/utils/tags'
 import BookCard from '~/components/books/BookCard.vue'
 import SkillCard from '~/components/skills/SkillCard.vue'
+import VideoCard from '~/components/videos/VideoCard.vue'
 import ClickableContent from '~/components/content/ClickableContent.vue'
 import TagBadge from '~/components/tags/TagBadge.vue'
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
-import type { Writer, Skill, Tag } from '~/types'
+import type { Writer, Skill, Tag, Video, Book } from '~/types'
 
 const route = useRoute()
 const { locale, t } = useI18n()
@@ -249,6 +292,7 @@ const slug = computed(() => {
 // Get writer data - use ref to avoid computed dependency issues
 const writer = ref<Writer | undefined>(undefined)
 const books = ref<Book[]>([])
+const relatedVideos = ref<Video[]>([])
 const relatedSkills = ref<Skill[]>([])
 const writerTags = ref<Tag[]>([])
 
@@ -257,7 +301,9 @@ watch([slug, locale], () => {
   if (!slug.value) {
     writer.value = undefined
     books.value = []
+    relatedVideos.value = []
     relatedSkills.value = []
+    writerTags.value = []
     return
   }
   
@@ -267,10 +313,12 @@ watch([slug, locale], () => {
     
     if (writer.value) {
       books.value = getWriterBooks(writer.value.slug, currentLocale)
+      relatedVideos.value = getVideosByWriter(writer.value.slug, currentLocale)
       relatedSkills.value = getWriterSkills(writer.value.slug, currentLocale) as Skill[]
       writerTags.value = getTagsForWriter(writer.value.slug, currentLocale)
     } else {
       books.value = []
+      relatedVideos.value = []
       relatedSkills.value = []
       writerTags.value = []
     }
@@ -278,6 +326,7 @@ watch([slug, locale], () => {
     console.error('Error loading writer:', error)
     writer.value = undefined
     books.value = []
+    relatedVideos.value = []
     relatedSkills.value = []
     writerTags.value = []
   }
