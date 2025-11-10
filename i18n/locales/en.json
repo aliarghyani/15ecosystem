@@ -154,6 +154,21 @@
     "zoomOut": "Zoom Out",
     "resetView": "Reset View",
     "navigationHint": "💡 Tip: Use arrow keys to navigate, mouse wheel to zoom, or drag to pan"
+  },
+  "videos": {
+    "title": "Videos",
+    "description": "All videos related to skills",
+    "watchVideo": "Watch video",
+    "watchOnYouTube": "Watch on YouTube",
+    "views": "views",
+    "videos": "video(s)",
+    "noVideosFound": "No videos found",
+    "noVideosInCategory": "No videos in this category",
+    "filteredBySkill": "Filtered by skill",
+    "relatedVideos": "Related Videos",
+    "relatedVideosDescription": "Videos related to this skill",
+    "backToVideos": "Back to Videos",
+    "notFound": "Video not found"
   }
 }
 
