@@ -191,19 +191,18 @@
       </div>
     </div>
 
-    <!-- Tags Section (for future tag system) -->
-    <div v-if="writer.tags && writer.tags.length > 0" class="mb-8">
+    <!-- Tags Section -->
+    <div v-if="writerTags.length > 0" class="mb-8">
       <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
         {{ $t('writers.tags') }}
       </h2>
       <div class="flex flex-wrap gap-2">
-        <!-- Tags will be implemented in Story 4.6 -->
-        <UBadge
-          v-for="tagSlug in writer.tags"
-          :key="tagSlug"
-          :label="tagSlug"
-          color="primary"
-          variant="soft"
+        <TagBadge
+          v-for="tag in writerTags"
+          :key="tag.slug"
+          :tag="tag"
+          :clickable="true"
+          size="sm"
         />
       </div>
     </div>
@@ -238,10 +237,12 @@ definePageMeta({
 
 import { getWriterBySlug, getWriterBooks, getWriterSkills } from '~/utils/writers'
 import { getCategoryById } from '~/utils/categories'
+import { getTagsForWriter } from '~/utils/tags'
 import BookCard from '~/components/books/BookCard.vue'
 import SkillCard from '~/components/skills/SkillCard.vue'
 import ClickableContent from '~/components/content/ClickableContent.vue'
-import type { Writer, Skill } from '~/types'
+import TagBadge from '~/components/tags/TagBadge.vue'
+import type { Writer, Skill, Tag } from '~/types'
 
 const route = useRoute()
 const { locale } = useI18n()
@@ -259,6 +260,7 @@ const slug = computed(() => {
 const writer = ref<Writer | undefined>(undefined)
 const books = ref<Book[]>([])
 const relatedSkills = ref<Skill[]>([])
+const writerTags = ref<Tag[]>([])
 
 // Load data when route changes
 watch([slug, locale], () => {
@@ -276,15 +278,18 @@ watch([slug, locale], () => {
     if (writer.value) {
       books.value = getWriterBooks(writer.value.slug, currentLocale)
       relatedSkills.value = getWriterSkills(writer.value.slug, currentLocale) as Skill[]
+      writerTags.value = getTagsForWriter(writer.value.slug, currentLocale)
     } else {
       books.value = []
       relatedSkills.value = []
+      writerTags.value = []
     }
   } catch (error) {
     console.error('Error loading writer:', error)
     writer.value = undefined
     books.value = []
     relatedSkills.value = []
+    writerTags.value = []
   }
 }, { immediate: true })
 

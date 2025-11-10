@@ -135,6 +135,22 @@
       </UCard>
     </div>
 
+    <!-- Tags Section -->
+    <div v-if="skillTags.length > 0" class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+        {{ $t('tags.title') }}
+      </h2>
+      <div class="flex flex-wrap gap-2">
+        <TagBadge
+          v-for="tag in skillTags"
+          :key="tag.slug"
+          :tag="tag"
+          :clickable="true"
+          size="sm"
+        />
+      </div>
+    </div>
+
     <!-- Skill Navigation -->
     <div class="mt-12">
       <SkillNavigation :current-skill-id="skill.id" :category-id="skill.category" />
@@ -162,11 +178,13 @@ import { getSkillById, getRelatedSkills } from '~/utils/skills'
 import { getBooksBySkillId } from '~/utils/books'
 import { getCategoryById } from '~/utils/categories'
 import { generateSkillRelationshipDiagram } from '~/utils/skill-diagrams'
+import { getTagsForSkill } from '~/utils/tags'
 import BookCard from '~/components/books/BookCard.vue'
 import SkillCard from '~/components/skills/SkillCard.vue'
 import SkillNavigation from '~/components/skills/SkillNavigation.vue'
 import VueFlowDiagram from '~/components/common/VueFlowDiagram.client.vue'
-import type { Skill, Category } from '~/types'
+import TagBadge from '~/components/tags/TagBadge.vue'
+import type { Skill, Category, Tag } from '~/types'
 import type { Node, Edge } from '@vue-flow/core'
 
 const route = useRoute()
@@ -195,6 +213,7 @@ const skill = ref<Skill | undefined>(undefined)
 const category = ref<Category | undefined>(undefined)
 const books = ref<ReturnType<typeof getBooksBySkillId>>([])
 const relatedSkills = ref<ReturnType<typeof getRelatedSkills>>([])
+const skillTags = ref<Tag[]>([])
 const diagramData = ref<{ nodes: Node[]; edges: Edge[] } | null>(null)
 
 // Load data when route changes
@@ -216,12 +235,14 @@ watch([skillId, locale], () => {
       category.value = getCategoryById(skill.value.category, currentLocale)
       books.value = getBooksBySkillId(skill.value.id, currentLocale)
       relatedSkills.value = getRelatedSkills(skill.value.id, currentLocale)
+      skillTags.value = getTagsForSkill(skill.value.id, currentLocale)
       // Generate relationship diagram using Vue Flow
       diagramData.value = generateSkillRelationshipDiagram(skill.value.id, currentLocale)
     } else {
       category.value = undefined
       books.value = []
       relatedSkills.value = []
+      skillTags.value = []
       diagramData.value = null
     }
   } catch (error) {
@@ -230,6 +251,7 @@ watch([skillId, locale], () => {
     category.value = undefined
     books.value = []
     relatedSkills.value = []
+    skillTags.value = []
     diagramData.value = null
   }
 }, { immediate: true })

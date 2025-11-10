@@ -123,6 +123,19 @@
     "backToWriters": "Back to Writers",
     "notFound": "Writer not found"
   },
+  "tags": {
+    "title": "Tags",
+    "description": "Browse content by tags to discover related skills, books, writers, and categories",
+    "searchPlaceholder": "Search tags...",
+    "skills": "Skills",
+    "books": "Books",
+    "writers": "Writers",
+    "categories": "Categories",
+    "noTagsFound": "No tags found matching your search",
+    "noContent": "No content available for this tag",
+    "backToTags": "Back to Tags",
+    "notFound": "Tag not found"
+  },
   "diagrams": {
     "skillRelationships": "Skill Relationships & Ecosystem",
     "keyConnections": "Key Connections",

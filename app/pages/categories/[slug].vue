@@ -74,6 +74,22 @@
       </p>
     </div>
 
+    <!-- Tags Section -->
+    <div v-if="categoryTags.length > 0" class="mb-12">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+        {{ $t('tags.title') }}
+      </h2>
+      <div class="flex flex-wrap gap-2">
+        <TagBadge
+          v-for="tag in categoryTags"
+          :key="tag.slug"
+          :tag="tag"
+          :clickable="true"
+          size="sm"
+        />
+      </div>
+    </div>
+
     <!-- Navigation Buttons -->
     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
       <UButton
@@ -110,8 +126,10 @@
 <script setup lang="ts">
 import { getCategoryById } from '~/utils/categories'
 import { getSkillsByCategory } from '~/utils/skills'
+import { getTagsForCategory } from '~/utils/tags'
 import SkillCard from '~/components/skills/SkillCard.vue'
-import type { Category } from '~/types'
+import TagBadge from '~/components/tags/TagBadge.vue'
+import type { Category, Tag } from '~/types'
 
 const route = useRoute()
 const { locale } = useI18n()
@@ -135,6 +153,14 @@ const skills = computed(() => {
     return []
   }
   return getSkillsByCategory(category.value.id as 'health' | 'identity' | 'career', locale.value as 'fa' | 'en')
+})
+
+// Get tags for this category
+const categoryTags = computed(() => {
+  if (!category.value) {
+    return []
+  }
+  return getTagsForCategory(category.value.id, locale.value as 'fa' | 'en')
 })
 
 // Calculate position for skill indicators in diagram

@@ -64,6 +64,22 @@
       </div>
     </div>
 
+    <!-- Tags Section -->
+    <div v-if="bookTags.length > 0" class="mb-12">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+        {{ $t('tags.title') }}
+      </h2>
+      <div class="flex flex-wrap gap-2">
+        <TagBadge
+          v-for="tag in bookTags"
+          :key="tag.slug"
+          :tag="tag"
+          :clickable="true"
+          size="sm"
+        />
+      </div>
+    </div>
+
     <!-- Navigation -->
     <div class="flex justify-center gap-4 mt-12">
       <UButton :to="localePath('/books')" variant="soft" color="primary" icon="i-heroicons-arrow-left">
@@ -92,10 +108,12 @@ definePageMeta({
   // Ensure this page is handled correctly in SPA mode
 })
 
-import { getBookBySlug } from '~/utils/books'
+import { getBookBySlug, getBookSlug } from '~/utils/books'
 import { getSkillsByIds } from '~/utils/skills'
+import { getTagsForBook } from '~/utils/tags'
 import SkillCard from '~/components/skills/SkillCard.vue'
-import type { Book, Skill } from '~/types'
+import TagBadge from '~/components/tags/TagBadge.vue'
+import type { Book, Skill, Tag } from '~/types'
 
 const route = useRoute()
 const { locale } = useI18n()
@@ -112,6 +130,7 @@ const slug = computed(() => {
 // Get book data - use ref to avoid computed dependency issues
 const book = ref<Book | undefined>(undefined)
 const relatedSkills = ref<Skill[]>([])
+const bookTags = ref<Tag[]>([])
 
 // Load data when route changes
 watch([slug, locale], () => {
@@ -127,13 +146,17 @@ watch([slug, locale], () => {
     
     if (book.value) {
       relatedSkills.value = getSkillsByIds(book.value.skillIds, currentLocale)
+      const bookSlug = getBookSlug(book.value.title, book.value.author)
+      bookTags.value = getTagsForBook(bookSlug, currentLocale)
     } else {
       relatedSkills.value = []
+      bookTags.value = []
     }
   } catch (error) {
     console.error('Error loading book:', error)
     book.value = undefined
     relatedSkills.value = []
+    bookTags.value = []
   }
 }, { immediate: true })
 

@@ -17,6 +17,7 @@ export interface Skill {
   }
   books: Book[]
   relatedSkills?: number[]
+  tags?: string[] // Array of tag slugs
 }
 
 export interface Category {
@@ -30,12 +31,14 @@ export interface Category {
     fa: string
   }
   skills: number[]
+  tags?: string[] // Array of tag slugs
 }
 
 export interface Book {
   title: string
   author: string
   skillIds: number[]
+  tags?: string[] // Array of tag slugs
 }
 
 export interface Writer {
@@ -62,7 +65,23 @@ export interface Writer {
     instagram?: string
     other?: Array<{ label: string; url: string }>
   }
-  tags?: string[] // Array of tag slugs (optional for now)
+  tags?: string[] // Array of tag slugs
+}
+
+export interface Tag {
+  id: string // Unique identifier (slug-based)
+  name: {
+    en: string
+    fa: string
+  }
+  slug: string // URL-friendly identifier
+  description?: {
+    en: string
+    fa: string
+  }
+  color?: string // Hex color for visual distinction (optional, will use Nuxt UI colors)
+  icon?: string // Optional icon identifier
+  category?: 'skill' | 'book' | 'writer' | 'category' | 'general' // Tag category
 }
 
 

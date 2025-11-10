@@ -49,7 +49,7 @@ pnpm install nuxt@latest @nuxt/ui@latest @nuxtjs/i18n@latest @nuxt/image@latest 
 | Category | Decision | Version | Affects Epics | Rationale |
 | -------- | -------- | ------- | ------------- | --------- |
 | **Framework** | Nuxt 4 (SSG) | Latest stable | All | Static site generation, matches portfolio, excellent i18n support |
-| **UI Library** | Nuxt UI 4 | Latest stable | Epic 3, 4, 5, 6 | Modern components, Tailwind integration, RTL support |
+| **UI Library** | Nuxt UI 4 | Latest stable | Epic 3, 4, 5, 6 | Modern components, Tailwind integration, RTL support. **Priority: Always use Nuxt UI 4 components first** |
 | **Styling** | Tailwind CSS 4 | Latest stable | All | Utility-first, matches portfolio, modern design system |
 | **Language** | TypeScript | Latest stable | All | Type safety, matches portfolio, production-ready |
 | **i18n** | @nuxtjs/i18n | Latest stable | All | Bilingual support, RTL/LTR, matches portfolio strategy |

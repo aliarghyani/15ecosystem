@@ -56,8 +56,10 @@ So that I can discover related skills, books, writers, and categories.
 - Create `/tags/[slug]` page (detail view)
 
 ### Components
-- Create `TagBadge` component
-- Create `TagList` component (optional)
+- Create `TagBadge` component using **Nuxt UI 4 Badge component** (https://ui.nuxt.com/docs/components/badge)
+- Create `TagList` component (optional) using **Nuxt UI 4 components**
+- Use **Nuxt UI 4 Input** component for search/filter functionality (https://ui.nuxt.com/docs/components/input)
+- Use **Nuxt UI 4 Card** component for tag display sections (https://ui.nuxt.com/docs/components/card)
 
 ### Integration
 - Add tags to skill detail pages
@@ -83,6 +85,11 @@ So that I can discover related skills, books, writers, and categories.
 - [ ] Task 14: Test and verify functionality
 
 ## Technical Notes
+
+### Component Library Priority
+- **Primary:** Use Nuxt UI 4 components (Badge, Card, Input, etc.) from https://ui.nuxt.com/docs/components
+- **Reference:** Always check latest Nuxt UI 4 documentation for component props and usage
+- **Styling:** Use Nuxt UI 4's built-in styling system and Tailwind CSS 4 utilities
 
 ### File Locations
 - Tag type: `app/types/index.ts`
