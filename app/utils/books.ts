@@ -2,10 +2,12 @@
  * Utility functions for accessing and querying book data
  */
 
-import type { Book } from '~/types'
+import type { Book, Writer, Video } from '~/types'
 import { books as booksFa } from '~/data/fa/books'
 import { books as booksEn } from '~/data/en/books'
 import { getSkillById, getSkillsByCategory } from './skills'
+import { getAllWriters } from './writers'
+import { getVideosByBookSlug } from './videos'
 
 /**
  * Get all books
@@ -187,5 +189,33 @@ export function getBookSlug(title: string, author: string): string {
 export function getBookBySlug(slug: string, locale: 'fa' | 'en' = 'fa'): Book | undefined {
   const allBooks = getAllBooks(locale)
   return allBooks.find((book) => getBookSlug(book.title, book.author) === slug)
+}
+
+/**
+ * Get writers who wrote a book
+ * Finds writers whose books array includes this book slug
+ * @param bookSlug - Book slug
+ * @param locale - Locale to use ('fa' | 'en'), defaults to 'fa'
+ * @returns Array of writers who wrote this book
+ */
+export function getWritersByBook(
+  bookSlug: string,
+  locale: 'fa' | 'en' = 'fa'
+): Writer[] {
+  const allWriters = getAllWriters(locale)
+  return allWriters.filter((writer) => writer.books.includes(bookSlug))
+}
+
+/**
+ * Get videos mentioning a book
+ * @param bookSlug - Book slug
+ * @param locale - Locale to use ('fa' | 'en'), defaults to 'fa'
+ * @returns Array of videos mentioning the book
+ */
+export function getVideosByBook(
+  bookSlug: string,
+  locale: 'fa' | 'en' = 'fa'
+): Video[] {
+  return getVideosByBookSlug(bookSlug, locale)
 }
 

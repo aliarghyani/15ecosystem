@@ -180,3 +180,33 @@ export function isValidCategoryId(categoryId: string): boolean {
   return ['health', 'identity', 'career'].includes(categoryId)
 }
 
+/**
+ * Get videos by writer ID
+ * @param writerId - Writer slug/ID
+ * @param locale - Locale to use ('fa' | 'en'), defaults to 'fa'
+ * @returns Array of videos featuring the writer
+ */
+export function getVideosByWriterId(
+  writerId: string,
+  locale: 'fa' | 'en' = 'fa'
+): Video[] {
+  const videos = getAllVideos(locale)
+  return videos.filter((video) => video.writerId === writerId)
+}
+
+/**
+ * Get videos by book slug
+ * @param bookSlug - Book slug
+ * @param locale - Locale to use ('fa' | 'en'), defaults to 'fa'
+ * @returns Array of videos mentioning the book
+ */
+export function getVideosByBookSlug(
+  bookSlug: string,
+  locale: 'fa' | 'en' = 'fa'
+): Video[] {
+  const videos = getAllVideos(locale)
+  return videos.filter((video) => 
+    video.bookIds && video.bookIds.includes(bookSlug)
+  )
+}
+

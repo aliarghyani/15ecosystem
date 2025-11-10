@@ -2,12 +2,13 @@
  * Utility functions for accessing and querying writer data
  */
 
-import type { Writer, Book } from '~/types'
+import type { Writer, Book, Video } from '~/types'
 import { writers as writersFa } from '~/data/fa/writers'
 import { writers as writersEn } from '~/data/en/writers'
 import { getAllBooks, getBookSlug } from './books'
 import { getSkillById, getSkillsByCategory } from './skills'
 import { getAllCategories } from './categories'
+import { getVideosByWriterId } from './videos'
 
 /**
  * Generate a URL-friendly slug from writer name
@@ -133,5 +134,18 @@ export function getWriterSkills(writerSlug: string, locale: 'fa' | 'en' = 'fa') 
   return writer.skillIds
     .map((skillId) => getSkillById(skillId, locale))
     .filter((skill) => skill !== undefined)
+}
+
+/**
+ * Get videos featuring a writer
+ * @param writerSlug - Writer slug
+ * @param locale - Locale to use ('fa' | 'en'), defaults to 'fa'
+ * @returns Array of videos featuring the writer
+ */
+export function getVideosByWriter(
+  writerSlug: string,
+  locale: 'fa' | 'en' = 'fa'
+): Video[] {
+  return getVideosByWriterId(writerSlug, locale)
 }
 
