@@ -1,5 +1,15 @@
 <template>
-  <div v-if="book" class="max-w-4xl mx-auto pt-24 px-4 pb-16">
+  <!-- Loading State -->
+  <div v-if="!book && slug" class="max-w-4xl mx-auto pt-24 px-4 pb-16 text-center">
+    <div class="py-12">
+      <UIcon name="i-heroicons-arrow-path" class="w-12 h-12 text-primary-500 animate-spin mx-auto mb-4" />
+      <p class="text-gray-600 dark:text-gray-400">Loading book...</p>
+      <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">Slug: {{ slug }}</p>
+    </div>
+  </div>
+  
+  <!-- Book Detail Page -->
+  <div v-else-if="book" class="max-w-4xl mx-auto pt-24 px-4 pb-16">
     <!-- Breadcrumb Navigation -->
     <nav class="mb-8 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
       <NuxtLink :to="localePath('/')" class="hover:text-primary-600 dark:hover:text-primary-400">
@@ -42,7 +52,7 @@
       <p class="text-gray-600 dark:text-gray-400 mb-6">
         {{ $t('books.relatedSkillsDescription') }}
       </p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
         <SkillCard
           v-for="skill in relatedSkills"
           :key="skill.id"
@@ -78,6 +88,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  // Ensure this page is handled correctly in SPA mode
+})
+
 import { getBookBySlug } from '~/utils/books'
 import { getSkillsByIds } from '~/utils/skills'
 import SkillCard from '~/components/skills/SkillCard.vue'
@@ -86,40 +100,64 @@ import type { Book, Skill } from '~/types'
 const route = useRoute()
 const { locale } = useI18n()
 const localePath = useLocalePath()
+const { t } = useI18n()
 
 // Get book slug from route
-const slug = computed(() => route.params.slug as string)
-
-// Get book data
-const book = computed<Book | undefined>(() => {
-  return getBookBySlug(slug.value, locale.value as 'fa' | 'en')
+const slug = computed(() => {
+  const param = route.params?.slug
+  if (!param) return ''
+  return Array.isArray(param) ? param[0] : String(param)
 })
 
-// Get related skills
-const relatedSkills = computed<Skill[]>(() => {
-  if (!book.value) {
-    return []
+// Get book data - use ref to avoid computed dependency issues
+const book = ref<Book | undefined>(undefined)
+const relatedSkills = ref<Skill[]>([])
+
+// Load data when route changes
+watch([slug, locale], () => {
+  if (!slug.value) {
+    book.value = undefined
+    relatedSkills.value = []
+    return
   }
-  return getSkillsByIds(book.value.skillIds, locale.value as 'fa' | 'en')
+  
+  try {
+    const currentLocale = locale.value as 'fa' | 'en'
+    book.value = getBookBySlug(slug.value, currentLocale)
+    
+    if (book.value) {
+      relatedSkills.value = getSkillsByIds(book.value.skillIds, currentLocale)
+    } else {
+      relatedSkills.value = []
+    }
+  } catch (error) {
+    console.error('Error loading book:', error)
+    book.value = undefined
+    relatedSkills.value = []
+  }
+}, { immediate: true })
+
+// Set page title - use computed to avoid infinite loops
+const pageTitle = computed(() => {
+  if (book.value) {
+    return `${book.value.title} - ${t('books.title')} - 15ecosystem`
+  }
+  return `${t('books.notFound')} - 15ecosystem`
 })
 
-// Set page title
+const pageDescription = computed(() => {
+  if (book.value) {
+    return `${t('books.byAuthor')} ${book.value.author} - ${t('books.relatedSkills')}`
+  }
+  return t('books.notFound')
+})
+
 useHead({
-  title: computed(() => {
-    if (book.value) {
-      return `${book.value.title} - ${useI18n().t('books.title')} - 15ecosystem`
-    }
-    return `${useI18n().t('books.notFound')} - 15ecosystem`
-  }),
+  title: pageTitle,
   meta: [
     {
       name: 'description',
-      content: computed(() => {
-        if (book.value) {
-          return `${useI18n().t('books.byAuthor')} ${book.value.author} - ${useI18n().t('books.relatedSkills')}`
-        }
-        return useI18n().t('books.notFound')
-      }),
+      content: pageDescription,
     },
   ],
 })

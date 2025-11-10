@@ -173,3 +173,4 @@ const isPrimaryActive = (p: PrimaryColor) =>
   ((appConfig.ui as any)?.primary === p) || ((appConfig.ui as any)?.colors?.primary === p)
 </script>
 
+

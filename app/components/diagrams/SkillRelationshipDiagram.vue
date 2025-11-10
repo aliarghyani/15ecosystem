@@ -15,9 +15,10 @@
           :key="step.category"
           class="category-row"
         >
-          <!-- Category Header -->
-          <div
-            class="category-header mb-4 p-5 rounded-xl shadow-lg"
+          <!-- Category Header (Clickable) -->
+          <NuxtLink
+            :to="localePath(`/categories/${step.category}`)"
+            class="category-header mb-4 p-5 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] cursor-pointer block"
             :class="getCategoryColorClass(step.category, 'badge')"
           >
             <div class="flex items-center justify-between flex-wrap gap-4">
@@ -38,7 +39,7 @@
                 </p>
               </div>
             </div>
-          </div>
+          </NuxtLink>
 
           <!-- Skills Grid -->
           <div class="skills-in-category grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">

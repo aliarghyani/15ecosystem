@@ -49,11 +49,14 @@
     "title": "{name} Category",
     "description": "Skills in this category",
     "backToHome": "Back to Home",
-    "viewAllCategories": "View All Categories",
+    "viewAllCategories": "All Categories",
+    "viewAllCategoriesDescription": "Explore all skill categories",
     "skillsInCategory": "Skills in this category",
     "noSkillsFound": "No skills found in this category"
   },
   "skills": {
+    "allSkills": "All Skills",
+    "allSkillsDescription": "Explore all 15 essential skills for 2025",
     "viewDetails": "View Details",
     "skillNumber": "Skill {number}",
     "whyItMatters": "Why It Matters",

@@ -132,16 +132,50 @@ export function verifyBookSkillRelationships(locale: 'fa' | 'en' = 'fa'): {
 
 /**
  * Generate a URL-friendly slug from book title and author
+ * Uses a hash-based approach for non-ASCII characters (like Persian)
  * @param title - Book title
  * @param author - Book author
  * @returns URL-friendly slug
  */
 export function getBookSlug(title: string, author: string): string {
-  const combined = `${title}-${author}`
+  // Create a unique identifier from title and author
+  const combined = `${title}|${author}`
+  
+  // For ASCII-only strings, create a readable slug
+  if (/^[\x00-\x7F]*$/.test(combined)) {
+    const slug = combined
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+    return slug || 'book' // Fallback if empty
+  }
+  
+  // For non-ASCII (Persian, etc.), create a hash-based slug
+  // Simple hash function for consistent slug generation
+  let hash = 0
+  for (let i = 0; i < combined.length; i++) {
+    const char = combined.charCodeAt(i)
+    hash = ((hash << 5) - hash) + char
+    hash = hash & hash // Convert to 32-bit integer
+  }
+  
+  // Use absolute value and convert to base36 for shorter slugs
+  const hashStr = Math.abs(hash).toString(36)
+  
+  // Also include first few ASCII characters if available for readability
+  const asciiPart = combined
+    .replace(/[^\x00-\x7F]/g, '')
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric with hyphens
-    .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
-  return combined
+    .replace(/[^a-z0-9]+/g, '-')
+    .substring(0, 20)
+    .replace(/^-+|-+$/g, '')
+  
+  // Ensure we always return a valid slug
+  if (asciiPart) {
+    return `${asciiPart}-${hashStr}`
+  }
+  // If no ASCII part, use hash with prefix
+  return `book-${hashStr}`
 }
 
 /**

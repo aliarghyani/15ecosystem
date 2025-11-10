@@ -56,7 +56,7 @@
       <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200">
         {{ $t('category.skillsInCategory') }}
       </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
         <SkillCard
           v-for="skill in skills"
           :key="skill.id"

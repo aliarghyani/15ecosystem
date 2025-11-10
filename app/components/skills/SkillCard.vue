@@ -1,50 +1,61 @@
 <template>
-  <UCard
-    :class="[
-      'hover-minimal dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm transition-all duration-300 hover:shadow-lg cursor-pointer',
-      variant === 'compact' ? 'p-4' : ''
-    ]"
-    @click="navigateToSkill"
+  <NuxtLink
+    :to="skillPath"
+    class="block no-underline h-full"
   >
-    <template #header>
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+    <UCard
+      :class="[
+        'skill-card hover-minimal dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm transition-all duration-300 hover:shadow-lg cursor-pointer flex flex-col h-full',
+        variant === 'compact' ? 'p-4' : ''
+      ]"
+    >
+      <!-- Header Section - Compact Design -->
+      <div 
+        class="skill-header pb-3 border-b border-gray-200 dark:border-gray-700"
+        :class="showDescription && skill.whyItMatters?.[locale] ? 'mb-3' : (showFooter ? 'mb-3' : 'mb-0')"
+      >
+        <!-- Top Row: Number Badge and Arrow -->
+        <div class="flex items-center justify-between mb-2">
+          <span
+            class="skill-number-badge w-7 h-7 rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 text-xs font-bold flex items-center justify-center"
+          >
             {{ skill.id }}
           </span>
-          <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
-            {{ skill.name[locale] || skill.name.fa }}
-          </h3>
+          <UIcon
+            name="i-heroicons-arrow-left"
+            :class="[
+              'text-gray-400 dark:text-gray-500 transition-transform text-sm',
+              locale === 'fa' ? 'rotate-180' : ''
+            ]"
+          />
         </div>
-        <UIcon
-          name="i-heroicons-arrow-left"
-          :class="[
-            'text-gray-400 dark:text-gray-500 transition-transform',
-            locale === 'fa' ? 'rotate-180' : ''
-          ]"
-        />
+        <!-- Bottom Row: Skill Name (Full Width, Can Wrap) -->
+        <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 leading-snug line-clamp-3">
+          {{ skill.name[locale] || skill.name.fa }}
+        </h3>
       </div>
-    </template>
 
-    <div v-if="showDescription && skill.whyItMatters?.[locale]" class="mt-2">
-      <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
-        {{ skill.whyItMatters[locale] || skill.whyItMatters.fa }}
-      </p>
-    </div>
+      <!-- Content Area - Only shows if description exists -->
+      <div v-if="showDescription && skill.whyItMatters?.[locale]" class="skill-content flex-1" :class="showFooter ? 'mb-3' : 'mb-0'">
+        <p class="text-xs text-gray-600 dark:text-gray-300 line-clamp-3 leading-relaxed">
+          {{ skill.whyItMatters[locale] || skill.whyItMatters.fa }}
+        </p>
+      </div>
 
-    <template #footer v-if="showFooter">
-      <UButton
-        :to="skillPath"
-        variant="soft"
-        color="primary"
-        block
-        size="sm"
-        class="mt-2"
-      >
-        {{ $t('skills.viewDetails') }}
-      </UButton>
-    </template>
-  </UCard>
+      <!-- Footer - Always at bottom, only if showFooter is true -->
+      <div v-if="showFooter" class="skill-footer mt-auto pt-3 border-t border-gray-200 dark:border-gray-700">
+        <UButton
+          variant="soft"
+          color="primary"
+          block
+          size="xs"
+          class="w-full pointer-events-none"
+        >
+          {{ $t('skills.viewDetails') }}
+        </UButton>
+      </div>
+    </UCard>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
@@ -67,12 +78,42 @@ const { locale } = useI18n()
 const localePath = useLocalePath()
 
 const skillPath = computed(() => {
-  // For now, use skill ID as slug - will be updated when skill pages are created
+  // Use skill ID as slug
   return localePath(`/skills/${props.skill.id}`)
 })
-
-const navigateToSkill = () => {
-  navigateTo(skillPath.value)
-}
 </script>
+
+<style scoped>
+.skill-card {
+  min-height: 0; /* Allow flex shrinking */
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-header {
+  flex-shrink: 0; /* Don't shrink header */
+}
+
+.skill-content {
+  flex-shrink: 1; /* Allow content to shrink if needed */
+  min-height: 0; /* Allow flex shrinking */
+}
+
+.skill-footer {
+  flex-shrink: 0; /* Don't shrink footer */
+  margin-top: auto; /* Push to bottom */
+}
+
+.skill-number-badge {
+  font-size: 0.75rem; /* text-xs */
+  line-height: 1;
+}
+
+/* Ensure cards stretch to same height in grids */
+:deep(.skill-card) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+</style>
 

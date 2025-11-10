@@ -49,11 +49,14 @@
     "title": "دسته‌بندی {name}",
     "description": "مهارت‌های این دسته‌بندی",
     "backToHome": "بازگشت به خانه",
-    "viewAllCategories": "مشاهده همه دسته‌بندی‌ها",
+    "viewAllCategories": "همه دسته‌بندی‌ها",
+    "viewAllCategoriesDescription": "کاوش در همه دسته‌بندی‌های مهارت",
     "skillsInCategory": "مهارت‌های این دسته‌بندی",
     "noSkillsFound": "هیچ مهارتی در این دسته‌بندی یافت نشد"
   },
   "skills": {
+    "allSkills": "همه مهارت‌ها",
+    "allSkillsDescription": "کاوش در ۱۵ مهارت ضروری برای ۲۰۲۵",
     "viewDetails": "مشاهده جزئیات",
     "skillNumber": "مهارت {number}",
     "whyItMatters": "چرا مهم است؟",

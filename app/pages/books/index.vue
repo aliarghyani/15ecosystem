@@ -136,8 +136,6 @@ import BookCard from '~/components/books/BookCard.vue'
 const { locale } = useI18n()
 const localePath = useLocalePath()
 
-// Debug: Log that we're on the books listing page
-console.log('[BOOKS LISTING] Page loaded, route:', useRoute().path)
 
 // Get books by category
 const healthBooks = computed(() => {

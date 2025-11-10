@@ -2,11 +2,11 @@
   <NuxtLink
     v-if="clickable"
     :to="bookPath"
-    class="block no-underline"
+    class="block no-underline h-full"
   >
     <UCard
       :class="[
-        'hover-minimal dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm transition-all duration-300 cursor-pointer hover:shadow-lg',
+        'hover-minimal dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm transition-all duration-300 cursor-pointer hover:shadow-lg h-full',
         variant === 'compact' ? 'p-3' : ''
       ]"
     >

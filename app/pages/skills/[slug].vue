@@ -85,16 +85,16 @@
       <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
         {{ $t('skills.relatedSkills') }}
       </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <SkillCard
-          v-for="relatedSkill in relatedSkills"
-          :key="relatedSkill.id"
-          :skill="relatedSkill"
-          :show-description="true"
-          :show-footer="false"
-          variant="compact"
-        />
-      </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+          <SkillCard
+            v-for="relatedSkill in relatedSkills"
+            :key="relatedSkill.id"
+            :skill="relatedSkill"
+            :show-description="true"
+            :show-footer="false"
+            variant="compact"
+          />
+        </div>
     </div>
 
     <!-- Skill Navigation -->
@@ -116,6 +116,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  // Ensure this page is handled correctly in SPA mode
+})
+
 import { getSkillById, getRelatedSkills } from '~/utils/skills'
 import { getBooksBySkillId } from '~/utils/books'
 import { getCategoryById } from '~/utils/categories'
@@ -129,10 +133,15 @@ const { locale } = useI18n()
 const localePath = useLocalePath()
 
 // Get skill slug from route (can be ID or slug)
-const slug = computed(() => route.params.slug as string)
+const slug = computed(() => {
+  const param = route.params?.slug
+  if (!param) return ''
+  return Array.isArray(param) ? param[0] : String(param)
+})
 
 // Parse skill ID from slug (handle both numeric IDs and slugs)
 const skillId = computed(() => {
+  if (!slug.value) return null
   const id = parseInt(slug.value, 10)
   if (!isNaN(id) && id >= 1 && id <= 15) {
     return id
@@ -140,55 +149,65 @@ const skillId = computed(() => {
   return null
 })
 
-// Get skill data
-const skill = computed<Skill | undefined>(() => {
+// Get skill data - use ref to avoid computed dependency issues
+const skill = ref<Skill | undefined>(undefined)
+const category = ref<Category | undefined>(undefined)
+const books = ref<ReturnType<typeof getBooksBySkillId>>([])
+const relatedSkills = ref<ReturnType<typeof getRelatedSkills>>([])
+
+// Load data when route changes
+watch([skillId, locale], () => {
   if (!skillId.value) {
-    return undefined
+    skill.value = undefined
+    category.value = undefined
+    books.value = []
+    relatedSkills.value = []
+    return
   }
-  return getSkillById(skillId.value, locale.value as 'fa' | 'en')
-})
-
-// Get category for breadcrumb
-const category = computed<Category | undefined>(() => {
-  if (!skill.value) {
-    return undefined
-  }
-  return getCategoryById(skill.value.category, locale.value as 'fa' | 'en')
-})
-
-// Get books for this skill
-const books = computed(() => {
-  if (!skill.value) {
-    return []
-  }
-  return getBooksBySkillId(skill.value.id, locale.value as 'fa' | 'en')
-})
-
-// Get related skills
-const relatedSkills = computed(() => {
-  if (!skill.value) {
-    return []
-  }
-  return getRelatedSkills(skill.value.id, locale.value as 'fa' | 'en')
-})
-
-// Set page title
-useHead({
-  title: computed(() => {
+  
+  try {
+    const currentLocale = locale.value as 'fa' | 'en'
+    skill.value = getSkillById(skillId.value, currentLocale)
+    
     if (skill.value) {
-      return `${skill.value.name[locale.value] || skill.value.name.fa} - 15ecosystem`
+      category.value = getCategoryById(skill.value.category, currentLocale)
+      books.value = getBooksBySkillId(skill.value.id, currentLocale)
+      relatedSkills.value = getRelatedSkills(skill.value.id, currentLocale)
+    } else {
+      category.value = undefined
+      books.value = []
+      relatedSkills.value = []
     }
-    return 'Skill Not Found - 15ecosystem'
-  }),
+  } catch (error) {
+    console.error('Error loading skill:', error)
+    skill.value = undefined
+    category.value = undefined
+    books.value = []
+    relatedSkills.value = []
+  }
+}, { immediate: true })
+
+// Set page title - use computed to avoid infinite loops
+const pageTitle = computed(() => {
+  if (skill.value) {
+    return `${skill.value.name[locale.value] || skill.value.name.fa} - 15ecosystem`
+  }
+  return 'Skill Not Found - 15ecosystem'
+})
+
+const pageDescription = computed(() => {
+  if (skill.value) {
+    return skill.value.whyItMatters?.[locale.value] || skill.value.whyItMatters?.fa || ''
+  }
+  return 'Skill not found'
+})
+
+useHead({
+  title: pageTitle,
   meta: [
     {
       name: 'description',
-      content: computed(() => {
-        if (skill.value) {
-          return skill.value.whyItMatters?.[locale.value] || skill.value.whyItMatters?.fa || ''
-        }
-        return 'Skill not found'
-      }),
+      content: pageDescription,
     },
   ],
 })
