@@ -4,7 +4,8 @@
       <div class="mx-auto max-w-6xl px-4 pt-2">
         <div
           class="backdrop-blur-md bg-white/80 dark:bg-slate-900/70 shadow-md rounded-2xl border border-white/30 dark:border-slate-700/50 pointer-events-auto">
-          <div class="flex items-center justify-between px-2 py-2">
+          <!-- Desktop Navigation -->
+          <div class="hidden lg:flex items-center justify-between px-2 py-2">
             <div class="flex items-center gap-3">
               <!-- Home -->
               <div class="flex items-center gap-1.5">
@@ -12,7 +13,7 @@
                   <UButton class="cursor-pointer" :class="[isActive('home') ? activeClass : inactiveClass]"
                     variant="soft" square icon="i-twemoji-house" :aria-label="$t('nav.home')" @click="goTo('home')" />
                 </UTooltip>
-                <button type="button" class="hidden lg:inline-flex text-sm font-medium transition-colors"
+                <button type="button" class="text-sm font-medium transition-colors"
                   :class="[isActive('home') ? labelActiveClass : labelInactiveClass]" @click="goTo('home')">
                   {{ $t('nav.home') }}
                 </button>
@@ -25,7 +26,7 @@
                     variant="soft" square icon="i-twemoji-hammer-and-wrench" :aria-label="$t('nav.categories')"
                     @click="goTo('categories')" />
                 </UTooltip>
-                <button type="button" class="hidden lg:inline-flex text-sm font-medium transition-colors"
+                <button type="button" class="text-sm font-medium transition-colors"
                   :class="[isActive('categories') ? labelActiveClass : labelInactiveClass]" @click="goTo('categories')">
                   {{ $t('nav.categories') }}
                 </button>
@@ -38,7 +39,7 @@
                     variant="soft" square icon="i-twemoji-briefcase" :aria-label="$t('nav.skills')"
                     @click="goTo('skills')" />
                 </UTooltip>
-                <button type="button" class="hidden lg:inline-flex text-sm font-medium transition-colors"
+                <button type="button" class="text-sm font-medium transition-colors"
                   :class="[isActive('skills') ? labelActiveClass : labelInactiveClass]" @click="goTo('skills')">
                   {{ $t('nav.skills') }}
                 </button>
@@ -51,7 +52,7 @@
                     variant="soft" square icon="i-heroicons-book-open" :aria-label="$t('nav.books')"
                     @click="goTo('books')" />
                 </UTooltip>
-                <button type="button" class="hidden lg:inline-flex text-sm font-medium transition-colors"
+                <button type="button" class="text-sm font-medium transition-colors"
                   :class="[isActive('books') ? labelActiveClass : labelInactiveClass]" @click="goTo('books')">
                   {{ $t('nav.books') }}
                 </button>
@@ -64,7 +65,7 @@
                     variant="soft" square icon="i-heroicons-document-text" :aria-label="$t('nav.transcript')"
                     @click="goTo('transcript')" />
                 </UTooltip>
-                <button type="button" class="hidden lg:inline-flex text-sm font-medium transition-colors"
+                <button type="button" class="text-sm font-medium transition-colors"
                   :class="[isActive('transcript') ? labelActiveClass : labelInactiveClass]" @click="goTo('transcript')">
                   {{ $t('nav.transcript') }}
                 </button>
@@ -77,7 +78,7 @@
                     variant="soft" square icon="i-heroicons-clipboard-document-list" :aria-label="$t('nav.summary')"
                     @click="goTo('summary')" />
                 </UTooltip>
-                <button type="button" class="hidden lg:inline-flex text-sm font-medium transition-colors"
+                <button type="button" class="text-sm font-medium transition-colors"
                   :class="[isActive('summary') ? labelActiveClass : labelInactiveClass]" @click="goTo('summary')">
                   {{ $t('nav.summary') }}
                 </button>
@@ -89,6 +90,96 @@
               <ThemeCustomizer />
             </div>
           </div>
+
+          <!-- Mobile Navigation -->
+          <div class="lg:hidden flex items-center justify-between px-2 py-2">
+            <div class="flex items-center gap-2">
+              <!-- Hamburger Menu Button -->
+              <UButton
+                :icon="isMobileMenuOpen ? 'i-heroicons-x-mark' : 'i-heroicons-bars-3'"
+                variant="soft"
+                square
+                :aria-label="isMobileMenuOpen ? $t('nav.closeMenu') : $t('nav.openMenu')"
+                @click="toggleMobileMenu"
+              />
+              <!-- Logo/Title (optional) -->
+              <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ $t('nav.home') }}</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <LanguageSwitcher />
+              <ThemeCustomizer />
+            </div>
+          </div>
+
+          <!-- Mobile Menu Dropdown -->
+          <Transition
+            enter-active-class="transition ease-out duration-200"
+            enter-from-class="opacity-0 -translate-y-1"
+            enter-to-class="opacity-100 translate-y-0"
+            leave-active-class="transition ease-in duration-150"
+            leave-from-class="opacity-100 translate-y-0"
+            leave-to-class="opacity-0 -translate-y-1"
+          >
+            <div v-if="isMobileMenuOpen" class="lg:hidden border-t border-gray-200 dark:border-slate-700 mt-2 pt-2 pb-2">
+              <div class="flex flex-col gap-1 px-2">
+                <UButton
+                  :class="[isActive('home') ? activeClass : inactiveClass]"
+                  variant="soft"
+                  block
+                  :icon="'i-twemoji-house'"
+                  @click="goTo('home'); closeMobileMenu()"
+                >
+                  {{ $t('nav.home') }}
+                </UButton>
+                <UButton
+                  :class="[isActive('categories') ? activeClass : inactiveClass]"
+                  variant="soft"
+                  block
+                  :icon="'i-twemoji-hammer-and-wrench'"
+                  @click="goTo('categories'); closeMobileMenu()"
+                >
+                  {{ $t('nav.categories') }}
+                </UButton>
+                <UButton
+                  :class="[isActive('skills') ? activeClass : inactiveClass]"
+                  variant="soft"
+                  block
+                  :icon="'i-twemoji-briefcase'"
+                  @click="goTo('skills'); closeMobileMenu()"
+                >
+                  {{ $t('nav.skills') }}
+                </UButton>
+                <UButton
+                  :class="[isActive('books') ? activeClass : inactiveClass]"
+                  variant="soft"
+                  block
+                  :icon="'i-heroicons-book-open'"
+                  @click="goTo('books'); closeMobileMenu()"
+                >
+                  {{ $t('nav.books') }}
+                </UButton>
+                <UButton
+                  :class="[isActive('transcript') ? activeClass : inactiveClass]"
+                  variant="soft"
+                  block
+                  :icon="'i-heroicons-document-text'"
+                  @click="goTo('transcript'); closeMobileMenu()"
+                >
+                  {{ $t('nav.transcript') }}
+                </UButton>
+                <UButton
+                  :class="[isActive('summary') ? activeClass : inactiveClass]"
+                  variant="soft"
+                  block
+                  :icon="'i-heroicons-clipboard-document-list'"
+                  @click="goTo('summary'); closeMobileMenu()"
+                >
+                  {{ $t('nav.summary') }}
+                </UButton>
+              </div>
+            </div>
+          </Transition>
         </div>
       </div>
     </nav>
@@ -109,6 +200,7 @@ const labelActiveClass = 'text-primary-700 dark:text-primary-400'
 const labelInactiveClass = 'text-gray-600 dark:text-gray-300 hover:text-primary-400'
 
 const currentPath = computed(() => route.path)
+const isMobileMenuOpen = ref(false)
 
 const isActive = (id: string) => {
   if (id === 'home') {
@@ -130,5 +222,32 @@ async function goTo(id: string) {
     }
   }
 }
+
+function toggleMobileMenu() {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+function closeMobileMenu() {
+  isMobileMenuOpen.value = false
+}
+
+// Close mobile menu when route changes
+watch(() => route.path, () => {
+  closeMobileMenu()
+})
+
+// Close mobile menu when clicking outside
+onMounted(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as HTMLElement
+    if (isMobileMenuOpen.value && !target.closest('nav')) {
+      closeMobileMenu()
+    }
+  }
+  document.addEventListener('click', handleClickOutside)
+  onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside)
+  })
+})
 </script>
 

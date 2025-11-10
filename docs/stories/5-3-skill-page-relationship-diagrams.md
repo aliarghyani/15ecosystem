@@ -1,7 +1,7 @@
 # Story 5.3: Skill Page Relationship Diagrams
 
 **Epic:** Epic 5 - Visual Diagrams  
-**Status:** in-progress  
+**Status:** done  
 **Story ID:** 5-3-skill-page-relationship-diagrams
 
 ## User Story

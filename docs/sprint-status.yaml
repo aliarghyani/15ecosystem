@@ -71,12 +71,12 @@ development_status:
   epic-5: backlog
   5-1-category-structure-diagram-3-categories-modern-design: review
   5-2-skill-relationship-diagram: review
-  5-3-skill-page-relationship-diagrams: in-progress
+  5-3-skill-page-relationship-diagrams: done
   epic-5-retrospective: optional
 
   # Epic 6: Navigation & Polish
   epic-6: backlog
-  6-1-main-navigation-menu-bilingual: backlog
+  6-1-main-navigation-menu-bilingual: done
   6-2-breadcrumb-navigation: backlog
   6-3-skill-navigation-previous-next: backlog
   6-4-mobile-responsiveness-modern-design-polish: backlog

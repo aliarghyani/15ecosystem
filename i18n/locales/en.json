@@ -17,7 +17,9 @@
     "books": "Books",
     "transcript": "Transcript",
     "summary": "Summary",
-    "theme": "Theme"
+    "theme": "Theme",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "theme": {
     "customizer": "Theme Customization",

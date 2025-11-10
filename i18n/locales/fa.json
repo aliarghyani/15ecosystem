@@ -17,7 +17,9 @@
     "books": "کتاب‌ها",
     "transcript": "متن کامل",
     "summary": "خلاصه",
-    "theme": "تم"
+    "theme": "تم",
+    "openMenu": "باز کردن منو",
+    "closeMenu": "بستن منو"
   },
   "theme": {
     "customizer": "سفارشی سازی تم",
