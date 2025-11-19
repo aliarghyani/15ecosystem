@@ -103,20 +103,24 @@ development_status:
   8-0-excel-import-video-data-extraction: done
   8-0a-video-summary-data-structure-storage: done
   8-0b-excel-data-enrichment-skill-category-mapping: done
-  8-1-video-transcript-data-structure-storage: done
-  8-2-text-analysis-utilities-core-functions: done
-  8-3-analysis-report-types-data-models: done
-  8-4-report-generation-engine: backlog
-  8-5-analytics-dashboard-page-structure: backlog
-  8-6-word-frequency-report-component: backlog
-  8-7-mention-report-component: backlog
-  8-8-top-words-report-component: backlog
-  8-9-comparison-report-component: backlog
-  8-10-category-skill-based-analysis: backlog
-  8-11-advanced-search-custom-queries: backlog
-  8-12-report-export-sharing: backlog
-  8-13-analytics-navigation-integration: backlog
-  8-14-performance-optimization-caching: backlog
-  8-15-analytics-dashboard-polish-ux: backlog
+  8-1-youtube-url-extraction-from-google-sheets: backlog
+  8-2-yt-dlp-subtitle-download-automation: backlog
+  8-3-vtt-transcript-cleaning-processing: backlog
+  8-4-youtube-transcript-extraction-workflow-integration: backlog
+  8-5-video-transcript-data-structure-storage: done
+  8-6-text-analysis-utilities-core-functions: done
+  8-7-analysis-report-types-data-models: done
+  8-8-report-generation-engine: backlog
+  8-9-analytics-dashboard-page-structure: backlog
+  8-10-word-frequency-report-component: backlog
+  8-11-mention-report-component: backlog
+  8-12-top-words-report-component: backlog
+  8-13-comparison-report-component: backlog
+  8-14-category-skill-based-analysis: backlog
+  8-15-advanced-search-custom-queries: backlog
+  8-16-report-export-sharing: backlog
+  8-17-analytics-navigation-integration: backlog
+  8-18-performance-optimization-caching: backlog
+  8-19-analytics-dashboard-polish-ux: backlog
   epic-8-retrospective: optional
 

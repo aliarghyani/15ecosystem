@@ -1095,7 +1095,138 @@ So that videos are properly categorized and searchable.
 - Output enriched video data files
 - Create mapping documentation for manual review
 
-### Story 8.1: Video Transcript Data Structure & Storage
+### Story 8.1: YouTube URL Extraction from Google Sheets
+
+As a content manager,
+I want to extract YouTube URLs from Google Sheets containing multiple playlists,
+So that I can process transcripts for bulk video analysis.
+
+**Acceptance Criteria:**
+
+**Given** I have a Google Sheet with multiple playlist tabs
+**When** I extract URLs from all tabs
+**Then** I have:
+- All YouTube URLs extracted from each sheet tab
+- URLs deduplicated across all tabs
+- URLs sorted alphabetically
+- Single file containing all unique URLs (one per line)
+- URL validation (proper YouTube format)
+- Error handling for invalid or missing data
+- Progress reporting for large datasets (~100+ videos)
+
+**Prerequisites:** None (can start in parallel with other data preparation)
+
+**Technical Notes:**
+- Create `scripts/extract-google-sheet-urls.ts`
+- Use Google Sheets API or CSV export for data access
+- Parse each tab separately (ignore header rows with "Data from: playlist_url")
+- Extract URLs from column B (Title | URL | Upload Date | Views format)
+- Implement deduplication logic
+- Generate `links.txt` file with one URL per line
+- Add validation for YouTube URL formats
+- Handle both playlist URLs and individual video URLs
+- Support both direct API access and manual CSV export workflows
+
+### Story 8.2: yt-dlp Subtitle Download Automation
+
+As a developer,
+I want automated subtitle downloading using yt-dlp,
+So that I can efficiently obtain transcripts for bulk video processing.
+
+**Acceptance Criteria:**
+
+**Given** I have a list of YouTube URLs
+**When** I run the download automation
+**Then** I have:
+- Auto-generated subtitles downloaded for all videos
+- Subtitles in VTT format with proper encoding
+- Filenames sanitized and structured
+- Support for both Persian (fa) and English (en) subtitles
+- Download progress tracking and error reporting
+- Retry logic for failed downloads
+- Bandwidth and rate limiting considerations
+- Clean folder structure for subtitle files
+
+**Prerequisites:** Story 8.1
+
+**Technical Notes:**
+- Create `scripts/download-subtitles.ts` or shell script wrapper
+- Use yt-dlp command: `yt-dlp --write-auto-subs --sub-lang fa,en --skip-download -a links.txt`
+- Ensure VTT format output with `--sub-format vtt`
+- Implement filename sanitization (remove special characters, length limits)
+- Add progress monitoring for bulk downloads
+- Handle API rate limits and retry failed downloads
+- Support both automated script execution and manual command generation
+- Organize output into structured directories by language/video ID
+
+### Story 8.3: VTT Transcript Cleaning & Processing
+
+As a developer,
+I want to clean VTT subtitle files into readable transcripts,
+So that I can prepare text for analysis and storage.
+
+**Acceptance Criteria:**
+
+**Given** I have VTT subtitle files from yt-dlp downloads
+**When** I process them with cleaning scripts
+**Then** I have:
+- Clean text transcripts without timestamps or markup
+- Preserved Persian and English text (UTF-8 encoding)
+- No blank lines or formatting artifacts
+- File naming format: "TITLE (VIDEO_ID).txt"
+- Both Python and Node.js cleaning script implementations
+- Progress reporting and error handling
+- Support for multiple subtitle languages per video
+- Organized output in clean/ folder structure
+
+**Prerequisites:** Story 8.2
+
+**Technical Notes:**
+- Create `scripts/clean-vtt.py` (Python implementation)
+- Create `scripts/clean-vtt.js` (Node.js implementation)
+- Remove VTT timestamps, <c> tags, and markup
+- Preserve line breaks for paragraph structure
+- Handle UTF-8 encoding properly for Persian text
+- Extract video title and ID from VTT metadata
+- Generate clean filenames using title and video ID
+- Add progress indicators and file counting
+- Error handling for missing subtitles, invalid VTT files
+- Support processing entire directories of VTT files
+- Use only built-in libraries (no external dependencies)
+
+### Story 8.4: YouTube Transcript Extraction Workflow Integration
+
+As a developer,
+I want an integrated workflow for end-to-end transcript extraction,
+So that I can process YouTube videos from URLs to clean transcripts efficiently.
+
+**Acceptance Criteria:**
+
+**Given** I have YouTube video URLs
+**When** I run the complete extraction workflow
+**Then** I have:
+- Automated pipeline: URLs → Subtitles → Clean Transcripts
+- Clear step-by-step execution plan
+- Error handling and recovery at each step
+- Progress tracking across the entire pipeline
+- Integration with existing transcript storage system
+- Support for incremental processing (resume after failures)
+- Quality validation of extracted transcripts
+- Ready-to-use transcripts for analysis system
+
+**Prerequisites:** Story 8.1, 8.2, 8.3
+
+**Technical Notes:**
+- Create `scripts/extract-transcripts-workflow.ts` or shell script
+- Orchestrate the three-step process: extract → download → clean
+- Add validation between steps (check file existence, formats)
+- Implement resume capability for interrupted workflows
+- Generate summary reports of processed videos
+- Integrate output with existing transcript data structure (Story 8.5)
+- Add configuration options for different processing scenarios
+- Support both batch processing and individual video processing
+
+### Story 8.5: Video Transcript Data Structure & Storage
 
 As a developer,
 I want a structured way to store and access video transcripts,
@@ -1115,7 +1246,7 @@ So that I can perform analysis on the full text of all videos.
 - Utility functions for transcript operations
 - Content-based skill/category mapping refinement (using transcript analysis)
 
-**Prerequisites:** Story 8.0b (Data enrichment)
+**Prerequisites:** Story 8.0b (Data enrichment), Story 8.4 (Workflow integration)
 
 **Technical Notes:**
 - Define `VideoTranscript` interface in `app/types/transcripts.ts` (already exists)
@@ -1129,7 +1260,7 @@ So that I can perform analysis on the full text of all videos.
 - Once transcripts are available, refine skill/category mappings from Story 8.0b using content analysis
 - Use transcript content to improve writer and book identification
 
-### Story 8.2: Text Analysis Utilities & Core Functions
+### Story 8.6: Text Analysis Utilities & Core Functions
 
 As a developer,
 I want text analysis utilities for processing video transcripts and summaries,
@@ -1151,7 +1282,7 @@ So that I can generate various analytics reports.
 - Support for analyzing both transcripts and summaries
 - Content-based skill/category mapping refinement
 
-**Prerequisites:** Story 8.1, Story 8.0a (Summaries)
+**Prerequisites:** Story 8.5, Story 8.0a (Summaries)
 
 **Technical Notes:**
 - Create `app/utils/text-analysis.ts` with core analysis functions (already exists)
@@ -1168,7 +1299,7 @@ So that I can generate various analytics reports.
 - Extend functions to work with both transcripts and summaries
 - Use analysis to refine skill/category mappings from Story 8.0b
 
-### Story 8.3: Analysis Report Types & Data Models
+### Story 8.7: Analysis Report Types & Data Models
 
 As a developer,
 I want defined report types and data models,
@@ -1188,7 +1319,7 @@ So that I can structure analysis results consistently.
 - TypeScript interfaces for all report types
 - Report metadata (generated date, filters applied, etc.)
 
-**Prerequisites:** Story 8.2
+**Prerequisites:** Story 8.6
 
 **Technical Notes:**
 - Define report types in `app/types/analytics.ts`
@@ -1200,7 +1331,7 @@ So that I can structure analysis results consistently.
 - Support filtering by video, category, skill, date range
 - Include percentage calculations and relative frequencies
 
-### Story 8.4: Report Generation Engine
+### Story 8.8: Report Generation Engine
 
 As a developer,
 I want a report generation engine,
@@ -1220,7 +1351,7 @@ So that I can create various analysis reports from video transcripts.
 - Custom search reports (user-defined queries)
 - Export reports (JSON, CSV formats)
 
-**Prerequisites:** Story 8.2, 8.3
+**Prerequisites:** Story 8.6, 8.7
 
 **Technical Notes:**
 - Create `app/utils/report-generator.ts`
@@ -1235,7 +1366,7 @@ So that I can create various analysis reports from video transcripts.
 - Handle large datasets efficiently (127 videos worth of text)
 - Support both Persian and English analysis
 
-### Story 8.5: Analytics Dashboard Page Structure
+### Story 8.9: Analytics Dashboard Page Structure
 
 As a user,
 I want an analytics dashboard page,
@@ -1256,7 +1387,7 @@ So that I can access and view various analysis reports.
 - Error handling for invalid queries
 - Bilingual support (Persian/English)
 
-**Prerequisites:** Story 8.4
+**Prerequisites:** Story 8.8
 
 **Technical Notes:**
 - Create `app/pages/analytics/index.vue`
@@ -1291,7 +1422,7 @@ So that I can understand how often specific words or phrases appear across video
 - Filter by video, category, or skill
 - Sort by frequency or video date
 
-**Prerequisites:** Story 8.5
+**Prerequisites:** Story 8.9
 
 **Technical Notes:**
 - Create `app/components/analytics/WordFrequencyReport.vue`
@@ -1324,7 +1455,7 @@ So that I can track how often specific people or ideas are referenced.
 - Links to video transcripts with highlighted mentions
 - Filter by video, category, or skill
 
-**Prerequisites:** Story 8.5
+**Prerequisites:** Story 8.9
 
 **Technical Notes:**
 - Create `app/components/analytics/MentionReport.vue`
@@ -1357,7 +1488,7 @@ So that I can understand the main topics and themes.
 - Click on word to see detailed frequency report
 - Support for both single words and phrases
 
-**Prerequisites:** Story 8.5
+**Prerequisites:** Story 8.9
 
 **Technical Notes:**
 - Create `app/components/analytics/TopWordsReport.vue`
@@ -1388,7 +1519,7 @@ So that I can understand relative frequency and usage patterns.
 - Statistical summary (total, average, max, min)
 - Export comparison data
 
-**Prerequisites:** Story 8.5
+**Prerequisites:** Story 8.9
 
 **Technical Notes:**
 - Create `app/components/analytics/ComparisonReport.vue`
@@ -1418,7 +1549,7 @@ So that I can understand topic distribution within specific areas.
 - Visual breakdown by category/skill
 - Option to compare across categories
 
-**Prerequisites:** Story 8.5
+**Prerequisites:** Story 8.9
 
 **Technical Notes:**
 - Extend report generator to support category/skill filtering
@@ -1448,7 +1579,7 @@ So that I can find specific patterns or combinations of terms.
 - View search history
 - Get search suggestions based on available data
 
-**Prerequisites:** Story 8.5
+**Prerequisites:** Story 8.9
 
 **Technical Notes:**
 - Create `app/components/analytics/AdvancedSearch.vue`
@@ -1479,7 +1610,7 @@ So that I can use the data in other tools or share insights.
 - Include report metadata in exports
 - Choose export format and options
 
-**Prerequisites:** Story 8.5
+**Prerequisites:** Story 8.9
 
 **Technical Notes:**
 - Create `app/utils/report-export.ts`
@@ -1508,7 +1639,7 @@ So that I can easily find the analysis features.
 - Breadcrumb navigation on analytics pages
 - Link from video pages to analytics (optional)
 
-**Prerequisites:** Story 8.5
+**Prerequisites:** Story 8.9
 
 **Technical Notes:**
 - Update `app/components/common/TopNav.vue`
@@ -1537,7 +1668,7 @@ So that analysis of 127 videos runs efficiently.
 - Memory usage is optimized
 - Lazy loading for transcript data
 
-**Prerequisites:** Story 8.4
+**Prerequisites:** Story 8.8
 
 **Technical Notes:**
 - Implement memoization for report generation
