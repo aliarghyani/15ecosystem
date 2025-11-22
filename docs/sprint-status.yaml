@@ -116,7 +116,7 @@ development_status:
     status: done
     description: "Cache channel + video metadata with TTL (e.g. 1h), only refetch when new videos appear."
   8-4c-youtube-transcript-cache-and-storage:
-    status: backlog
+    status: done
     description: "Store transcripts in local JSON files and avoid refetching if already stored."
   8-5-video-transcript-data-structure-storage: done
   8-6-text-analysis-utilities-core-functions: done
