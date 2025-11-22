@@ -177,6 +177,32 @@ See `vercel.json` for deployment configuration.
 This project follows the structure and patterns from:
 - [nuxt-portfolio](https://github.com/aliarghyani/nuxt-portfolio)
 
+## YouTube Integration
+
+This project integrates with the YouTube Data API v3 to fetch channel information and videos.
+
+### Setup
+
+1. Get a YouTube Data API v3 key from Google Cloud Console.
+2. Create a `.env` file in the root directory (see `.env.example`):
+   ```
+   NUXT_YOUTUBE_API_KEY=your_api_key
+   NUXT_YOUTUBE_CHANNEL_HANDLES=@YourChannelHandle
+   ```
+
+### API Endpoints
+
+Internal API routes are available at `/api/youtube/*`:
+
+- `GET /api/youtube/channel?handle=@handle`: Get channel details.
+- `GET /api/youtube/playlists?handle=@handle`: Get playlists.
+- `GET /api/youtube/uploads?handle=@handle`: Get latest uploads.
+- `GET /api/youtube/videos?ids=id1,id2`: Get video details.
+
+### Development
+
+Visit `/dev/youtube` to test the integration.
+
 ## 📝 License
 
 Private project - All rights reserved

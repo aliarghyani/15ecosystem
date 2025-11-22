@@ -122,6 +122,19 @@
                   {{ $t('nav.summary') }}
                 </button>
               </div>
+
+              <!-- Analytics -->
+              <div class="flex items-center gap-1.5">
+                <UTooltip :text="$t('nav.analytics')">
+                  <UButton class="cursor-pointer" :class="[isActive('analytics') ? activeClass : inactiveClass]"
+                    variant="soft" square icon="i-twemoji-chart-increasing" :aria-label="$t('nav.analytics')"
+                    @click="goTo('analytics')" />
+                </UTooltip>
+                <button type="button" class="text-sm font-medium transition-colors"
+                  :class="[isActive('analytics') ? labelActiveClass : labelInactiveClass]" @click="goTo('analytics')">
+                  {{ $t('nav.analytics') }}
+                </button>
+              </div>
             </div>
 
             <div class="flex items-center gap-2">
@@ -134,13 +147,8 @@
           <div class="lg:hidden flex items-center justify-between px-2 py-2">
             <div class="flex items-center gap-2">
               <!-- Hamburger Menu Button -->
-              <UButton
-                :icon="isMobileMenuOpen ? 'i-twemoji-cross-mark' : 'i-twemoji-hamburger'"
-                variant="soft"
-                square
-                :aria-label="isMobileMenuOpen ? $t('nav.closeMenu') : $t('nav.openMenu')"
-                @click="toggleMobileMenu"
-              />
+              <UButton :icon="isMobileMenuOpen ? 'i-twemoji-cross-mark' : 'i-twemoji-hamburger'" variant="soft" square
+                :aria-label="isMobileMenuOpen ? $t('nav.closeMenu') : $t('nav.openMenu')" @click="toggleMobileMenu" />
               <!-- Logo/Title (optional) -->
               <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ $t('nav.home') }}</span>
             </div>
@@ -152,96 +160,51 @@
           </div>
 
           <!-- Mobile Menu Dropdown -->
-          <Transition
-            enter-active-class="transition ease-out duration-200"
-            enter-from-class="opacity-0 -translate-y-1"
-            enter-to-class="opacity-100 translate-y-0"
-            leave-active-class="transition ease-in duration-150"
-            leave-from-class="opacity-100 translate-y-0"
-            leave-to-class="opacity-0 -translate-y-1"
-          >
-            <div v-if="isMobileMenuOpen" class="lg:hidden border-t border-gray-200 dark:border-slate-700 mt-2 pt-2 pb-2">
+          <Transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 -translate-y-1"
+            enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150"
+            leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 -translate-y-1">
+            <div v-if="isMobileMenuOpen"
+              class="lg:hidden border-t border-gray-200 dark:border-slate-700 mt-2 pt-2 pb-2">
               <div class="flex flex-col gap-1 px-2">
-                <UButton
-                  :class="[isActive('home') ? activeClass : inactiveClass]"
-                  variant="soft"
-                  block
-                  :icon="'i-twemoji-house'"
-                  @click="goTo('home'); closeMobileMenu()"
-                >
+                <UButton :class="[isActive('home') ? activeClass : inactiveClass]" variant="soft" block
+                  :icon="'i-twemoji-house'" @click="goTo('home'); closeMobileMenu()">
                   {{ $t('nav.home') }}
                 </UButton>
-                <UButton
-                  :class="[isActive('categories') ? activeClass : inactiveClass]"
-                  variant="soft"
-                  block
-                  :icon="'i-twemoji-hammer-and-wrench'"
-                  @click="goTo('categories'); closeMobileMenu()"
-                >
+                <UButton :class="[isActive('categories') ? activeClass : inactiveClass]" variant="soft" block
+                  :icon="'i-twemoji-hammer-and-wrench'" @click="goTo('categories'); closeMobileMenu()">
                   {{ $t('nav.categories') }}
                 </UButton>
-                <UButton
-                  :class="[isActive('skills') ? activeClass : inactiveClass]"
-                  variant="soft"
-                  block
-                  :icon="'i-twemoji-briefcase'"
-                  @click="goTo('skills'); closeMobileMenu()"
-                >
+                <UButton :class="[isActive('skills') ? activeClass : inactiveClass]" variant="soft" block
+                  :icon="'i-twemoji-briefcase'" @click="goTo('skills'); closeMobileMenu()">
                   {{ $t('nav.skills') }}
                 </UButton>
-                <UButton
-                  :class="[isActive('books') ? activeClass : inactiveClass]"
-                  variant="soft"
-                  block
-                  :icon="'i-twemoji-open-book'"
-                  @click="goTo('books'); closeMobileMenu()"
-                >
+                <UButton :class="[isActive('books') ? activeClass : inactiveClass]" variant="soft" block
+                  :icon="'i-twemoji-open-book'" @click="goTo('books'); closeMobileMenu()">
                   {{ $t('nav.books') }}
                 </UButton>
-                <UButton
-                  :class="[isActive('videos') ? activeClass : inactiveClass]"
-                  variant="soft"
-                  block
-                  :icon="'i-twemoji-video-camera'"
-                  @click="goTo('videos'); closeMobileMenu()"
-                >
+                <UButton :class="[isActive('videos') ? activeClass : inactiveClass]" variant="soft" block
+                  :icon="'i-twemoji-video-camera'" @click="goTo('videos'); closeMobileMenu()">
                   {{ $t('nav.videos') }}
                 </UButton>
-                <UButton
-                  :class="[isActive('playlists') ? activeClass : inactiveClass]"
-                  variant="soft"
-                  block
-                  :icon="'i-twemoji-video-camera'"
-                  @click="goTo('playlists'); closeMobileMenu()"
-                >
+                <UButton :class="[isActive('playlists') ? activeClass : inactiveClass]" variant="soft" block
+                  :icon="'i-twemoji-video-camera'" @click="goTo('playlists'); closeMobileMenu()">
                   {{ $t('nav.playlists') }}
                 </UButton>
-                <UButton
-                  :class="[isActive('writers') ? activeClass : inactiveClass]"
-                  variant="soft"
-                  block
-                  :icon="'i-twemoji-busts-in-silhouette'"
-                  @click="goTo('writers'); closeMobileMenu()"
-                >
+                <UButton :class="[isActive('writers') ? activeClass : inactiveClass]" variant="soft" block
+                  :icon="'i-twemoji-busts-in-silhouette'" @click="goTo('writers'); closeMobileMenu()">
                   {{ $t('nav.writers') }}
                 </UButton>
-                <UButton
-                  :class="[isActive('transcript') ? activeClass : inactiveClass]"
-                  variant="soft"
-                  block
-                  :icon="'i-twemoji-scroll'"
-                  @click="goTo('transcript'); closeMobileMenu()"
-                >
+                <UButton :class="[isActive('transcript') ? activeClass : inactiveClass]" variant="soft" block
+                  :icon="'i-twemoji-scroll'" @click="goTo('transcript'); closeMobileMenu()">
                   {{ $t('nav.transcript') }}
                 </UButton>
-                <UButton
-                  :class="[isActive('summary') ? activeClass : inactiveClass]"
-                  variant="soft"
-                  block
-                  :icon="'i-twemoji-clipboard'"
-                  @click="goTo('summary'); closeMobileMenu()"
-                >
+                <UButton :class="[isActive('summary') ? activeClass : inactiveClass]" variant="soft" block
+                  :icon="'i-twemoji-clipboard'" @click="goTo('summary'); closeMobileMenu()">
                   {{ $t('nav.summary') }}
+                </UButton>
+                <UButton :class="[isActive('analytics') ? activeClass : inactiveClass]" variant="soft" block
+                  :icon="'i-twemoji-chart-increasing'" @click="goTo('analytics'); closeMobileMenu()">
+                  {{ $t('nav.analytics') }}
                 </UButton>
               </div>
             </div>
@@ -316,4 +279,3 @@ onMounted(() => {
   })
 })
 </script>
-

@@ -8,7 +8,9 @@
     "books": "Books",
     "language": "Language",
     "english": "English",
-    "persian": "Persian"
+    "persian": "Persian",
+    "relatedTo": "related to",
+    "clearFilter": "Clear Filter"
   },
   "nav": {
     "home": "Home",
@@ -22,7 +24,8 @@
     "summary": "Summary",
     "theme": "Theme",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "analytics": "Analytics"
   },
   "theme": {
     "customizer": "Theme Customization",
@@ -211,10 +214,5 @@
     "backToPlaylists": "Back to Playlists",
     "notFound": "Playlist not found",
     "loading": "Loading playlist..."
-  },
-  "common": {
-    "relatedTo": "related to",
-    "clearFilter": "Clear Filter"
   }
 }
-

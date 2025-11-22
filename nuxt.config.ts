@@ -4,6 +4,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
+  runtimeConfig: {
+    youtubeApiKey: process.env.NUXT_YOUTUBE_API_KEY || '',
+    youtubeChannelHandles: process.env.NUXT_YOUTUBE_CHANNEL_HANDLES || '@KhashayarTalks',
+  },
+
   // SSG Mode Configuration
   ssr: false, // Disable SSR for pure static site generation
   nitro: {
@@ -60,7 +65,7 @@ export default defineNuxtConfig({
       include: ['@vue-flow/core', '@vue-flow/controls', '@vue-flow/minimap'],
     },
   },
-  
+
   // Build Configuration
   build: {
     transpile: ['@vue-flow/core', '@vue-flow/controls', '@vue-flow/minimap'],

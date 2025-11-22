@@ -987,9 +987,9 @@ So that I can easily find video content.
 
 ---
 
-## Epic 8: Video Transcript Data Analysis & Analytics
+## Epic 8: YouTube API Integration & Analytics
 
-**Goal:** Create a comprehensive data analysis system for analyzing the full text transcripts and summaries of all 127 videos from KhashayarTalks channel. Import video data from Excel, enrich with skill/category mappings, integrate transcripts and summaries, and provide interactive analytics dashboard with various report types including word frequency, mentions, trends, and insights.
+**Goal:** Create a comprehensive system that integrates with the YouTube Data API to fetch channel content (videos, playlists) and performs deep data analysis on video transcripts. This includes a hybrid full-stack approach for API communication, importing video data, enriching it with skills/categories, and providing an interactive analytics dashboard.
 
 ### Story 8.0: Excel Import & Video Data Extraction
 
@@ -1006,7 +1006,7 @@ So that I can process and enrich the video data for analysis.
 - All playlists extracted with playlist URLs and video associations
 - Video IDs extracted from YouTube URLs
 - View counts parsed from format like "101K" to numbers
-- Upload dates converted from relative format ("1 year ago") to ISO dates
+- Upload dates converted from relative format ("1 year ago" to ISO dates)
 - Structured output (JSON/YAML) ready for data enrichment
 - Validation of video URLs and IDs
 
@@ -1082,11 +1082,7 @@ So that videos are properly categorized and searchable.
 **Technical Notes:**
 - Create `scripts/enrich-video-data.ts`
 - Implement title-based keyword matching for initial skill mapping
-- Use keyword dictionaries for skill identification:
-  - Skill 1 (Sleep): ['خواب', 'sleep', 'bedtime']
-  - Skill 5 (Focus): ['تمرکز', 'focus', 'concentration']
-  - Skill 13 (Financial Literacy): ['سواد مالی', 'financial', 'money']
-  - etc.
+- Use keyword dictionaries for skill identification
 - Extract tags from titles (topics, experts mentioned, etc.)
 - Identify writers from title patterns (name mentions)
 - Generate thumbnail URLs using existing utility
@@ -1124,6 +1120,113 @@ So that I can process transcripts for bulk video analysis.
 - Implement deduplication logic
 - Support both batch processing and individual video processing
 
+### Story 8.2: Configuration & Server Client
+
+As a developer,
+I want to configure the project with YouTube API credentials and create a server-side client,
+So that I can securely communicate with the YouTube Data API.
+
+**Acceptance Criteria:**
+
+**Given** a valid YouTube Data API key
+**When** I configure the project
+**Then** I have:
+- `.env` file with `NUXT_YOUTUBE_API_KEY` and `NUXT_YOUTUBE_CHANNEL_HANDLES`
+- `nuxt.config.ts` updated with `runtimeConfig` (server-only key)
+- `server/utils/youtubeClient.ts` class implemented with:
+  - `getChannelByHandle`
+  - `getPlaylistsByChannelId`
+  - `getUploadsPlaylistId`
+  - `getAllPlaylistItems`
+  - `getVideosByIds`
+- Error handling for failed requests
+- Quota-friendly delays between requests
+
+**Prerequisites:** None
+
+**Technical Notes:**
+- Use `process.env` for secrets
+- Keep API key server-side only
+- Use `fetch` for requests
+
+### Story 8.3: API Routes
+
+As a developer,
+I want to expose internal API routes for YouTube data,
+So that the frontend can fetch data without direct access to the YouTube API.
+
+**Acceptance Criteria:**
+
+**Given** the server client is ready
+**When** I implement API routes
+**Then** I have endpoints for:
+- `/api/youtube/channel` (GET channel details)
+- `/api/youtube/playlists` (GET playlists)
+- `/api/youtube/uploads` (GET latest uploads)
+- `/api/youtube/videos` (GET video details by ID or handle)
+
+**And** responses are normalized JSON
+**And** errors are handled gracefully
+
+**Prerequisites:** Story 8.2
+
+**Technical Notes:**
+- Use `defineEventHandler`
+- Return typed interfaces (ChannelData, PlaylistData, etc.)
+
+### Story 8.4: Frontend Composables
+
+As a developer,
+I want reusable composables to fetch YouTube data,
+So that I can easily use this data in my Vue components.
+
+**Acceptance Criteria:**
+
+**Given** the API routes are available
+**When** I create composables
+**Then** I have:
+- `useYoutubeChannel(handle?)`
+- `useYoutubeUploads(handle?)`
+- `useYoutubeVideos(options)`
+
+**And** they use `useAsyncData` or `$fetch`
+**And** they are SSR-safe
+**And** they provide typed results
+
+**Prerequisites:** Story 8.3
+
+**Technical Notes:**
+- Auto-imported in `app/composables`
+- Handle loading and error states
+
+### Story 8.4a: Dev UI & Documentation
+
+As a developer,
+I want a test page and updated documentation,
+So that I can verify the integration and understand how to use it.
+
+**Acceptance Criteria:**
+
+**Given** the full stack is implemented
+**When** I create the dev page
+**Then** I see:
+- A page at `/dev/youtube`
+- Channel information card
+- List of videos with thumbnails and stats
+- Input to change the channel handle
+
+**And** when I update the README
+**Then** it includes:
+- Setup instructions for YouTube integration
+- API endpoint documentation
+- Usage examples
+
+**Prerequisites:** Story 8.4
+
+**Technical Notes:**
+- Use Nuxt UI components
+- Keep design minimal but functional
+
 ### Story 8.5: Video Transcript Data Structure & Storage
 
 As a developer,
@@ -1144,15 +1247,15 @@ So that I can perform analysis on the full text of all videos.
 - Utility functions for transcript operations
 - Content-based skill/category mapping refinement (using transcript analysis)
 
-**Prerequisites:** Story 8.0b (Data enrichment), Story 8.4 (Workflow integration)
+**Prerequisites:** Story 8.0b (Data enrichment)
 
 **Technical Notes:**
-- Define `VideoTranscript` interface in `app/types/transcripts.ts` (already exists)
+- Define `VideoTranscript` interface in `app/types/transcripts.ts`
 - Store transcripts in `app/data/transcripts/` directory
 - Structure: `app/data/transcripts/fa/` and `app/data/transcripts/en/`
 - Each transcript file maps to video ID
 - Include metadata: word count, character count, video ID reference
-- Create `app/utils/transcripts.ts` for transcript operations (already exists)
+- Create `app/utils/transcripts.ts` for transcript operations
 - Support lazy loading for performance (load on demand)
 - Consider indexing for fast search (future enhancement)
 - Once transcripts are available, refine skill/category mappings from Story 8.0b using content analysis
@@ -1183,7 +1286,7 @@ So that I can generate various analytics reports.
 **Prerequisites:** Story 8.5, Story 8.0a (Summaries)
 
 **Technical Notes:**
-- Create `app/utils/text-analysis.ts` with core analysis functions (already exists)
+- Create `app/utils/text-analysis.ts` with core analysis functions
 - Functions:
   - `countWordOccurrences(text: string, word: string, options?: AnalysisOptions): number`
   - `countPhraseOccurrences(text: string, phrase: string, options?: AnalysisOptions): number`
@@ -1300,7 +1403,7 @@ So that I can access and view various analysis reports.
 - Add error messages for invalid inputs
 - Follow modern, compact design patterns
 
-### Story 8.6: Word Frequency Report Component
+### Story 8.10: Word Frequency Report Component
 
 As a user,
 I want to see word frequency analysis reports,
@@ -1333,7 +1436,7 @@ So that I can understand how often specific words or phrases appear across video
 - Add copy-to-clipboard for counts
 - Support both Persian and English display
 
-### Story 8.7: Mention Report Component
+### Story 8.11: Mention Report Component
 
 As a user,
 I want to see mention reports for names, concepts, or topics,
@@ -1366,7 +1469,7 @@ So that I can track how often specific people or ideas are referenced.
 - Implement search suggestions (autocomplete)
 - Support case-insensitive and exact match options
 
-### Story 8.8: Top Words Report Component
+### Story 8.12: Top Words Report Component
 
 As a user,
 I want to see the most frequently used words across all videos,
@@ -1398,7 +1501,7 @@ So that I can understand the main topics and themes.
 - Support phrase analysis (bigrams, trigrams)
 - Optimize performance for large word lists
 
-### Story 8.9: Comparison Report Component
+### Story 8.13: Comparison Report Component
 
 As a user,
 I want to compare multiple terms side by side,
@@ -1428,7 +1531,7 @@ So that I can understand relative frequency and usage patterns.
 - Add interactive filters
 - Support different comparison metrics (count, percentage, per video average)
 
-### Story 8.10: Category & Skill-Based Analysis
+### Story 8.14: Category & Skill-Based Analysis
 
 As a user,
 I want to analyze transcripts filtered by category or skill,
@@ -1458,7 +1561,7 @@ So that I can understand topic distribution within specific areas.
 - Link to category/skill detail pages
 - Show insights specific to each category
 
-### Story 8.11: Advanced Search & Custom Queries
+### Story 8.15: Advanced Search & Custom Queries
 
 As a user,
 I want to perform advanced searches with custom queries,
@@ -1489,7 +1592,7 @@ So that I can find specific patterns or combinations of terms.
 - Add query examples/templates
 - Support regex patterns (with validation)
 
-### Story 8.12: Report Export & Sharing
+### Story 8.16: Report Export & Sharing
 
 As a user,
 I want to export and share analysis reports,
@@ -1520,7 +1623,7 @@ So that I can use the data in other tools or share insights.
 - Include metadata (generation date, filters, etc.)
 - Optimize export for large datasets
 
-### Story 8.13: Analytics Navigation Integration
+### Story 8.17: Analytics Navigation Integration
 
 As a user,
 I want to access analytics from the main navigation,
@@ -1547,7 +1650,7 @@ So that I can easily find the analysis features.
 - Ensure mobile menu works correctly
 - Add route handling for analytics pages
 
-### Story 8.14: Performance Optimization & Caching
+### Story 8.18: Performance Optimization & Caching
 
 As a developer,
 I want optimized performance for analytics operations,
@@ -1578,7 +1681,7 @@ So that analysis of 127 videos runs efficiently.
 - Add performance monitoring
 - Optimize bundle size (code splitting)
 
-### Story 8.15: Analytics Dashboard Polish & UX
+### Story 8.19: Analytics Dashboard Polish & UX
 
 As a user,
 I want a polished and intuitive analytics experience,
@@ -1611,61 +1714,3 @@ So that I can easily discover insights from video transcripts.
 - Add accessibility attributes (ARIA labels)
 - Conduct UX review and improvements
 - Add example queries and tutorials
-
----
-
-## Implementation Notes
-
-### MVP Scope Summary
-
-**Included:**
-- ✅ Single video content organization
-- ✅ 15 skills with content from video
-- ✅ Two main categories
-- ✅ Book references
-- ✅ Full transcript and summary pages
-- ✅ Simple visual diagrams
-- ✅ Basic navigation
-
-**Excluded (Future Phases):**
-- ❌ Multiple videos
-- ❌ Database
-- ❌ User accounts
-- ❌ Search functionality
-- ❌ Community features
-- ❌ Progress tracking
-- ❌ "Connecting the Dots" feature
-- ❌ Interactive exercises
-
-### Story Dependencies
-
-**Critical Path:**
-1. Story 1.1 → 1.2 (Foundation)
-2. Story 2.1 → 2.2 → 2.3 (Content)
-3. Story 3.1 → 3.2 → 3.3 (Pages)
-4. Story 4.1 → 4.2 → 4.3 (Content Pages)
-5. Story 5.1 → 5.2 (Diagrams)
-6. Story 6.1 → 6.2 → 6.3 → 6.4 → 6.5 (Navigation & Polish)
-
-**Parallel Work:**
-- Epic 3 and Epic 4 can progress in parallel after Epic 2
-- Epic 5 can start after Epic 3.1
-- Epic 6 can start after Epic 3 is complete
-
-### Technical Considerations
-
-- **Component-Based Architecture:** Fully component-based, matching portfolio structure
-- **Expandable Design:** Components designed for future features (database, search, etc.)
-- **Modern Design:** Not traditional - modern, compact, following current UI/UX trends
-- **Code Quality:** Production-ready, TypeScript strict, ESLint, Prettier
-- **Best Practices:** Development standards and UI/UX best practices throughout
-- **No Database (MVP):** All content from YAML files, parsed at build time
-- **Static Generation:** Full SSG, no server needed
-- **Content Updates:** Update YAML files and rebuild (expandable to CMS later)
-- **Deployment:** Vercel static hosting (matching portfolio)
-- **Future-Proof:** Component structure allows easy addition of features later
-- **Portfolio Reference:** Follow https://github.com/aliarghyani/nuxt-portfolio structure
-
----
-
-_For implementation: Use the `create-story` workflow to generate individual story implementation plans from this epic breakdown._

@@ -8,7 +8,9 @@
     "books": "کتاب‌ها",
     "language": "زبان",
     "english": "انگلیسی",
-    "persian": "فارسی"
+    "persian": "فارسی",
+    "relatedTo": "مرتبط با",
+    "clearFilter": "پاک کردن فیلتر"
   },
   "nav": {
     "home": "خانه",
@@ -22,7 +24,8 @@
     "summary": "خلاصه",
     "theme": "تم",
     "openMenu": "باز کردن منو",
-    "closeMenu": "بستن منو"
+    "closeMenu": "بستن منو",
+    "analytics": "تحلیل داده‌ها"
   },
   "theme": {
     "customizer": "سفارشی سازی تم",
@@ -209,10 +212,5 @@
     "backToPlaylists": "بازگشت به پلی‌لیست‌ها",
     "notFound": "پلی‌لیست یافت نشد",
     "loading": "در حال بارگذاری پلی‌لیست..."
-  },
-  "common": {
-    "relatedTo": "مرتبط با",
-    "clearFilter": "پاک کردن فیلتر"
   }
 }
-
