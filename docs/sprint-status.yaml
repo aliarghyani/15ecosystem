@@ -136,8 +136,8 @@ development_status:
     status: done
     description: "Refactor /dev/youtube video cards to match YouTube aesthetics (thumbnail, duration, views, etc.)."
   8-19b-dev-youtube-transcript-integration:
-    status: backlog
-    description: "Show transcript status per video in /dev/youtube and allow triggering fetch."
+    status: done
+    description: "Integrate transcript status and fetch trigger into /dev/youtube."
   8-20-real-data-integration-videos-page:
     status: backlog
     description: "Update /videos page to use real cached YouTube data."
