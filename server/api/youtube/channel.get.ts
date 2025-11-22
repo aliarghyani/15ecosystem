@@ -1,3 +1,5 @@
+import { getCachedChannel, setCachedChannel } from '../../utils/metadataCache'
+
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig()
     const query = getQuery(event)
@@ -10,6 +12,15 @@ export default defineEventHandler(async (event) => {
         })
     }
 
+    // Check cache first
+    const cachedData = await getCachedChannel(handle)
+    if (cachedData) {
+        console.log(`[Cache HIT] Channel: ${handle}`)
+        return cachedData
+    }
+
+    console.log(`[Cache MISS] Channel: ${handle} - Fetching from API`)
+
     const client = new YouTubeClient({ apiKey: config.youtubeApiKey })
     const channel = await client.getChannelByHandle(handle)
 
@@ -20,7 +31,7 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    return {
+    const data = {
         id: channel.id,
         handle: channel.snippet.customUrl,
         title: channel.snippet.title,
@@ -36,4 +47,9 @@ export default defineEventHandler(async (event) => {
         },
         raw: channel,
     }
+
+    // Cache the result
+    await setCachedChannel(handle, data)
+
+    return data
 })

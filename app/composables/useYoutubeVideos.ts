@@ -21,7 +21,17 @@ export const useYoutubeVideos = (options: UseYoutubeVideosOptions) => {
         return q
     })
 
+    // Create a stable key for caching
+    const cacheKey = computed(() => {
+        const q = query.value
+        if (q.handle) return `youtube-videos-${q.handle}`
+        if (q.ids) return `youtube-videos-${q.ids}`
+        return 'youtube-videos'
+    })
+
     return useFetch<VideoData[]>('/api/youtube/videos', {
         query,
+        key: cacheKey,
+        dedupe: 'defer', // Deduplicate requests with same key
     })
 }
