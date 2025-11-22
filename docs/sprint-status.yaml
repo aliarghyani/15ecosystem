@@ -103,10 +103,10 @@ development_status:
   8-0-excel-import-video-data-extraction: done
   8-0a-video-summary-data-structure-storage: done
   8-0b-excel-data-enrichment-skill-category-mapping: done
-  8-1-youtube-url-extraction-from-google-sheets: backlog
-  8-2-yt-dlp-subtitle-download-automation: backlog
-  8-3-vtt-transcript-cleaning-processing: backlog
-  8-4-youtube-transcript-extraction-workflow-integration: backlog
+  8-1-youtube-url-extraction-from-google-sheets: done
+  8-2-youtube-api-integration-transcript-fetching: backlog
+  8-3-transcript-cleaning-processing-api-source: backlog
+  8-4-youtube-api-workflow-integration: backlog
   8-5-video-transcript-data-structure-storage: done
   8-6-text-analysis-utilities-core-functions: done
   8-7-analysis-report-types-data-models: done
