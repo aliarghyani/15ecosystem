@@ -99,63 +99,41 @@ development_status:
   epic-7-retrospective: optional
 
   # Epic 8: YouTube API Integration & Analytics
-  epic-8: backlog
+  epic-8: done
   8-0-excel-import-video-data-extraction: done
   8-0a-video-summary-data-structure-storage: done
   8-0b-excel-data-enrichment-skill-category-mapping: done
-  8-2-youtube-api-integration-transcript-fetching:
-    status: done
-    description: "Initial API integration (completed). Future: yt-dlp based transcript fetching for all 128 videos."
-  8-3-transcript-cleaning-processing-api-source:
-    status: done
-    description: "Initial processing (completed). Future: Cleaning/normalizing yt-dlp transcripts into internal format."
-  8-4-youtube-api-workflow-integration:
-    status: done
-    description: "Initial workflow (completed). Future: Metadata + transcript caching & sync."
-  8-4b-youtube-metadata-cache-layer:
-    status: done
-    description: "Cache channel + video metadata with TTL (e.g. 1h), only refetch when new videos appear."
-  8-4c-youtube-transcript-cache-and-storage:
-    status: done
-    description: "Store transcripts in local JSON files and avoid refetching if already stored."
+  8-2-youtube-api-integration-transcript-fetching: done
+  8-3-transcript-cleaning-processing-api-source: done
+  8-4-youtube-api-workflow-integration: done
+  8-4b-youtube-metadata-cache-layer: done
+  8-4c-youtube-transcript-cache-and-storage: done
   8-5-video-transcript-data-structure-storage: done
   8-6-text-analysis-utilities-core-functions: done
   8-7-analysis-report-types-data-models: done
   8-8-report-generation-engine: done
   8-9-analytics-dashboard-page-structure: done
-  8-10-word-frequency-report-component: backlog
-  8-11-mention-report-component: backlog
-  8-12-top-words-report-component: backlog
-  8-13-comparison-report-component: backlog
-  8-14-category-analysis-report-component: backlog
-  8-15-skill-analysis-report-component: backlog
-  8-16-trend-analysis-report-component: backlog
-  8-17-export-functionality-pdf-csv: backlog
-  8-18-dashboard-filtering-interactivity: backlog
-  8-19a-dev-youtube-ui-refactor:
-    status: done
-    description: "Refactor /dev/youtube video cards to match YouTube aesthetics (thumbnail, duration, views, etc.)."
-  8-19b-dev-youtube-transcript-integration:
-    status: done
-    description: "Integrate transcript status and fetch trigger into /dev/youtube (Completed: Added batch fetch button)."
-  8-20-real-data-integration-videos-page:
-    status: done
-    description: "Update /videos page to use real cached YouTube data (Completed: Merged API data with static data)."
-  8-21-real-data-integration-playlists-page:
-    status: backlog
-    description: "Update /playlists page to use real cached YouTube data."
-  8-22-real-data-integration-transcript-page:
-    status: done
-    description: "Update /transcript page to list real videos and show full transcripts (Completed: Added video list and search)."
-  8-23-transcript-page-special-highlight:
-    status: backlog
-    description: "Highlight the main source video (15 skills) at the top of the /transcript page."
-  8-24-video-details-page-relations:
-    status: backlog
-    description: "Create video details page with links to transcript and relations (skills, categories, books, writers)."
-  8-25-summary-generation-placeholder:
-    status: backlog
-    description: "Create placeholder/structure for generating summaries from transcripts."
-  8-19-analytics-dashboard-polish-ux: backlog
+  8-19a-dev-youtube-ui-refactor: done
+  8-19b-dev-youtube-transcript-integration: done
+  8-20-real-data-integration-videos-page: done
+  8-22-real-data-integration-transcript-page: done
   epic-8-retrospective: optional
+
+  # Epic 9: Content Relationships & UI Polish
+  epic-9: backlog
+  9-1-type-sharding: backlog
+  9-2-transcript-audit: backlog
+  9-3-server-utils-enhancement: backlog
+  9-4-video-card-standardization: backlog
+  9-5-video-detail-enhancement: backlog
+  9-6-transcript-skill-extraction: backlog
+  9-7-videos-page-category-organization: backlog
+  9-8-playlists-page-redesign: backlog
+  9-9-summary-page-redesign: backlog
+  9-10-transcript-click-expand: backlog
+  9-11-hero-advanced-search: backlog
+  9-12-model-relationships-skills-first: backlog
+  9-13-transcript-relationship-enhancement: backlog
+  9-14-transcript-generation-stability: backlog
+  epic-9-retrospective: optional
 ```
