@@ -1,72 +1,74 @@
 <template>
   <NuxtLink
     :to="videoDetailUrl"
-    class="block no-underline h-full"
+    class="block no-underline group cursor-pointer"
     :aria-label="`${$t('videos.viewVideoDetails')}: ${video.title[locale] || video.title.fa}`"
   >
-    <UCard
-      :class="[
-        'video-card hover-minimal dark:bg-slate-800/50 bg-white/80 backdrop-blur-sm transition-all duration-300 ease-out hover:shadow-xl hover:scale-[1.02] hover:-translate-y-0.5 cursor-pointer flex flex-col h-full',
-        variant === 'compact' ? 'p-3' : 'p-4'
-      ]"
-    >
-      <!-- Thumbnail with Play Icon Overlay -->
-      <div class="relative mb-3 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 aspect-video">
-        <NuxtImg
-          :src="video.thumbnail"
-          :alt="video.title[locale] || video.title.fa"
-          class="w-full h-full object-cover"
-          loading="lazy"
-          format="webp"
-        />
-        <!-- Play Icon Overlay (YouTube-style) -->
-        <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
-          <div class="w-16 h-16 rounded-full bg-red-600/90 hover:bg-red-600 flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform min-w-[64px] min-h-[64px]">
-            <UIcon name="i-twemoji-play-button" class="text-white text-2xl" :class="locale === 'fa' ? 'mr-1' : 'ml-1'" />
-          </div>
-        </div>
-        <!-- Duration Badge (if available) -->
-        <div v-if="video.duration" class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
-          {{ formatDuration(video.duration) }}
+    <!-- Thumbnail -->
+    <div class="relative mb-3 rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800">
+      <NuxtImg
+        :src="video.thumbnail"
+        :alt="video.title[locale] || video.title.fa"
+        class="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-200"
+        loading="lazy"
+        format="webp"
+      />
+      <!-- Duration Badge -->
+      <div v-if="video.duration" class="absolute bottom-2 right-2 bg-black/90 text-white text-xs font-semibold px-1.5 py-0.5 rounded">
+        {{ formatDuration(video.duration) }}
+      </div>
+    </div>
+
+    <!-- Video Info -->
+    <div class="flex gap-3">
+      <!-- Channel Avatar -->
+      <div v-if="video.channelName" class="flex-shrink-0">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white font-semibold text-sm shadow-sm">
+          {{ getChannelInitial(video.channelName) }}
         </div>
       </div>
 
-      <!-- Title -->
-      <h3 class="text-base font-semibold text-gray-800 dark:text-gray-200 mb-2 line-clamp-2 leading-snug">
-        {{ video.title[locale] || video.title.fa }}
-      </h3>
+      <!-- Video Details -->
+      <div class="flex-1 min-w-0">
+        <!-- Title -->
+        <h3 class="font-semibold text-sm text-gray-900 dark:text-white line-clamp-2 mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" :title="video.title[locale] || video.title.fa">
+          {{ video.title[locale] || video.title.fa }}
+        </h3>
 
-      <!-- Description (if shown) -->
-      <p v-if="showDescription && video.description?.[locale]" class="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2 leading-relaxed">
-        {{ video.description[locale] || video.description.fa }}
-      </p>
+        <!-- Channel Name -->
+        <p v-if="video.channelName" class="text-xs text-gray-600 dark:text-gray-400 mb-1">
+          {{ video.channelName }}
+        </p>
 
-      <!-- Related Skills Badges -->
-      <div v-if="video.skillIds.length > 0" class="flex flex-wrap gap-1.5 mt-auto">
-        <UBadge
-          v-for="skillId in video.skillIds.slice(0, 3)"
-          :key="skillId"
-          :label="getSkillLabel(skillId)"
-          size="xs"
-          color="primary"
-          variant="soft"
-          class="text-[10px] px-1.5 py-0.5"
-        />
-        <UBadge
-          v-if="video.skillIds.length > 3"
-          :label="`+${video.skillIds.length - 3}`"
-          size="xs"
-          color="neutral"
-          variant="soft"
-          class="text-[10px] px-1.5 py-0.5"
-        />
+        <!-- Views & Date -->
+        <div class="text-xs text-gray-600 dark:text-gray-400">
+          <span v-if="video.viewCount">{{ formatViewCount(video.viewCount) }} views</span>
+          <span v-if="video.viewCount && video.publishedAt" class="mx-1">•</span>
+          <span v-if="video.publishedAt">{{ formatRelativeDate(video.publishedAt) }}</span>
+        </div>
+
+        <!-- Related Skills Badges (optional) -->
+        <div v-if="showSkills && video.skillIds.length > 0" class="flex flex-wrap gap-1.5 mt-2">
+          <UBadge
+            v-for="skillId in video.skillIds.slice(0, 3)"
+            :key="skillId"
+            :label="getSkillLabel(skillId)"
+            size="xs"
+            color="primary"
+            variant="soft"
+            class="text-[10px] px-1.5 py-0.5"
+          />
+          <UBadge
+            v-if="video.skillIds.length > 3"
+            :label="`+${video.skillIds.length - 3}`"
+            size="xs"
+            color="neutral"
+            variant="soft"
+            class="text-[10px] px-1.5 py-0.5"
+          />
+        </div>
       </div>
-
-      <!-- View Count (if available) -->
-      <div v-if="video.viewCount" class="text-xs text-gray-500 dark:text-gray-400 mt-2">
-        {{ formatViewCount(video.viewCount) }} {{ $t('videos.views') }}
-      </div>
-    </UCard>
+    </div>
   </NuxtLink>
 </template>
 
@@ -74,19 +76,20 @@
 import type { Video } from '~/types'
 import { getSkillById } from '~/utils/skills'
 import { generateVideoSlug } from '~/utils/videos'
+import { formatRelativeDate, formatViewCount } from '~/utils/date'
 
 interface Props {
   video: Video
-  showDescription?: boolean
+  showSkills?: boolean
   variant?: 'default' | 'compact'
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showDescription: false,
+  showSkills: false,
   variant: 'default',
 })
 
-const { locale, t } = useI18n()
+const { locale } = useI18n()
 const localePath = useLocalePath()
 
 // Generate video detail page URL
@@ -104,6 +107,11 @@ const getSkillLabel = (skillId: number): string => {
   return locale.value === 'fa' ? `مهارت ${skillId}` : `Skill ${skillId}`
 }
 
+// Get channel initial for avatar placeholder
+const getChannelInitial = (channelName: string): string => {
+  return channelName.charAt(0).toUpperCase()
+}
+
 // Format duration from seconds to MM:SS or HH:MM:SS
 const formatDuration = (seconds: number): string => {
   const hours = Math.floor(seconds / 3600)
@@ -115,24 +123,9 @@ const formatDuration = (seconds: number): string => {
   }
   return `${minutes}:${secs.toString().padStart(2, '0')}`
 }
-
-// Format view count (e.g., 50000 -> "50K")
-const formatViewCount = (count: number): string => {
-  if (count >= 1000000) {
-    return `${(count / 1000000).toFixed(1)}M`
-  }
-  if (count >= 1000) {
-    return `${(count / 1000).toFixed(1)}K`
-  }
-  return count.toString()
-}
 </script>
 
 <style scoped>
-.video-card {
-  min-height: 100%;
-}
-
 /* Ensure aspect ratio for thumbnail */
 .aspect-video {
   aspect-ratio: 16 / 9;
