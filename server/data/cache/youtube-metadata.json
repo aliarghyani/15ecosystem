@@ -2,7 +2,7 @@
   "channels": {
     "@KhashayarTalks": {
       "metadata": {
-        "lastUpdated": 1763822891266,
+        "lastUpdated": 1763877451273,
         "ttl": 3600000
       },
       "data": {
@@ -14,14 +14,14 @@
         "country": "CA",
         "publishedAt": "2019-05-08T11:24:34Z",
         "stats": {
-          "viewCount": 11399070,
+          "viewCount": 11412877,
           "subscriberCount": 180000,
           "hiddenSubscriberCount": false,
           "videoCount": 128
         },
         "raw": {
           "kind": "youtube#channel",
-          "etag": "oRavD67A4XuaWGYR4Fs-CmbuhUY",
+          "etag": "U4_oK11skXwhLe1Hc8rFc3dCCgE",
           "id": "UCE1P_bsD_kKh-i0HEsPpxtA",
           "snippet": {
             "title": "KhashayarTalks",
@@ -58,7 +58,7 @@
             }
           },
           "statistics": {
-            "viewCount": "11399070",
+            "viewCount": "11412877",
             "subscriberCount": "180000",
             "hiddenSubscriberCount": false,
             "videoCount": "128"
@@ -97,7 +97,7 @@
   "uploads": {
     "@KhashayarTalks": {
       "metadata": {
-        "lastUpdated": 1763822893742,
+        "lastUpdated": 1763877453599,
         "ttl": 3600000
       },
       "channelHandle": "@KhashayarTalks",

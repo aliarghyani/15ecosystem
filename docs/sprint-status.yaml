@@ -137,16 +137,16 @@ development_status:
     description: "Refactor /dev/youtube video cards to match YouTube aesthetics (thumbnail, duration, views, etc.)."
   8-19b-dev-youtube-transcript-integration:
     status: done
-    description: "Integrate transcript status and fetch trigger into /dev/youtube."
+    description: "Integrate transcript status and fetch trigger into /dev/youtube (Completed: Added batch fetch button)."
   8-20-real-data-integration-videos-page:
-    status: backlog
-    description: "Update /videos page to use real cached YouTube data."
+    status: done
+    description: "Update /videos page to use real cached YouTube data (Completed: Merged API data with static data)."
   8-21-real-data-integration-playlists-page:
     status: backlog
     description: "Update /playlists page to use real cached YouTube data."
   8-22-real-data-integration-transcript-page:
-    status: backlog
-    description: "Update /transcript page to list real videos and show full transcripts."
+    status: done
+    description: "Update /transcript page to list real videos and show full transcripts (Completed: Added video list and search)."
   8-23-transcript-page-special-highlight:
     status: backlog
     description: "Highlight the main source video (15 skills) at the top of the /transcript page."

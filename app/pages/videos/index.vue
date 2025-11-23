@@ -5,7 +5,8 @@
 
     <!-- Page Header -->
     <div class="mb-12 text-center">
-      <h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
+      <h1
+        class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
         {{ $t('videos.title') }}
       </h1>
       <p class="text-lg text-gray-600 dark:text-gray-400">
@@ -26,14 +27,8 @@
               {{ getSkillLabel(skillFilter) }}
             </p>
           </div>
-          <UButton
-            :to="localePath('/videos')"
-            variant="ghost"
-            color="primary"
-            size="sm"
-            icon="i-twemoji-cross-mark"
-            class="min-h-[44px]"
-          >
+          <UButton :to="localePath('/videos')" variant="ghost" color="primary" size="sm" icon="i-twemoji-cross-mark"
+            class="min-h-[44px]">
             {{ $t('common.clearFilter') || 'Clear Filter' }}
           </UButton>
         </div>
@@ -50,14 +45,8 @@
               {{ getWriterLabel(writerFilter) }}
             </p>
           </div>
-          <UButton
-            :to="localePath('/videos')"
-            variant="ghost"
-            color="primary"
-            size="sm"
-            icon="i-twemoji-cross-mark"
-            class="min-h-[44px]"
-          >
+          <UButton :to="localePath('/videos')" variant="ghost" color="primary" size="sm" icon="i-twemoji-cross-mark"
+            class="min-h-[44px]">
             {{ $t('common.clearFilter') || 'Clear Filter' }}
           </UButton>
         </div>
@@ -74,14 +63,8 @@
               {{ getBookLabel(bookFilter) }}
             </p>
           </div>
-          <UButton
-            :to="localePath('/videos')"
-            variant="ghost"
-            color="primary"
-            size="sm"
-            icon="i-twemoji-cross-mark"
-            class="min-h-[44px]"
-          >
+          <UButton :to="localePath('/videos')" variant="ghost" color="primary" size="sm" icon="i-twemoji-cross-mark"
+            class="min-h-[44px]">
             {{ $t('common.clearFilter') || 'Clear Filter' }}
           </UButton>
         </div>
@@ -93,70 +76,65 @@
       <!-- Health Category -->
       <div v-if="healthVideos.length > 0">
         <div class="mb-6">
-          <NuxtLink
-            :to="localePath('/categories/health')"
-            class="inline-block group"
-          >
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+          <NuxtLink :to="localePath('/categories/health')" class="inline-block group">
+            <h2
+              class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
               {{ getCategoryName('health') }}
             </h2>
           </NuxtLink>
           <p class="text-gray-600 dark:text-gray-400">
-            {{ healthVideos.length }} {{ $t('videos.videos') }} {{ $t('common.relatedTo') || 'related to' }} {{ getCategoryName('health') }}
+            {{ healthVideos.length }} {{ $t('videos.videos') }} {{ $t('common.relatedTo') || 'related to' }} {{
+              getCategoryName('health') }}
           </p>
         </div>
-        <VideoList
-          :videos="healthVideos"
-          group-by="none"
-          :show-description="false"
-          variant="default"
-        />
+        <VideoList :videos="healthVideos" group-by="none" :show-description="false" variant="default" />
       </div>
 
       <!-- Identity Category -->
       <div v-if="identityVideos.length > 0">
         <div class="mb-6">
-          <NuxtLink
-            :to="localePath('/categories/identity')"
-            class="inline-block group"
-          >
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+          <NuxtLink :to="localePath('/categories/identity')" class="inline-block group">
+            <h2
+              class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
               {{ getCategoryName('identity') }}
             </h2>
           </NuxtLink>
           <p class="text-gray-600 dark:text-gray-400">
-            {{ identityVideos.length }} {{ $t('videos.videos') }} {{ $t('common.relatedTo') || 'related to' }} {{ getCategoryName('identity') }}
+            {{ identityVideos.length }} {{ $t('videos.videos') }} {{ $t('common.relatedTo') || 'related to' }} {{
+              getCategoryName('identity') }}
           </p>
         </div>
-        <VideoList
-          :videos="identityVideos"
-          group-by="none"
-          :show-description="false"
-          variant="default"
-        />
+        <VideoList :videos="identityVideos" group-by="none" :show-description="false" variant="default" />
       </div>
 
       <!-- Career Category -->
       <div v-if="careerVideos.length > 0">
         <div class="mb-6">
-          <NuxtLink
-            :to="localePath('/categories/career')"
-            class="inline-block group"
-          >
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+          <NuxtLink :to="localePath('/categories/career')" class="inline-block group">
+            <h2
+              class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
               {{ getCategoryName('career') }}
             </h2>
           </NuxtLink>
           <p class="text-gray-600 dark:text-gray-400">
-            {{ careerVideos.length }} {{ $t('videos.videos') }} {{ $t('common.relatedTo') || 'related to' }} {{ getCategoryName('career') }}
+            {{ careerVideos.length }} {{ $t('videos.videos') }} {{ $t('common.relatedTo') || 'related to' }} {{
+              getCategoryName('career') }}
           </p>
         </div>
-        <VideoList
-          :videos="careerVideos"
-          group-by="none"
-          :show-description="false"
-          variant="default"
-        />
+        <VideoList :videos="careerVideos" group-by="none" :show-description="false" variant="default" />
+      </div>
+
+      <!-- Other Videos -->
+      <div v-if="uncategorizedVideos.length > 0">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            {{ $t('videos.otherVideos') || 'Other Videos' }}
+          </h2>
+          <p class="text-gray-600 dark:text-gray-400">
+            {{ uncategorizedVideos.length }} {{ $t('videos.videos') }}
+          </p>
+        </div>
+        <VideoList :videos="uncategorizedVideos" group-by="none" :show-description="false" variant="default" />
       </div>
     </div>
 
@@ -235,27 +213,48 @@ const bookFilter = computed(() => {
   return null
 })
 
+// Fetch real video data
+const allVideoIds = getAllVideos('fa').map(v => v.youtubeId)
+const { data: realVideos } = await useYoutubeVideos({ ids: allVideoIds })
+
 // Get all videos
 const allVideos = computed(() => {
   let videos = getAllVideos(locale.value as 'fa' | 'en')
-  
+
+  // Merge with real data if available
+  if (realVideos.value) {
+    videos = videos.map(v => {
+      const real = realVideos.value?.find(rv => rv.id === v.youtubeId)
+      if (real) {
+        return {
+          ...v,
+          duration: real.durationSeconds,
+          viewCount: real.stats.viewCount,
+          publishedAt: real.publishedAt,
+          thumbnail: real.thumbnails?.medium?.url || real.thumbnails?.default?.url || v.thumbnail
+        }
+      }
+      return v
+    })
+  }
+
   // Filter by skill if query param present
   if (skillFilter.value) {
     videos = videos.filter((video) => video.skillIds.includes(skillFilter.value!))
   }
-  
+
   // Filter by writer if query param present
   if (writerFilter.value) {
     videos = videos.filter((video) => video.writerId === writerFilter.value)
   }
-  
+
   // Filter by book if query param present
   if (bookFilter.value) {
-    videos = videos.filter((video) => 
+    videos = videos.filter((video) =>
       video.bookIds && video.bookIds.includes(bookFilter.value!)
     )
   }
-  
+
   return videos
 })
 
@@ -272,9 +271,17 @@ const careerVideos = computed(() => {
   return allVideos.value.filter((video) => video.categoryIds.includes('career'))
 })
 
+const uncategorizedVideos = computed(() => {
+  return allVideos.value.filter((video) =>
+    !video.categoryIds.includes('health') &&
+    !video.categoryIds.includes('identity') &&
+    !video.categoryIds.includes('career')
+  )
+})
+
 // Check if there are any videos
 const hasVideos = computed(() => {
-  return healthVideos.value.length > 0 || identityVideos.value.length > 0 || careerVideos.value.length > 0
+  return healthVideos.value.length > 0 || identityVideos.value.length > 0 || careerVideos.value.length > 0 || uncategorizedVideos.value.length > 0
 })
 
 // Get category name
@@ -342,4 +349,3 @@ useHead({
   ],
 })
 </script>
-

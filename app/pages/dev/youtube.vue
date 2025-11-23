@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getAllVideos } from '~/utils/videos'
+
 const inputHandle = ref('@KhashayarTalks')
 const currentHandle = ref('@KhashayarTalks')
 
@@ -7,6 +9,28 @@ const { data: videos, pending: videosPending, error: videosError } = await useYo
 
 const fetchHandle = () => {
     currentHandle.value = inputHandle.value
+}
+
+// Batch Fetch Transcripts
+const batchFetchLoading = ref(false)
+const batchFetchResult = ref<any>(null)
+
+const fetchAllTranscripts = async () => {
+    batchFetchLoading.value = true
+    batchFetchResult.value = null
+    try {
+        const videoIds = getAllVideos('fa').map(v => v.youtubeId)
+        const result = await $fetch('/api/youtube/transcript-batch', {
+            method: 'POST',
+            body: { videoIds, language: 'fa' }
+        })
+        batchFetchResult.value = result
+    } catch (e) {
+        console.error(e)
+        batchFetchResult.value = { error: String(e) }
+    } finally {
+        batchFetchLoading.value = false
+    }
 }
 
 // Format large numbers (e.g., 1000 -> 1K, 1000000 -> 1M)
@@ -67,6 +91,26 @@ const formatRelativeTime = (dateString: string): string => {
             <!-- Error States -->
             <UAlert v-if="channelError" color="error" variant="soft" title="Error loading channel"
                 :description="String(channelError)" />
+
+            <!-- Admin Actions -->
+            <UCard>
+                <template #header>
+                    <h3 class="text-lg font-bold">Admin Actions</h3>
+                </template>
+
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-4">
+                        <UButton @click="fetchAllTranscripts" :loading="batchFetchLoading" color="warning">
+                            Batch Fetch Transcripts ({{ getAllVideos('fa').length }} videos)
+                        </UButton>
+                    </div>
+
+                    <div v-if="batchFetchResult"
+                        class="bg-gray-100 dark:bg-gray-800 p-4 rounded text-xs font-mono overflow-auto max-h-64">
+                        <pre>{{ JSON.stringify(batchFetchResult, null, 2) }}</pre>
+                    </div>
+                </div>
+            </UCard>
 
             <!-- Channel Header -->
             <div v-if="channel"
