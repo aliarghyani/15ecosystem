@@ -24,7 +24,7 @@
             v-for="video in getVideosInCategory(category.id)"
             :key="video.id"
             :video="video"
-            :show-description="showDescription"
+            :show-skills="showSkills"
             :variant="variant"
           />
         </div>
@@ -51,7 +51,7 @@
             v-for="video in getVideosBySkill(skillId)"
             :key="video.id"
             :video="video"
-            :show-description="showDescription"
+            :show-skills="showSkills"
             :variant="variant"
           />
         </div>
@@ -64,7 +64,7 @@
         v-for="video in filteredVideos"
         :key="video.id"
         :video="video"
-        :show-description="showDescription"
+        :show-skills="showSkills"
         :variant="variant"
       />
     </div>
@@ -90,7 +90,7 @@ interface Props {
   groupBy?: 'category' | 'skill' | 'playlist' | 'none'
   filterBySkillId?: number
   filterByCategoryId?: string
-  showDescription?: boolean
+  showSkills?: boolean
   variant?: 'default' | 'compact'
 }
 
@@ -98,7 +98,7 @@ const props = withDefaults(defineProps<Props>(), {
   groupBy: 'category',
   filterBySkillId: undefined,
   filterByCategoryId: undefined,
-  showDescription: false,
+  showSkills: false,
   variant: 'default',
 })
 

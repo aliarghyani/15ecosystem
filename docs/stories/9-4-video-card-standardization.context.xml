@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>9</epicId>
+    <storyId>4</storyId>
+    <title>Video Card UI Standardization</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-23</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/9-4-video-card-standardization.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>video cards to look like YouTube video cards</iWant>
+    <soThat>the interface feels familiar and professional</soThat>
+    <tasks>
+      <task id="1" ac="1,2">Audit current VideoCard component - Review existing implementation, identify differences from reference, document current props and structure</task>
+      <task id="2" ac="1,2">Update VideoCard.vue component - Add channel avatar (circular, left side), add channel name display, update metadata to show "X views • Y ago" format, ensure 2-line title truncation</task>
+      <task id="3" ac="1,6">Create/Update helper functions - Ensure formatViewCount(), formatRelativeDate(), formatDuration() utilities exist and work correctly</task>
+      <task id="4" ac="3">Update VideoList.vue component - Implement responsive grid layout (1/2/3/4 columns), use CSS Grid or Nuxt UI utilities, configure breakpoints</task>
+      <task id="5" ac="1,4">Style enhancements - Refine hover transitions, ensure duration badge styling matches YouTube, style metadata text with muted colors</task>
+      <task id="6" ac="2">Update all pages using VideoCard - Update /videos page, verify /dev/youtube page, update skill pages with related videos</task>
+      <task id="7" ac="3">Responsive testing - Test on mobile, tablet, desktop, large desktop, verify grid columns adjust correctly</task>
+      <task id="8" ac="1">Accessibility review - Ensure proper alt text, add ARIA labels, test keyboard navigation, verify focus indicators</task>
+      <task id="9" ac="5">Performance optimization - Use lazy loading for thumbnails, optimize image sizes, minimize layout shifts</task>
+      <task id="10" ac="1,2,3,4,5,6">Documentation - Update component documentation, document props and usage, add examples</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">
+      <given>A video card component</given>
+      <when>It is rendered</when>
+      <then>
+        <item>Video thumbnail with 16:9 aspect ratio</item>
+        <item>Duration badge in bottom-right corner</item>
+        <item>Channel avatar (small, circular) on left side below thumbnail</item>
+        <item>Video title (2 lines max, truncated with ellipsis)</item>
+        <item>Channel name below title</item>
+        <item>View count and publish date ("X views • Y ago" format)</item>
+        <item>Hover effects (subtle shadow/scale)</item>
+      </then>
+    </ac>
+    <ac id="2">
+      <given>Pages using VideoCard component</given>
+      <when>Video cards are displayed</when>
+      <then>
+        <item>All cards use same standardized design on /videos page</item>
+        <item>All cards use same standardized design on /dev/youtube page</item>
+        <item>All cards use same standardized design on skill pages</item>
+        <item>All cards use same standardized design on any other pages</item>
+      </then>
+    </ac>
+    <ac id="3">
+      <given>Different screen sizes</given>
+      <when>Video list is displayed</when>
+      <then>
+        <item>Mobile (< 640px): 1 column</item>
+        <item>Tablet (640px - 1024px): 2 columns</item>
+        <item>Desktop (1024px - 1536px): 3 columns</item>
+        <item>Large desktop (>= 1536px): 4 columns</item>
+      </then>
+    </ac>
+    <ac id="4">
+      <given>A video card</given>
+      <when>User hovers over it</when>
+      <then>
+        <item>Card shows subtle shadow increase</item>
+        <item>Card shows slight scale transform (1.02)</item>
+        <item>Smooth transition (200-300ms)</item>
+        <item>Cursor changes to pointer</item>
+      </then>
+    </ac>
+    <ac id="5">
+      <given>A video with duration</given>
+      <when>Video card is rendered</when>
+      <then>
+        <item>Duration badge displays in bottom-right corner</item>
+        <item>Duration badge has dark semi-transparent background</item>
+        <item>Duration badge shows formatted duration (MM:SS or H:MM:SS)</item>
+        <item>Duration badge is clearly readable</item>
+      </then>
+    </ac>
+    <ac id="6">
+      <given>A video with metadata</given>
+      <when>Video card is rendered</when>
+      <then>
+        <item>View count formatted (e.g., "1.2K views", "45K views")</item>
+        <item>Publish date in relative format ("2 days ago", "3 months ago")</item>
+        <item>Separated by bullet point ("•")</item>
+        <item>Uses muted text color</item>
+      </then>
+    </ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epic-9/epic-9-content-relationships-and-polish.md</path>
+        <title>Epic 9: Content Relationships & UI Polish</title>
+        <section>Story 9.4: Video Card UI Standardization</section>
+        <snippet>Goal: Make video cards in /videos match the YouTube-style design from /dev/youtube. Tasks include updating VideoCard.vue component with thumbnail, duration badge, channel avatar, title, channel name, view count, publish date, hover effects. Update VideoList.vue to use responsive grid layout (1/2/3/4 columns). Design reference: app/pages/dev/youtube.vue lines 154-193.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>app/components/videos/VideoCard.vue</path>
+        <purpose>Current video card component - needs updates to match YouTube design</purpose>
+        <currentFeatures>
+          <item>Thumbnail with 16:9 aspect ratio ✓</item>
+          <item>Duration badge in bottom-right ✓</item>
+          <item>Play button overlay ✓</item>
+          <item>Title with line-clamp-2 ✓</item>
+          <item>Skill badges ✓</item>
+          <item>View count display ✓</item>
+          <item>Hover effects (shadow, scale) ✓</item>
+        </currentFeatures>
+        <missingFeatures>
+          <item>Channel avatar (circular, left side) ✗</item>
+          <item>Channel name below title ✗</item>
+          <item>Publish date with relative format ✗</item>
+          <item>Metadata format "X views • Y ago" ✗</item>
+        </missingFeatures>
+        <props>
+          <prop name="video" type="Video" required="true">Video object with all metadata</prop>
+          <prop name="showDescription" type="boolean" default="false">Whether to show description</prop>
+          <prop name="variant" type="'default' | 'compact'" default="'default'">Card variant</prop>
+        </props>
+      </file>
+      <file>
+        <path>app/pages/dev/youtube.vue</path>
+        <purpose>Reference implementation with target YouTube-style design</purpose>
+        <keyFeatures>
+          <item>Grid layout: grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4</item>
+          <item>Channel avatar: w-9 h-9 rounded-full on left side</item>
+          <item>Title: font-semibold text-sm line-clamp-2 with hover color change</item>
+          <item>Channel name: text-xs text-gray-600 dark:text-gray-400</item>
+          <item>Metadata: "X views • Y ago" format with bullet separator</item>
+          <item>Duration badge: bg-black/90 text-white text-xs font-semibold</item>
+          <item>Hover: group-hover:scale-105 on thumbnail</item>
+        </keyFeatures>
+        <helperFunctions>
+          <function name="formatDuration">Format seconds to MM:SS or HH:MM:SS</function>
+          <function name="formatNumber">Format view count with K/M suffixes</function>
+          <function name="formatRelativeTime">Format date to relative time ("2 days ago")</function>
+        </helperFunctions>
+      </file>
+      <file>
+        <path>app/types/video.ts</path>
+        <purpose>Video type definitions</purpose>
+        <note>Video type includes: id, title (bilingual), description, thumbnail, duration, viewCount, publishedAt, channelId, channelTitle, skillIds</note>
+      </file>
+    </code>
+    <dependencies>
+      <ecosystem name="nuxt">
+        <package name="@nuxt/ui" version="latest" purpose="UI components (UCard, UBadge, UIcon)" />
+        <package name="@nuxt/image" version="latest" purpose="Optimized images with lazy loading" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <name>YouTube Design Consistency</name>
+      <description>Must match YouTube's video card design for familiarity. Reference: app/pages/dev/youtube.vue</description>
+      <source>Story requirements</source>
+    </constraint>
+    <constraint>
+      <name>Responsive Grid Layout</name>
+      <description>Must adapt to screen sizes: 1 column (mobile), 2 columns (tablet), 3 columns (desktop), 4 columns (large desktop)</description>
+      <source>AC3</source>
+    </constraint>
+    <constraint>
+      <name>Bilingual Support</name>
+      <description>Must support Persian (RTL) and English (LTR) content with proper text direction</description>
+      <source>Project architecture</source>
+    </constraint>
+    <constraint>
+      <name>Accessibility</name>
+      <description>Must meet WCAG AA standards with proper alt text, ARIA labels, keyboard navigation, and focus indicators</description>
+      <source>Project requirements</source>
+    </constraint>
+    <constraint>
+      <name>Performance</name>
+      <description>Must use lazy loading for images, optimize image sizes, and minimize layout shifts</description>
+      <source>AC9, project requirements</source>
+    </constraint>
+    <constraint>
+      <name>No Breaking Changes</name>
+      <description>Must maintain existing props and functionality while adding new features</description>
+      <source>Story requirements</source>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>Video</name>
+      <location>app/types/video.ts</location>
+      <definition>
+        interface Video {
+          id: string
+          title: { fa: string; en: string }
+          description?: { fa: string; en: string }
+          thumbnail: string
+          duration: number // seconds
+          viewCount?: number
+          publishedAt?: string // ISO date
+          channelId?: string
+          channelTitle?: { fa: string; en: string }
+          skillIds: number[]
+          // ... other fields
+        }
+      </definition>
+      <usage>Main video data structure used in VideoCard component</usage>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Visual testing: Verify design matches YouTube reference on all screen sizes. Responsive testing: Test on mobile (< 640px), tablet (640px-1024px), desktop (1024px-1536px), large desktop (>= 1536px). Accessibility testing: Test keyboard navigation, screen reader compatibility, focus indicators, color contrast. Performance testing: Verify lazy loading works, check image optimization, measure layout shift (CLS).
+    </standards>
+    <locations>
+      Visual inspection on actual pages: /videos, /dev/youtube, skill pages with related videos
+      Browser DevTools for responsive testing
+      Lighthouse for accessibility and performance audits
+    </locations>
+    <ideas>
+      <test ac="1">Verify channel avatar displays as circular image on left side</test>
+      <test ac="1">Verify channel name displays below title</test>
+      <test ac="1">Verify metadata shows "X views • Y ago" format</test>
+      <test ac="2">Check VideoCard consistency across /videos, /dev/youtube, and skill pages</test>
+      <test ac="3">Test grid layout at 320px width (1 column)</test>
+      <test ac="3">Test grid layout at 768px width (2 columns)</test>
+      <test ac="3">Test grid layout at 1280px width (3 columns)</test>
+      <test ac="3">Test grid layout at 1920px width (4 columns)</test>
+      <test ac="4">Verify hover effects (shadow, scale, transition)</test>
+      <test ac="5">Verify duration badge visibility and styling</test>
+      <test ac="6">Verify view count formatting (1234 → "1.2K views")</test>
+      <test ac="6">Verify relative date formatting ("2 days ago")</test>
+    </ideas>
+  </tests>
+
+  <implementation-notes>
+    <note priority="high">
+      Current VideoCard already has most features. Main additions needed: channel avatar, channel name, publish date, and metadata format change.
+    </note>
+    <note priority="high">
+      Reference implementation at app/pages/dev/youtube.vue (lines 154-193) shows exact target design.
+    </note>
+    <note priority="medium">
+      Need to add channelTitle and publishedAt to Video type if not already present. Check video data structure.
+    </note>
+    <note priority="medium">
+      formatRelativeDate() utility needs to be created or imported. Check if it exists in utils.
+    </note>
+    <note priority="low">
+      Consider extracting helper functions to composables for reusability across components.
+    </note>
+  </implementation-notes>
+</story-context>

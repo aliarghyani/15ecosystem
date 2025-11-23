@@ -2,7 +2,7 @@
   "channels": {
     "@KhashayarTalks": {
       "metadata": {
-        "lastUpdated": 1763890198067,
+        "lastUpdated": 1763895351240,
         "ttl": 3600000
       },
       "data": {
@@ -21,7 +21,7 @@
         },
         "raw": {
           "kind": "youtube#channel",
-          "etag": "tyCGd2V4hRfkopZt79b-8hfcAXs",
+          "etag": "U4_oK11skXwhLe1Hc8rFc3dCCgE",
           "id": "UCE1P_bsD_kKh-i0HEsPpxtA",
           "snippet": {
             "title": "KhashayarTalks",
@@ -65,12 +65,12 @@
           },
           "topicDetails": {
             "topicIds": [
-              "/m/019_rr",
-              "/m/0kt51"
+              "/m/0kt51",
+              "/m/019_rr"
             ],
             "topicCategories": [
-              "https://en.wikipedia.org/wiki/Lifestyle_(sociology)",
-              "https://en.wikipedia.org/wiki/Health"
+              "https://en.wikipedia.org/wiki/Health",
+              "https://en.wikipedia.org/wiki/Lifestyle_(sociology)"
             ]
           },
           "status": {
@@ -97,7 +97,7 @@
   "uploads": {
     "@KhashayarTalks": {
       "metadata": {
-        "lastUpdated": 1763890200433,
+        "lastUpdated": 1763895353612,
         "ttl": 3600000
       },
       "channelHandle": "@KhashayarTalks",
