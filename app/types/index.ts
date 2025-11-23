@@ -15,6 +15,7 @@ export type { Playlist } from './playlist'
 // Content models
 export type { VideoTranscript, TranscriptMetadata } from './transcripts'
 export type { VideoSummary, SummaryMetadata } from './summaries'
+export type { TranscriptManifest, TranscriptMetadata as ManifestMetadata } from './transcript-manifest'
 
 // Analytics models
 export type {
@@ -28,4 +29,3 @@ export type {
   ReportOptions,
   ReportMetadata
 } from './reports'
-
