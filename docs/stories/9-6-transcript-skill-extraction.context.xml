@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context>
+  <story-id>9-6-transcript-skill-extraction</story-id>
+  <epic-id>epic-9</epic-id>
+  <title>Transcript Content Analysis &amp; Skill Extraction</title>
+  
+  <objective>
+    Analyze all 128 video transcripts to automatically detect mentions of skills, books, and writers.
+    Generate relationship suggestions with confidence scores to enhance video metadata.
+  </objective>
+
+  <dependencies>
+    <dependency>
+      <story-id>9-2-transcript-audit</story-id>
+      <status>completed</status>
+      <note>All 128 transcripts verified and available</note>
+    </dependency>
+    <dependency>
+      <story-id>9-3-server-utils-enhancement</story-id>
+      <status>completed</status>
+      <note>Transcript search utilities with Persian normalization available</note>
+    </dependency>
+  </dependencies>
+
+  <existing-utilities>
+    <utility>
+      <file>server/utils/transcriptSearch.ts</file>
+      <functions>
+        <function name="normalizePersianText">Normalizes Persian text for accurate matching</function>
+        <function name="searchTranscripts">Search across all transcripts</function>
+        <function name="searchTranscriptByVideoId">Search within specific transcript</function>
+        <function name="findTranscriptSegments">Find segments containing keyword</function>
+      </functions>
+    </utility>
+    <utility>
+      <file>server/utils/transcriptBatch.ts</file>
+      <functions>
+        <function name="loadAllTranscripts">Load all 128 transcripts with progress tracking</function>
+        <function name="validateAllTranscripts">Validate all transcripts</function>
+        <function name="processTranscriptsBatch">Process transcripts with custom function</function>
+      </functions>
+    </utility>
+    <utility>
+      <file>server/utils/transcriptCache.ts</file>
+      <functions>
+        <function name="getTranscript">Get single transcript by video ID</function>
+        <function name="getAllTranscripts">Get list of all transcript video IDs</function>
+      </functions>
+    </utility>
+  </existing-utilities>
+
+  <data-sources>
+    <source>
+      <name>Skills Data</name>
+      <file>app/utils/skills.ts</file>
+      <function>getAllSkills('fa')</function>
+      <count>15 skills</count>
+      <note>Each skill has Persian and English names</note>
+    </source>
+    <source>
+      <name>Books Data</name>
+      <file>app/utils/books.ts</file>
+      <function>getAllBooks('fa')</function>
+      <note>Book titles in Persian and English</note>
+    </source>
+    <source>
+      <name>Writers Data</name>
+      <file>app/utils/writers.ts</file>
+      <function>getAllWriters('fa')</function>
+      <note>Writer names in Persian and English</note>
+    </source>
+    <source>
+      <name>Transcripts</name>
+      <location>server/data/transcripts/</location>
+      <count>128 video transcripts</count>
+      <format>JSON files with segments and fullText</format>
+    </source>
+  </data-sources>
+
+  <technical-approach>
+    <step number="1">
+      <name>Create Analysis Script</name>
+      <file>scripts/analyze-transcripts.ts</file>
+      <description>Main script to analyze all transcripts and detect relationships</description>
+    </step>
+    <step number="2">
+      <name>Implement Fuzzy Matching</name>
+      <description>Use Levenshtein distance for detecting variations and typos</description>
+      <threshold>0.8 similarity score</threshold>
+    </step>
+    <step number="3">
+      <name>Persian Text Normalization</name>
+      <description>Use existing normalizePersianText from transcriptSearch.ts</description>
+      <handles>
+        <item>ی/ي normalization</item>
+        <item>ک/ك normalization</item>
+        <item>Diacritic removal</item>
+        <item>Whitespace normalization</item>
+      </handles>
+    </step>
+    <step number="4">
+      <name>Generate Results</name>
+      <output-file>docs/sources/transcript-analysis-results.json</output-file>
+      <format>
+        {
+          "videoId": "string",
+          "title": "string",
+          "detectedSkills": [{ "skillId": number, "skillName": "string", "mentions": number, "confidence": number }],
+          "detectedBooks": [{ "bookSlug": "string", "bookTitle": "string", "mentions": number, "confidence": number }],
+          "detectedWriters": [{ "writerSlug": "string", "writerName": "string", "mentions": number, "confidence": number }]
+        }
+      </format>
+    </step>
+  </technical-approach>
+
+  <implementation-notes>
+    <note priority="high">
+      Use existing Persian normalization from transcriptSearch.ts - already handles all edge cases
+    </note>
+    <note priority="high">
+      Search for both Persian and English names for each skill/book/writer
+    </note>
+    <note priority="medium">
+      Set confidence threshold at 0.8 for fuzzy matching to avoid false positives
+    </note>
+    <note priority="medium">
+      Count mentions per video to determine relationship strength
+    </note>
+    <note priority="low">
+      Consider context around mentions for better accuracy (future enhancement)
+    </note>
+  </implementation-notes>
+
+  <output-artifacts>
+    <artifact>
+      <name>Analysis Script</name>
+      <file>scripts/analyze-transcripts.ts</file>
+      <description>Main analysis script with fuzzy matching and detection logic</description>
+    </artifact>
+    <artifact>
+      <name>Analysis Results</name>
+      <file>docs/sources/transcript-analysis-results.json</file>
+      <description>JSON file with all detected relationships and confidence scores</description>
+    </artifact>
+    <artifact>
+      <name>Summary Report</name>
+      <file>docs/sources/transcript-analysis-summary.md</file>
+      <description>Human-readable summary of analysis results</description>
+    </artifact>
+    <artifact>
+      <name>Update Script</name>
+      <file>scripts/update-video-relationships.ts</file>
+      <description>Script to apply approved relationships to video data files</description>
+    </artifact>
+  </output-artifacts>
+
+  <testing-strategy>
+    <test>
+      <name>Sample Transcript Test</name>
+      <description>Test on 5-10 sample transcripts first to verify accuracy</description>
+    </test>
+    <test>
+      <name>False Positive Check</name>
+      <description>Manually review high-confidence matches to check for false positives</description>
+    </test>
+    <test>
+      <name>False Negative Check</name>
+      <description>Manually check known relationships to ensure they're detected</description>
+    </test>
+    <test>
+      <name>Full Run Validation</name>
+      <description>Run on all 128 transcripts and validate output format</description>
+    </test>
+  </testing-strategy>
+
+  <acceptance-criteria>
+    <criterion id="AC1">
+      <description>Script analyzes all 128 transcripts successfully</description>
+      <verification>Check that all 128 video IDs are in results JSON</verification>
+    </criterion>
+    <criterion id="AC2">
+      <description>Skill mentions detected and counted for all 15 skills</description>
+      <verification>Results include detectedSkills array with mention counts</verification>
+    </criterion>
+    <criterion id="AC3">
+      <description>Book and writer mentions detected</description>
+      <verification>Results include detectedBooks and detectedWriters arrays</verification>
+    </criterion>
+    <criterion id="AC4">
+      <description>Relationship suggestions generated with confidence scores</description>
+      <verification>Each detection includes confidence score (0.0-1.0)</verification>
+    </criterion>
+    <criterion id="AC5">
+      <description>Results reviewed and approved</description>
+      <verification>Manual review process completed, approved relationships marked</verification>
+    </criterion>
+    <criterion id="AC6">
+      <description>Video data updated with new relationships</description>
+      <verification>Video data files contain new skillIds, bookIds, writerId</verification>
+    </criterion>
+  </acceptance-criteria>
+
+</story-context>
+ndle Persian character variations</item>
+      <item>Handle partial book titles</item>
+      <item>Handle writer name variations</item>
+      <item>Weight by mention frequency</item>
+      <item>Set minimum confidence threshold</item>
+    </considerations>
+  </fuzzy-matching>
+
+  <testing-strategy>
+    <test>Test on sample transcripts first</test>
+    <test>Verify detection accuracy</test>
+    <test>Check false positives/negatives</test>
+    <test>Validate Persian text normalization</test>
+    <test>Run on all 128 transcripts</test>
+    <test>Validate output format</test>
+  </testing-strategy>
+
+  <acceptance-criteria>
+    <criterion id="AC1">Script analyzes all 128 transcripts successfully</criterion>
+    <criterion id="AC2">Skill mentions detected with counts (all 15 skills)</criterion>
+    <criterion id="AC3">Book/writer mentions detected with counts</criterion>
+    <criterion id="AC4">Relationship suggestions generated in JSON format</criterion>
+    <criterion id="AC5">Results reviewed and approved</criterion>
+    <criterion id="AC6">Video data updated with new relationships</criterion>
+  </acceptance-criteria>
+
+  <related-stories>
+    <story id="9-3">Server utils enhancement - provides transcript utilities</story>
+    <story id="9-13">Transcript relationship enhancement - will use these results</story>
+  </related-stories>
+
+  <notes>
+    <note>This is the most complex story in Epic 9 (6-8 hours estimated)</note>
+    <note>Fuzzy matching is critical for Persian text accuracy</note>
+    <note>Manual review step prevents false positives</note>
+    <note>Results will be used by Story 9-13 to update all relationships</note>
+    <note>Consider creating a simple web UI for review process</note>
+  </notes>
+</story-context>
