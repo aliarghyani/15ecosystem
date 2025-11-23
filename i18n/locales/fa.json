@@ -10,7 +10,9 @@
     "english": "انگلیسی",
     "persian": "فارسی",
     "relatedTo": "مرتبط با",
-    "clearFilter": "پاک کردن فیلتر"
+    "clearFilter": "پاک کردن فیلتر",
+    "showMore": "نمایش بیشتر",
+    "showLess": "نمایش کمتر"
   },
   "nav": {
     "home": "خانه",
@@ -193,7 +195,10 @@
     "relatedBooks": "کتاب‌های مرتبط",
     "relatedBooksDescription": "کتاب‌های مرتبط با این ویدیو",
     "relatedWriter": "نویسنده مرتبط",
-    "relatedWriterDescription": "نویسنده مرتبط با این ویدیو"
+    "relatedWriterDescription": "نویسنده مرتبط با این ویدیو",
+    "viewTranscript": "مشاهده متن کامل",
+    "viewSummary": "مشاهده خلاصه",
+    "videoDescription": "توضیحات"
   },
   "playlists": {
     "title": "پلی‌لیست‌ها",

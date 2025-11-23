@@ -19,33 +19,16 @@
         {{ video.title[locale] || video.title.fa }}
       </h1>
       
-      <!-- Large Thumbnail with Play Icon -->
-      <div class="relative mb-6 rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-700 aspect-video shadow-xl">
-        <a
-          :href="video.youtubeUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="block w-full h-full"
-          :aria-label="`${$t('videos.watchOnYouTube')}: ${video.title[locale] || video.title.fa}`"
-        >
-          <NuxtImg
-            :src="video.thumbnail"
-            :alt="video.title[locale] || video.title.fa"
-            class="w-full h-full object-cover"
-            loading="eager"
-            format="webp"
-          />
-          <!-- Play Icon Overlay (YouTube-style) -->
-          <div class="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/40 transition-colors cursor-pointer">
-            <div class="w-24 h-24 rounded-full bg-red-600/90 hover:bg-red-600 flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform min-w-[96px] min-h-[96px]">
-              <UIcon name="i-twemoji-play-button" class="text-white text-4xl" :class="locale === 'fa' ? 'mr-2' : 'ml-2'" />
-            </div>
-          </div>
-          <!-- Duration Badge -->
-          <div v-if="video.duration" class="absolute bottom-4 right-4 bg-black/90 text-white text-sm px-3 py-1.5 rounded-lg font-medium">
-            {{ formatDuration(video.duration) }}
-          </div>
-        </a>
+      <!-- YouTube Video Player -->
+      <div class="relative mb-6 rounded-xl overflow-hidden bg-gray-900 aspect-video shadow-xl">
+        <iframe
+          :src="`https://www.youtube.com/embed/${video.youtubeId}`"
+          :title="video.title[locale] || video.title.fa"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          class="w-full h-full"
+        />
       </div>
 
       <!-- Video Metadata -->
@@ -54,37 +37,77 @@
           <UIcon name="i-twemoji-eyes" class="w-5 h-5" />
           <span>{{ formatViewCount(video.viewCount) }} {{ $t('videos.views') }}</span>
         </div>
+        <div v-if="video.publishedAt" class="flex items-center gap-2">
+          <UIcon name="i-twemoji-calendar" class="w-5 h-5" />
+          <span>{{ formatRelativeDate(video.publishedAt) }}</span>
+        </div>
         <div v-if="video.channelName" class="flex items-center gap-2">
           <UIcon name="i-twemoji-video-camera" class="w-5 h-5" />
           <span>{{ video.channelName }}</span>
         </div>
       </div>
 
-      <!-- Watch on YouTube Button -->
-      <UButton
-        :href="video.youtubeUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-        color="red"
-        size="lg"
-        icon="i-twemoji-play-button"
-        class="mb-6 min-h-[48px]"
-      >
-        {{ $t('videos.watchOnYouTube') }}
-      </UButton>
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap gap-3 mb-6">
+        <UButton
+          :href="video.youtubeUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          color="error"
+          size="lg"
+          icon="i-twemoji-play-button"
+          class="min-h-[48px]"
+        >
+          {{ $t('videos.watchOnYouTube') }}
+        </UButton>
+        <UButton
+          v-if="hasTranscript"
+          :to="localePath(`/transcript#${video.youtubeId}`)"
+          variant="soft"
+          size="lg"
+          icon="i-twemoji-memo"
+          class="min-h-[48px]"
+        >
+          {{ $t('videos.viewTranscript') || 'View Transcript' }}
+        </UButton>
+        <UButton
+          v-if="hasSummary"
+          :to="localePath(`/summary#${video.youtubeId}`)"
+          variant="soft"
+          size="lg"
+          icon="i-twemoji-page-facing-up"
+          class="min-h-[48px]"
+        >
+          {{ $t('videos.viewSummary') || 'View Summary' }}
+        </UButton>
+      </div>
 
-      <!-- Description -->
+      <!-- Description (Expandable) -->
       <div v-if="video.description?.[locale] || video.description?.fa" class="mb-12">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-          {{ $t('videos.description') || 'Description' }}
+          {{ $t('videos.videoDescription') || 'Description' }}
         </h2>
-        <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-          {{ video.description?.[locale] || video.description?.fa }}
-        </p>
+        <div class="relative">
+          <p 
+            :class="[
+              'text-lg text-gray-700 dark:text-gray-300 leading-relaxed',
+              !isDescriptionExpanded && 'line-clamp-3'
+            ]"
+          >
+            {{ video.description?.[locale] || video.description?.fa }}
+          </p>
+          <button
+            v-if="(video.description?.[locale] || video.description?.fa || '').length > 200"
+            @click="isDescriptionExpanded = !isDescriptionExpanded"
+            class="text-primary-600 dark:text-primary-400 hover:underline mt-2 text-sm font-medium"
+          >
+            {{ isDescriptionExpanded ? $t('common.showLess') || 'Show less' : $t('common.showMore') || 'Show more' }}
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Related Skills Section -->
+    <!-- Related Skills Section (FIRST - Most Important) -->
     <div v-if="relatedSkills.length > 0" class="mb-12">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
         {{ $t('videos.relatedSkills') || 'Related Skills' }}
@@ -100,6 +123,23 @@
           :show-description="true"
           :show-footer="false"
           variant="compact"
+        />
+      </div>
+    </div>
+
+    <!-- Related Videos Section -->
+    <div v-if="relatedVideos.length > 0" class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+        {{ $t('videos.relatedVideos') || 'Related Videos' }}
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        {{ $t('videos.relatedVideosDescription') || 'Videos with similar skills or topics' }}
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <VideoCard
+          v-for="relatedVideo in relatedVideos"
+          :key="relatedVideo.id"
+          :video="relatedVideo"
         />
       </div>
     </div>
@@ -172,16 +212,18 @@
 </template>
 
 <script setup lang="ts">
-import { getVideoBySlug, generateVideoSlug } from '~/utils/videos'
+import { getVideoBySlug, getAllVideos } from '~/utils/videos'
 import { getSkillsByIds } from '~/utils/skills'
 import { getBookBySlug } from '~/utils/books'
 import { getWriterBySlug } from '~/utils/writers'
 import { getTagsForVideo } from '~/utils/tags'
+import { formatRelativeDate } from '~/utils/date'
 import SkillCard from '~/components/skills/SkillCard.vue'
 import BookCard from '~/components/books/BookCard.vue'
 import WriterCard from '~/components/writers/WriterCard.vue'
 import TagBadge from '~/components/tags/TagBadge.vue'
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
+import VideoCard from '~/components/videos/VideoCard.vue'
 import type { Video, Skill, Book, Writer, Tag } from '~/types'
 
 definePageMeta({
@@ -205,6 +247,21 @@ const relatedSkills = ref<Skill[]>([])
 const relatedBooks = ref<Book[]>([])
 const relatedWriter = ref<Writer | undefined>(undefined)
 const videoTags = ref<Tag[]>([])
+const relatedVideos = ref<Video[]>([])
+const isDescriptionExpanded = ref(false)
+
+// Check if transcript/summary exists
+const hasTranscript = computed(() => {
+  // TODO: Check if transcript file exists for this video
+  // For now, return true if video has youtubeId
+  return video.value?.youtubeId ? true : false
+})
+
+const hasSummary = computed(() => {
+  // TODO: Check if summary file exists for this video
+  // For now, return true if video has youtubeId
+  return video.value?.youtubeId ? true : false
+})
 
 // Load data when route changes
 watch([slug, locale], () => {
@@ -214,6 +271,7 @@ watch([slug, locale], () => {
     relatedBooks.value = []
     relatedWriter.value = undefined
     videoTags.value = []
+    relatedVideos.value = []
     return
   }
   
@@ -243,11 +301,22 @@ watch([slug, locale], () => {
       
       // Load tags
       videoTags.value = getTagsForVideo(video.value.id, currentLocale)
+      
+      // Load related videos (same skills or categories)
+      const allVideos = getAllVideos(currentLocale)
+      relatedVideos.value = allVideos
+        .filter((v) => 
+          v.id !== video.value!.id && 
+          (v.skillIds.some((id) => video.value!.skillIds.includes(id)) ||
+           v.categoryIds.some((id) => video.value!.categoryIds.includes(id)))
+        )
+        .slice(0, 8) // Limit to 8 related videos
     } else {
       relatedSkills.value = []
       relatedBooks.value = []
       relatedWriter.value = undefined
       videoTags.value = []
+      relatedVideos.value = []
     }
   } catch (error) {
     console.error('Error loading video:', error)
@@ -256,20 +325,9 @@ watch([slug, locale], () => {
     relatedBooks.value = []
     relatedWriter.value = undefined
     videoTags.value = []
+    relatedVideos.value = []
   }
 }, { immediate: true })
-
-// Format duration from seconds to MM:SS or HH:MM:SS
-const formatDuration = (seconds: number): string => {
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  const secs = seconds % 60
-
-  if (hours > 0) {
-    return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
-  }
-  return `${minutes}:${secs.toString().padStart(2, '0')}`
-}
 
 // Format view count (e.g., 50000 -> "50K")
 const formatViewCount = (count: number): string => {

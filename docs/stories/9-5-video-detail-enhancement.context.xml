@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>9</epicId>
+    <storyId>5</storyId>
+    <title>Video Detail Page Enhancement</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-23</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/9-5-video-detail-enhancement.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>a comprehensive video detail page with all related content</iWant>
+    <soThat>I can explore videos and discover related skills, books, and content</soThat>
+    <tasks>
+      <task id="1" ac="1,3,4">Audit current video detail page and identify enhancements needed</task>
+      <task id="2" ac="1">Replace thumbnail with YouTube iframe embed for direct playback</task>
+      <task id="3" ac="2">Ensure Related Skills section is prominent and first after description</task>
+      <task id="4" ac="3">Add Related Videos section showing videos with same skills/category</task>
+      <task id="5" ac="3,6">Add Transcript and Summary links if available</task>
+      <task id="6" ac="4">Improve layout and styling to match YouTube design</task>
+      <task id="7" ac="5">Test and improve mobile responsiveness</task>
+      <task id="8" ac="1,3">Optimize performance and lazy loading</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">
+      <given>A video detail page</given>
+      <when>The page loads</when>
+      <then>
+        <item>YouTube iframe player is embedded and functional</item>
+      </then>
+    </ac>
+    <ac id="2">
+      <given>A video with related skills</given>
+      <when>The page loads</when>
+      <then>
+        <item>Related Skills section appears first after description</item>
+        <item>Skills displayed with prominent badges</item>
+      </then>
+    </ac>
+    <ac id="3">
+      <given>A video with relationships</given>
+      <when>The page loads</when>
+      <then>
+        <item>Video player embedded</item>
+        <item>Title and metadata displayed</item>
+        <item>Description shown (expandable if long)</item>
+        <item>Related Skills section (first)</item>
+        <item>Related Videos section</item>
+        <item>Related Books section</item>
+        <item>Featured Writer section (if applicable)</item>
+        <item>Tags displayed</item>
+        <item>Transcript link (if available)</item>
+        <item>Summary link (if available)</item>
+      </then>
+    </ac>
+    <ac id="4">
+      <given>The video detail page</given>
+      <when>Viewing the layout</when>
+      <then>
+        <item>Design follows YouTube's clean structure</item>
+        <item>Proper spacing and typography</item>
+      </then>
+    </ac>
+    <ac id="5">
+      <given>The video detail page on mobile</given>
+      <when>Viewing on small screens</when>
+      <then>
+        <item>Layout adapts responsively</item>
+        <item>Sections stack properly</item>
+        <item>Text is readable</item>
+      </then>
+    </ac>
+    <ac id="6">
+      <given>A video with transcript or summary</given>
+      <when>User clicks the link</when>
+      <then>
+        <item>Navigates to transcript or summary page</item>
+      </then>
+    </ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epic-9/epic-9-content-relationships-and-polish.md</path>
+        <title>Epic 9: Content Relationships & UI Polish</title>
+        <section>Story 9.5: Video Detail Page Enhancement</section>
+        <snippet>Goal: Improve video detail page UI to match YouTube and show complete relationships. Add YouTube iframe embed, ensure skills shown first, add related videos section, add transcript/summary links. Clean YouTube-inspired design, mobile-friendly.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>app/pages/videos/[slug].vue</path>
+        <purpose>Current video detail page - needs enhancements</purpose>
+        <currentFeatures>
+          <item>Thumbnail with play button overlay ✓</item>
+          <item>Title and metadata ✓</item>
+          <item>Description ✓</item>
+          <item>Related Skills section ✓</item>
+          <item>Related Books section ✓</item>
+          <item>Featured Writer section ✓</item>
+          <item>Tags section ✓</item>
+          <item>Breadcrumb navigation ✓</item>
+        </currentFeatures>
+        <missingFeatures>
+          <item>YouTube iframe embed (currently just thumbnail) ✗</item>
+          <item>Related Videos section ✗</item>
+          <item>Transcript link ✗</item>
+          <item>Summary link ✗</item>
+          <item>Skills section not prominently first ✗</item>
+        </missingFeatures>
+      </file>
+      <file>
+        <path>app/components/videos/VideoCard.vue</path>
+        <purpose>Standardized video card component (from story 9-4)</purpose>
+        <note>Use this for related videos section</note>
+      </file>
+    </code>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <name>YouTube Embed</name>
+      <description>Must use YouTube iframe API for video playback</description>
+      <source>AC1</source>
+    </constraint>
+    <constraint>
+      <name>Skills First</name>
+      <description>Related Skills must be the first section after description, prominently displayed</description>
+      <source>AC2, Epic 9 principles</source>
+    </constraint>
+    <constraint>
+      <name>Mobile Responsive</name>
+      <description>Must work well on mobile devices with proper stacking</description>
+      <source>AC5</source>
+    </constraint>
+  </constraints>
+
+  <implementation-notes>
+    <note priority="high">
+      Current page already has most sections. Main work: add YouTube embed, related videos, and transcript/summary links.
+    </note>
+    <note priority="high">
+      YouTube embed URL format: https://www.youtube.com/embed/{youtubeId}
+    </note>
+    <note priority="medium">
+      Related videos: filter by same skills or categories, limit to 4-6 videos, use VideoCard component.
+    </note>
+    <note priority="medium">
+      Check if transcript/summary exists before showing links. May need to check file existence or data structure.
+    </note>
+  </implementation-notes>
+</story-context>
