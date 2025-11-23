@@ -121,8 +121,8 @@ development_status:
 
   # Epic 9: Content Relationships & UI Polish
   epic-9: backlog
-  9-1-type-sharding: backlog
-  9-2-transcript-audit: backlog
+  9-1-type-sharding: done
+  9-2-transcript-audit: done
   9-3-server-utils-enhancement: backlog
   9-4-video-card-standardization: backlog
   9-5-video-detail-enhancement: backlog

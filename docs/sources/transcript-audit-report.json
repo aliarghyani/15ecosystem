@@ -1,0 +1,25 @@
+{
+  "auditDate": "2025-11-23T08:30:25.570Z",
+  "totalFiles": 128,
+  "valid": 127,
+  "invalid": 1,
+  "incomplete": 0,
+  "empty": 0,
+  "issues": [
+    {
+      "file": "848Z4gr-qV0.json",
+      "videoId": "848Z4gr-qV0",
+      "issue": "invalid_structure",
+      "segmentCount": 0,
+      "fullTextLength": 0,
+      "source": "unavailable"
+    }
+  ],
+  "summary": {
+    "needsRefetch": [],
+    "validTranscripts": 127,
+    "invalidStructure": 1,
+    "emptyContent": 0,
+    "unavailable": 0
+  }
+}
