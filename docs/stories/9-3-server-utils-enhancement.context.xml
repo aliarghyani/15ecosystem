@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>9</epicId>
+    <storyId>3</storyId>
+    <title>Server Utils Audit & Enhancement</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-23</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/9-3-server-utils-enhancement.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>to review and improve server-side utilities</iWant>
+    <soThat>transcript operations are more reliable, maintainable, and well-documented</soThat>
+    <tasks>
+      <task id="1" ac="1,6">Audit existing server utils - Review all files in server/utils/, document current functionality, identify missing error handling, code duplication, and missing documentation</task>
+      <task id="2" ac="1,2,6">Review and improve transcriptCache.ts - Add JSDoc comments, improve error handling, add type safety, optimize cache operations, add cache invalidation logic, add cache statistics/monitoring</task>
+      <task id="3" ac="1,3">Create transcript validation utilities - Create server/utils/transcriptValidation.ts with validateTranscript(), validateTranscriptFile(), validateTranscriptStructure() functions, add detailed validation error messages, JSDoc documentation, and unit tests</task>
+      <task id="4" ac="1,4">Create batch transcript operations - Create server/utils/transcriptBatch.ts with loadAllTranscripts(), validateAllTranscripts(), processTranscriptsBatch() functions, add progress reporting, error collection, JSDoc documentation, and unit tests</task>
+      <task id="5" ac="1,5">Create transcript search/indexing helpers - Create server/utils/transcriptSearch.ts with searchTranscripts(), searchTranscriptByVideoId(), findTranscriptSegments() functions, add Persian text normalization, case-insensitive search, context extraction, JSDoc documentation, and unit tests</task>
+      <task id="6" ac="2">Improve error handling across utils - Review all utility functions, add try-catch blocks, create custom error types if needed, add meaningful error messages, add error logging, ensure no unhandled promise rejections</task>
+      <task id="7" ac="1">Add JSDoc comments to all functions - Document all exported functions with parameter descriptions, return type descriptions, example usage, and error condition notes</task>
+      <task id="8" ac="7">Write tests for critical functions - Set up Vitest, write tests for transcript validation, batch operations, search functions, error handling, ensure 80%+ code coverage, run tests and verify all pass</task>
+      <task id="9" ac="6">Code quality review and refactoring - Apply consistent naming conventions, remove code duplication, apply DRY principle, ensure single responsibility, optimize performance bottlenecks, run linter and fix issues, format code with Prettier</task>
+      <task id="10" ac="1">Documentation update - Update README with new utilities, document utility function usage, add examples for common operations, document error handling patterns, update developer guide</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">
+      <given>All utility functions in server/utils/</given>
+      <when>A developer reviews the code</when>
+      <then>
+        <item>All functions have JSDoc comments with function purpose, parameter types/descriptions, return type/description, example usage, and error conditions</item>
+      </then>
+    </ac>
+    <ac id="2">
+      <given>Utility functions that interact with file system or external APIs</given>
+      <when>An error occurs (file not found, invalid JSON, network error)</when>
+      <then>
+        <item>Function catches the error gracefully</item>
+        <item>Logs meaningful error messages</item>
+        <item>Returns appropriate error response or throws typed error</item>
+        <item>Does not crash the application</item>
+      </then>
+    </ac>
+    <ac id="3">
+      <given>A transcript file or transcript object</given>
+      <when>Validation is performed</when>
+      <then>
+        <item>Utility checks valid JSON structure</item>
+        <item>Utility checks required fields present (videoId, fullText, segments)</item>
+        <item>Utility checks non-empty fullText field</item>
+        <item>Utility checks reasonable segment count (>= 10 segments)</item>
+        <item>Utility checks valid segment structure (text, start, duration)</item>
+        <item>Returns validation result with specific error messages</item>
+      </then>
+    </ac>
+    <ac id="4">
+      <given>Multiple transcript files need processing</given>
+      <when>Batch operation is executed</when>
+      <then>
+        <item>Utility functions support batch loading of transcripts</item>
+        <item>Utility functions support batch validation</item>
+        <item>Utility functions support batch transformation/processing</item>
+        <item>Progress reporting available</item>
+        <item>Error collection (continue on error, report all issues)</item>
+      </then>
+    </ac>
+    <ac id="5">
+      <given>Need to search within transcripts</given>
+      <when>Search helper is used</when>
+      <then>
+        <item>Utility provides full-text search within transcript</item>
+        <item>Utility provides search by video ID</item>
+        <item>Utility provides search by keyword/phrase</item>
+        <item>Case-insensitive search supported</item>
+        <item>Persian text normalization support</item>
+        <item>Returns matching segments with context</item>
+      </then>
+    </ac>
+    <ac id="6">
+      <given>Existing utility code</given>
+      <when>Code review is performed</when>
+      <then>
+        <item>Consistent naming conventions applied</item>
+        <item>Type safety (TypeScript types) enforced</item>
+        <item>DRY principle applied (no code duplication)</item>
+        <item>Single responsibility principle followed</item>
+        <item>Proper separation of concerns</item>
+        <item>Performance optimizations where applicable</item>
+      </then>
+    </ac>
+    <ac id="7">
+      <given>Critical utility functions (validation, batch operations)</given>
+      <when>Tests are executed</when>
+      <then>
+        <item>Tests cover happy path scenarios</item>
+        <item>Tests cover error conditions</item>
+        <item>Tests cover edge cases (empty files, malformed JSON)</item>
+        <item>Tests cover performance (batch operations)</item>
+        <item>All tests pass</item>
+      </then>
+    </ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epic-9/epic-9-content-relationships-and-polish.md</path>
+        <title>Epic 9: Content Relationships & UI Polish</title>
+        <section>Story 9.3: Server Utils Audit & Enhancement</section>
+        <snippet>Goal: Review and improve server-side utilities. Tasks include auditing server/utils/ directory, reviewing transcriptCache.ts for improvements, adding utility functions for transcript validation, batch transcript operations, transcript search/indexing helpers, adding JSDoc comments to all functions, adding error handling improvements, writing tests for critical functions. Acceptance criteria: All utility functions documented, error handling improved, new helper functions added, code quality improved. Estimated effort: 4-5 hours.</snippet>
+      </doc>
+      <doc>
+        <path>docs/main/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Project Structure</section>
+        <snippet>Server-side structure includes server/utils/ directory for helper functions and server/data/ directory for content data including transcripts/. TypeScript strict mode required for type safety. Code quality standards: ESLint + Prettier, production-ready code.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>server/utils/transcriptCache.ts</path>
+        <purpose>Existing transcript cache utilities - manages transcript file operations, fetching via yt-dlp, VTT parsing, and basic cache operations</purpose>
+        <keyFunctions>
+          <function name="hasTranscript">Check if transcript exists for a video</function>
+          <function name="getTranscript">Get cached transcript for a video</function>
+          <function name="fetchTranscript">Fetch transcript using yt-dlp</function>
+          <function name="getAllTranscripts">Get all available transcripts</function>
+          <function name="getTranscriptStats">Get transcript statistics</function>
+          <function name="parseVTT">Parse VTT subtitle format to segments (internal)</function>
+          <function name="parseVTTTimestamp">Parse VTT timestamp to seconds (internal)</function>
+          <function name="ensureTranscriptsDir">Ensure transcripts directory exists (internal)</function>
+          <function name="getTranscriptPath">Get transcript file path for a video ID (internal)</function>
+        </keyFunctions>
+        <interfaces>
+          <interface name="TranscriptSegment">{ start: number, end: number, text: string }</interface>
+          <interface name="VideoTranscriptData">{ videoId: string, title: string, fetchedAt: string, source: 'generated' | 'manual' | 'unavailable', language: string, segments: TranscriptSegment[], fullText: string }</interface>
+        </interfaces>
+        <improvements>
+          <item>Add JSDoc comments to all functions</item>
+          <item>Improve error handling (currently minimal)</item>
+          <item>Add type safety for return values</item>
+          <item>Add cache invalidation logic</item>
+          <item>Add cache statistics/monitoring</item>
+          <item>Optimize cache operations</item>
+        </improvements>
+      </file>
+      <file>
+        <path>server/utils/metadataCache.ts</path>
+        <purpose>YouTube metadata cache utilities - manages caching of channel data, uploads, and video metadata</purpose>
+        <keyFunctions>
+          <function name="getCachedChannel">Get cached channel data</function>
+          <function name="setCachedChannel">Set cached channel data</function>
+          <function name="getCachedUploads">Get cached uploads data</function>
+          <function name="setCachedUploads">Set cached uploads data</function>
+          <function name="getCachedVideos">Get cached video data</function>
+          <function name="setCachedVideos">Set cached video data</function>
+          <function name="clearCache">Clear all cache</function>
+          <function name="getCacheStats">Get cache statistics</function>
+        </keyFunctions>
+        <patterns>
+          <item>TTL-based cache expiration</item>
+          <item>File-based cache storage (JSON)</item>
+          <item>Cache metadata tracking (lastUpdated, ttl)</item>
+          <item>Error handling with fallback to empty cache</item>
+        </patterns>
+      </file>
+      <file>
+        <path>server/utils/isoDuration.ts</path>
+        <purpose>ISO 8601 duration parsing and formatting utilities</purpose>
+        <keyFunctions>
+          <function name="parseIsoDuration">Parse ISO 8601 duration format (PT1H23M45S) to seconds</function>
+          <function name="formatToIsoDuration">Format seconds to ISO 8601 duration format</function>
+          <function name="formatDuration">Format seconds to human-readable duration (MM:SS or HH:MM:SS)</function>
+        </keyFunctions>
+        <quality>Well-documented with JSDoc comments and examples - use as reference for documentation style</quality>
+      </file>
+      <file>
+        <path>server/utils/youtubeClient.ts</path>
+        <purpose>YouTube API client wrapper - handles API requests with rate limiting and error handling</purpose>
+        <keyFunctions>
+          <function name="request">Private method for making API requests with error handling</function>
+          <function name="getChannelByHandle">Get channel data by handle</function>
+          <function name="getPlaylistsByChannelId">Get all playlists for a channel</function>
+          <function name="getUploadsPlaylistId">Get uploads playlist ID from channel</function>
+          <function name="getAllPlaylistItems">Get all items from a playlist (paginated)</function>
+          <function name="getVideosByIds">Get video data by IDs (batched)</function>
+        </keyFunctions>
+        <patterns>
+          <item>Rate limiting with delays between requests</item>
+          <item>Pagination handling</item>
+          <item>Batch processing (50 items per request)</item>
+          <item>Error handling with H3Error</item>
+        </patterns>
+      </file>
+      <file>
+        <path>server/data/transcripts/</path>
+        <purpose>Directory containing 128 transcript JSON files</purpose>
+        <structure>Each file named {videoId}.json with VideoTranscriptData structure</structure>
+        <note>Files created by transcriptCache.ts fetchTranscript() function</note>
+      </file>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="vitest" version="latest" purpose="Testing framework for unit tests" />
+        <package name="@vitest/ui" version="latest" purpose="Vitest UI for test visualization" />
+      </ecosystem>
+      <external>
+        <tool name="yt-dlp" purpose="Used by transcriptCache.ts to fetch transcripts from YouTube" />
+      </external>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <name>TypeScript Strict Mode</name>
+      <description>All utility functions must use TypeScript strict mode with proper type definitions</description>
+      <source>docs/main/architecture.md#Decision-Summary</source>
+    </constraint>
+    <constraint>
+      <name>Code Quality Standards</name>
+      <description>ESLint and Prettier required. Code must be production-ready with consistent naming conventions</description>
+      <source>docs/main/architecture.md#Decision-Summary</source>
+    </constraint>
+    <constraint>
+      <name>Error Handling Pattern</name>
+      <description>All utility functions must handle errors gracefully without crashing the application. Use try-catch blocks and meaningful error messages</description>
+      <source>Story requirements</source>
+    </constraint>
+    <constraint>
+      <name>Documentation Standard</name>
+      <description>All exported functions must have JSDoc comments with parameter descriptions, return types, examples, and error conditions. Use isoDuration.ts as reference for documentation style</description>
+      <source>Story requirements, server/utils/isoDuration.ts</source>
+    </constraint>
+    <constraint>
+      <name>Test Coverage</name>
+      <description>Critical functions must have 80%+ test coverage with tests for happy path, error conditions, and edge cases</description>
+      <source>Story requirements</source>
+    </constraint>
+    <constraint>
+      <name>No Breaking Changes</name>
+      <description>Enhancements must not break existing functionality. All existing functions must continue to work as before</description>
+      <source>Story Definition of Done</source>
+    </constraint>
+    <constraint>
+      <name>Persian Text Support</name>
+      <description>Search utilities must support Persian text normalization for accurate searching in bilingual content</description>
+      <source>Story requirements, project bilingual nature</source>
+    </constraint>
+    <constraint>
+      <name>Transcript Data Structure</name>
+      <description>Must work with existing VideoTranscriptData interface: { videoId, title, fetchedAt, source, language, segments, fullText }</description>
+      <source>server/utils/transcriptCache.ts</source>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>TranscriptSegment</name>
+      <location>server/utils/transcriptCache.ts</location>
+      <definition>
+        interface TranscriptSegment {
+          start: number    // Start time in seconds
+          end: number      // End time in seconds
+          text: string     // Segment text content
+        }
+      </definition>
+      <usage>Used in VideoTranscriptData segments array</usage>
+    </interface>
+    <interface>
+      <name>VideoTranscriptData</name>
+      <location>server/utils/transcriptCache.ts</location>
+      <definition>
+        interface VideoTranscriptData {
+          videoId: string                                    // YouTube video ID
+          title: string                                      // Video title
+          fetchedAt: string                                  // ISO timestamp
+          source: 'generated' | 'manual' | 'unavailable'    // Transcript source type
+          language: string                                   // Language code (en, fa)
+          segments: TranscriptSegment[]                      // Array of transcript segments
+          fullText: string                                   // Complete transcript text
+        }
+      </definition>
+      <usage>Primary transcript data structure used throughout the system</usage>
+    </interface>
+    <interface>
+      <name>TranscriptValidationResult</name>
+      <location>server/utils/transcriptValidation.ts (to be created)</location>
+      <definition>
+        interface TranscriptValidationResult {
+          valid: boolean                    // Overall validation result
+          errors: string[]                  // Array of error messages
+          warnings: string[]                // Array of warning messages
+          stats: {
+            segmentCount: number            // Number of segments
+            textLength: number              // Length of fullText
+            duration: number                // Total duration in seconds
+          }
+        }
+      </definition>
+      <usage>Return type for validation functions</usage>
+    </interface>
+    <interface>
+      <name>BatchOperationResult</name>
+      <location>server/utils/transcriptBatch.ts (to be created)</location>
+      <definition>
+        interface BatchOperationResult&lt;T&gt; {
+          success: boolean                  // Overall operation success
+          processed: number                 // Number of items processed
+          failed: number                    // Number of items failed
+          results: T[]                      // Array of results
+          errors: Array&lt;{                   // Array of errors with context
+            videoId: string
+            error: string
+          }&gt;
+        }
+      </definition>
+      <usage>Return type for batch operation functions</usage>
+    </interface>
+    <interface>
+      <name>SearchResult</name>
+      <location>server/utils/transcriptSearch.ts (to be created)</location>
+      <definition>
+        interface SearchResult {
+          videoId: string                   // Video ID
+          title: string                     // Video title
+          matches: Array&lt;{                  // Array of matching segments
+            segment: TranscriptSegment      // Matching segment
+            context: {                      // Surrounding context
+              before: string                // Text before match
+              after: string                 // Text after match
+            }
+            score: number                   // Relevance score
+          }&gt;
+        }
+      </definition>
+      <usage>Return type for search functions</usage>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Use Vitest as testing framework (Nuxt's recommended test framework). Test files located in server/utils/__tests__/. Run tests with 'pnpm test'. Aim for 80%+ code coverage on critical functions. Test categories: Unit tests for individual functions, Integration tests for file system operations, Error handling tests for all error scenarios, Performance tests for batch operations, Edge case tests for malformed data.
+    </standards>
+    <locations>
+      server/utils/__tests__/transcriptValidation.test.ts - Tests for validation utilities
+      server/utils/__tests__/transcriptBatch.test.ts - Tests for batch operations
+      server/utils/__tests__/transcriptSearch.test.ts - Tests for search utilities
+      server/utils/__tests__/transcriptCache.test.ts - Tests for enhanced cache utilities
+    </locations>
+    <ideas>
+      <test ac="3">Test validateTranscript() with valid transcript - should return valid: true</test>
+      <test ac="3">Test validateTranscript() with missing videoId - should return error</test>
+      <test ac="3">Test validateTranscript() with empty fullText - should return error</test>
+      <test ac="3">Test validateTranscript() with low segment count (&lt; 10) - should return warning</test>
+      <test ac="3">Test validateTranscript() with invalid segment structure - should return error</test>
+      <test ac="4">Test loadAllTranscripts() - should load all 128 transcripts</test>
+      <test ac="4">Test validateAllTranscripts() - should validate all transcripts and report errors</test>
+      <test ac="4">Test processTranscriptsBatch() with custom processor - should process all and report progress</test>
+      <test ac="4">Test batch operation error handling - should continue on error and collect all errors</test>
+      <test ac="5">Test searchTranscripts() with English keyword - should find matching transcripts</test>
+      <test ac="5">Test searchTranscripts() with Persian keyword - should find matching transcripts with normalization</test>
+      <test ac="5">Test searchTranscriptByVideoId() - should search within specific transcript</test>
+      <test ac="5">Test findTranscriptSegments() - should return matching segments with context</test>
+      <test ac="5">Test case-insensitive search - should match regardless of case</test>
+      <test ac="2">Test error handling for missing transcript file - should return error without crashing</test>
+      <test ac="2">Test error handling for malformed JSON - should return error without crashing</test>
+      <test ac="2">Test error handling for file system errors - should log and return error</test>
+      <test ac="7">Test performance of batch operations - should process 128 transcripts in reasonable time</test>
+      <test ac="7">Test edge case: empty transcript file - should handle gracefully</test>
+      <test ac="7">Test edge case: transcript with no segments - should return appropriate error</test>
+    </ideas>
+  </tests>
+
+  <implementation-notes>
+    <note priority="high">
+      Start by reviewing existing transcriptCache.ts to understand current patterns and identify improvement areas. Use isoDuration.ts as reference for documentation style (it has excellent JSDoc comments).
+    </note>
+    <note priority="high">
+      Create new utility files in server/utils/ directory: transcriptValidation.ts, transcriptBatch.ts, transcriptSearch.ts. Keep each file focused on single responsibility.
+    </note>
+    <note priority="medium">
+      For Persian text normalization in search utilities, consider using a library like 'persian-tools' or implement basic normalization (remove diacritics, normalize characters).
+    </note>
+    <note priority="medium">
+      For batch operations, implement progress reporting using callbacks or events to allow monitoring of long-running operations.
+    </note>
+    <note priority="medium">
+      Error handling pattern to follow: try-catch blocks, meaningful error messages, logging with console.error, return error objects instead of throwing (for non-critical errors).
+    </note>
+    <note priority="low">
+      Consider adding cache invalidation logic to transcriptCache.ts based on file modification time or explicit invalidation calls.
+    </note>
+    <note priority="low">
+      Consider adding performance monitoring to track operation times for optimization opportunities.
+    </note>
+  </implementation-notes>
+</story-context>
