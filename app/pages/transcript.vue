@@ -23,14 +23,17 @@ const filteredVideos = computed(() => {
 })
 
 // Fetch transcript
-const { data: transcriptData, pending: transcriptPending, error: transcriptError } = await useFetch('/api/youtube/transcript', {
+const { data: transcriptData, pending: transcriptPending, error: transcriptError, refresh } = useFetch('/api/youtube/transcript', {
   query: computed(() => ({ videoId: selectedVideoId.value })),
   immediate: false,
   watch: [selectedVideoId]
 })
 
-const selectVideo = (videoId: string) => {
+const selectVideo = async (videoId: string) => {
+  console.log('Selecting video:', videoId)
   selectedVideoId.value = videoId
+  // Manually trigger refresh to ensure fetch happens
+  await refresh()
 }
 
 // Format duration
@@ -110,7 +113,8 @@ useHead({
             <div v-else-if="transcriptError" class="flex flex-col items-center justify-center h-full text-red-500">
               <UIcon name="i-heroicons-exclamation-circle" class="text-4xl mb-2" />
               <p>Error loading transcript</p>
-              <p class="text-xs mt-2 opacity-70">{{ String(transcriptError) }}</p>
+              <p class="text-xs mt-2 opacity-70">{{ transcriptError }}</p>
+              <p class="text-xs mt-1 opacity-50">Video ID: {{ selectedVideoId }}</p>
             </div>
 
             <div v-else-if="transcriptData" class="prose dark:prose-invert max-w-none">
@@ -142,6 +146,8 @@ useHead({
             <div v-else class="flex flex-col items-center justify-center h-full text-gray-500">
               <p>No transcript found for this video.</p>
               <p class="text-xs mt-2">Try running the batch fetch in Dev tools.</p>
+              <p class="text-xs mt-1 opacity-50">Video ID: {{ selectedVideoId }}</p>
+              <p class="text-xs mt-1 opacity-50">Pending: {{ transcriptPending }}, Error: {{ !!transcriptError }}, Data: {{ !!transcriptData }}</p>
             </div>
           </div>
 

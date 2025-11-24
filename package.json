@@ -16,7 +16,8 @@
     "import:excel": "tsx scripts/import-excel-videos.ts",
     "enrich:videos": "tsx scripts/enrich-video-data.ts",
     "generate:transcripts": "tsx scripts/generate-transcripts-from-yaml.ts",
-    "extract:urls": "tsx scripts/extract-google-sheet-urls.ts"
+    "extract:urls": "tsx scripts/extract-google-sheet-urls.ts",
+    "clean:transcripts": "tsx scripts/clean-transcripts.ts"
   },
   "dependencies": {
     "@nuxt/image": "^1.11.0",

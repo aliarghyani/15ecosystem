@@ -24,7 +24,7 @@ export const transcripts: Record<string, VideoTranscript> = {
     "characterCount": 28774,
     "characterCountNoSpaces": 22772,
     "locale": "fa",
-    "updatedAt": "2025-11-10T19:57:46.596Z"
+    "updatedAt": "2025-11-24T11:14:23.394Z"
   }
 }
 
