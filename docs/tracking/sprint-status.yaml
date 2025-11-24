@@ -3,10 +3,26 @@
 # Phase 0-3 (Planning/Solutioning) is tracked separately in bmm-workflow-status.yaml
 
 # generated: 2025-11-06
+# updated: 2025-11-24 - Added Epic 10 (Content Analysis) and Epic 11 (WhisperX)
 # project: 15ecosystem
 # project_key: 15ecosystem
 # tracking_system: file-system
 # story_location: "{project-root}/docs/stories"
+
+# ROADMAP NOTES (2025-11-24):
+# ============================
+# Epic 10 (Content Analysis) is HIGH PRIORITY and prerequisite for:
+#   - Epic 9 remaining stories (9-7, 9-11, 9-12, 9-13)
+#   - Future semantic search and recommendations
+# 
+# Epic 11 (WhisperX) is OPTIONAL - evaluate after Epic 10-1 (quality metrics)
+#   - Only proceed if PoC (11-1) shows significant quality improvement
+#   - Consider cost/benefit: GPU time vs current transcript quality
+# 
+# Recommended execution order:
+#   1. Epic 10 (Content Analysis) - 3-4 weeks
+#   2. Epic 9 (Remaining stories) - 2 weeks  
+#   3. Epic 11 (WhisperX) - Optional, 2-3 weeks if approved
 
 # STATUS DEFINITIONS:
 # ==================
@@ -120,20 +136,42 @@ development_status:
   epic-8-retrospective: optional
 
   # Epic 9: Content Relationships & UI Polish
-  epic-9: backlog
+  epic-9: in-progress
   9-1-type-sharding: done
   9-2-transcript-audit: done
   9-3-server-utils-enhancement: done  # Transcript cleaner + page fixes completed 2025-11-24
   9-4-video-card-standardization: done
   9-5-video-detail-enhancement: done
   9-6-transcript-skill-extraction: done
-  9-7-videos-page-category-organization: backlog
+  9-7-videos-page-category-organization: backlog  # Depends on: 10-3 (skill detection)
   9-8-playlists-page-redesign: backlog
   9-9-summary-page-redesign: backlog
   9-10-transcript-click-expand: backlog
-  9-11-hero-advanced-search: backlog
-  9-12-model-relationships-skills-first: backlog
-  9-13-transcript-relationship-enhancement: backlog
+  9-11-hero-advanced-search: backlog              # Depends on: 10-7 (semantic search)
+  9-12-model-relationships-skills-first: backlog  # Depends on: 10-3, 10-4 (skills + similarity)
+  9-13-transcript-relationship-enhancement: backlog # Depends on: 10-2, 10-5 (keywords + book-video)
   9-14-transcript-generation-stability: backlog
   epic-9-retrospective: optional
+
+  # Epic 10: Content Analysis & Intelligence (NEW - HIGH PRIORITY)
+  # Foundation for Epic 9 remaining stories and future features
+  epic-10: backlog
+  10-1-transcript-quality-metrics: backlog        # Calculate quality scores, identify weak transcripts
+  10-2-keyword-extraction-pipeline: backlog       # TF-IDF, RAKE for Persian text
+  10-3-skill-detection-mapping: backlog           # Map videos to 15 core skills automatically
+  10-4-video-similarity-analysis: backlog         # Clustering and similarity scoring
+  10-5-book-video-relationship-extraction: backlog # Extract book mentions and relationships
+  10-6-category-clustering-validation: backlog    # Validate and improve category assignments
+  10-7-semantic-search-foundation: backlog        # Embeddings + vector DB for semantic search
+  epic-10-retrospective: optional
+
+  # Epic 11: High-Quality Transcription Pipeline (OPTIONAL - Evaluate after Epic 10)
+  # WhisperX-based transcription for improved accuracy
+  epic-11: backlog
+  11-1-whisperx-poc-evaluation: backlog           # PoC with 5 videos, compare quality vs YouTube captions
+  11-2-audio-extraction-pipeline: backlog         # yt-dlp integration, audio preprocessing
+  11-3-whisperx-integration-setup: backlog        # Setup WhisperX with Persian model, GPU optimization
+  11-4-selective-retranscription: backlog         # Re-transcribe top 20 videos or low-quality ones
+  11-5-quality-comparison-dashboard: backlog      # A/B comparison, quality monitoring
+  epic-11-retrospective: optional
 ```

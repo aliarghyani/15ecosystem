@@ -17,7 +17,7 @@ export function parseTranscript(): string {
 
 /**
  * Extract book references from text
- * Looks for patterns like: *Book Title* (Author) or منابع: *Book Title* (Author)
+ * Looks for patterns like: *Book Title* (Author) or Sources: *Book Title* (Author)
  */
 export function extractBooks(text: string, skillId: number): Book[] {
   const books: Book[] = []
@@ -82,7 +82,7 @@ export function parseSkillsFromSummary(): Skill[] {
       continue
     }
 
-    // Detect skill number (e.g., "1. **خوابِ باکیفیت**")
+    // Detect skill number (e.g., "1. **Quality Sleep**")
     const skillMatch = line.match(/^(\d+)\.\s*\*\*([^*]+)\*\*/)
     if (skillMatch && skillMatch[1] && skillMatch[2]) {
       // Save previous skill if exists
@@ -136,10 +136,10 @@ export function parseSkillsFromSummary(): Skill[] {
       continue
     }
 
-    // Detect sections: "چرا مهم است؟", "چرا؟", "چطور؟", "چیست؟", "منابع:"
+    // Detect sections: "Why is it important?", "Why?", "How?", "What is it?", "Sources:"
     if (currentSkill && (line.includes('چرا مهم است؟') || (line.includes('چرا؟') && !line.includes('منابع')))) {
       currentSection = 'whyItMatters'
-      // Extract content after "چرا مهم است؟" or "چرا؟"
+      // Extract content after "Why is it important?" or "Why?"
       const contentAfter = line.split(/چرا مهم است؟|چرا\؟/).pop()?.trim()
       if (contentAfter && contentAfter.length > 5 && currentSkill.whyItMatters) {
         currentSkill.whyItMatters.fa = contentAfter
@@ -147,9 +147,9 @@ export function parseSkillsFromSummary(): Skill[] {
       continue
     }
 
-    // Handle "چیست؟" as fallback for whyItMatters when "چرا؟" is not present
+    // Handle "What is it?" as fallback for whyItMatters when "Why?" is not present
     if (currentSkill && line.includes('چیست؟')) {
-      // If whyItMatters is empty, use "چیست؟" content as whyItMatters
+      // If whyItMatters is empty, use "What is it?" content as whyItMatters
       const contentAfter = line.split(/چیست\؟/).pop()?.trim()
       if (contentAfter && contentAfter.length > 5) {
         if (!currentSkill.whyItMatters?.fa || currentSkill.whyItMatters.fa.trim() === '') {
@@ -158,7 +158,7 @@ export function parseSkillsFromSummary(): Skill[] {
           }
           currentSection = 'whyItMatters'
         } else {
-          // If whyItMatters already has content, treat "چیست؟" as howTo
+          // If whyItMatters already has content, treat "What is it?" as howTo
           currentSection = 'howTo'
           if (currentSkill.howTo) {
             currentSkill.howTo.fa = contentAfter
@@ -170,7 +170,7 @@ export function parseSkillsFromSummary(): Skill[] {
 
     if (currentSkill && line.includes('چطور؟')) {
       currentSection = 'howTo'
-      // Extract content after "چطور؟"
+      // Extract content after "How?"
       const contentAfter = line.split(/چطور\؟/).pop()?.trim()
       if (contentAfter && contentAfter.length > 5 && currentSkill.howTo) {
         currentSkill.howTo.fa = contentAfter

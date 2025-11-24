@@ -1,56 +1,56 @@
 /**
  * Transcript Cleaner Utility
  * 
- * پاکسازی ترنسکریپت‌های خام از YouTube:
- * - حذف HTML tags و timing codes
- * - نرمال‌سازی متن فارسی
- * - حذف segments تکراری
- * - تولید fullText تمیز
+ * Cleans raw YouTube transcripts:
+ * - Removes HTML tags and timing codes
+ * - Normalizes Persian text
+ * - Removes duplicate segments
+ * - Generates clean fullText
  */
 
 import type { VideoTranscriptData, TranscriptSegment } from './transcriptCache'
 
 /**
- * حذف HTML tags و timing codes از متن
+ * Remove HTML tags and timing codes from text
  */
 export function cleanHtmlTags(text: string): string {
   if (!text) return ''
   
   return text
-    // حذف timing codes: <00:00:02.600>
+    // Remove timing codes: <00:00:02.600>
     .replace(/<\d{2}:\d{2}:\d{2}\.\d{3}>/g, '')
-    // حذف HTML tags: <c>, </c>, <i>, </i>, etc.
+    // Remove HTML tags: <c>, </c>, <i>, </i>, etc.
     .replace(/<\/?[a-z]+>/gi, '')
-    // حذف فاصله‌های اضافی
+    // Remove extra spaces
     .replace(/\s+/g, ' ')
     .trim()
 }
 
 /**
- * نرمال‌سازی متن فارسی
+ * Normalize Persian text
  */
 export function normalizePersianText(text: string): string {
   if (!text) return ''
   
   return text
-    // تبدیل ي عربی به ی فارسی
+    // Convert Arabic Yeh to Persian Yeh
     .replace(/ي/g, 'ی')
-    // تبدیل ك عربی به ک فارسی
+    // Convert Arabic Kaf to Persian Kaf
     .replace(/ك/g, 'ک')
-    // نرمال‌سازی فاصله‌ها
+    // Normalize spaces
     .replace(/\s+/g, ' ')
     .trim()
 }
 
 /**
- * حذف segments تکراری و همپوشانی
- * استراتژی: گروه‌بندی segments با start time نزدیک و انتخاب طولانی‌ترین
- * سپس حذف تکرار متن در fullText
+ * Remove duplicate and overlapping segments
+ * Strategy: Group segments with close start times and select the longest
+ * Then remove text duplication in fullText
  */
 export function deduplicateSegments(segments: TranscriptSegment[]): TranscriptSegment[] {
   if (segments.length === 0) return []
   
-  // مرتب‌سازی بر اساس start time
+  // Sort by start time
   const sorted = [...segments].sort((a, b) => a.start - b.start)
   
   const result: TranscriptSegment[] = []
@@ -66,23 +66,23 @@ export function deduplicateSegments(segments: TranscriptSegment[]): TranscriptSe
     const lastInGroup = currentGroup[currentGroup.length - 1]
     if (!lastInGroup) continue
     
-    // اگر start time نزدیک به گروه فعلی است (تفاوت کمتر از 0.5 ثانیه)
-    // یا با segment قبلی overlap دارد، به گروه اضافه کن
+    // If start time is close to current group (difference less than 0.5 seconds)
+    // or overlaps with previous segment, add to group
     if (Math.abs(current.start - lastInGroup.start) < 0.5 || current.start < lastInGroup.end) {
       currentGroup.push(current)
     } else {
-      // گروه تمام شد، طولانی‌ترین را انتخاب کن
+      // Group finished, select the longest
       const longest = currentGroup.reduce((prev, curr) => 
         curr.text.length > prev.text.length ? curr : prev
       )
       result.push(longest)
       
-      // شروع گروه جدید
+      // Start new group
       currentGroup = [current]
     }
   }
   
-  // آخرین گروه را پردازش کن
+  // Process the last group
   if (currentGroup.length > 0) {
     const longest = currentGroup.reduce((prev, curr) => 
       curr.text.length > prev.text.length ? curr : prev
@@ -94,8 +94,8 @@ export function deduplicateSegments(segments: TranscriptSegment[]): TranscriptSe
 }
 
 /**
- * حذف تکرار کلمات از متن
- * برای حل مشکل overlapping segments که باعث تکرار کلمات میشه
+ * Remove duplicate words from text
+ * Solves the problem of overlapping segments that cause word duplication
  */
 export function removeDuplicateWords(text: string): string {
   if (!text) return ''
@@ -105,12 +105,12 @@ export function removeDuplicateWords(text: string): string {
   let lastWords: string[] = []
   
   for (const word of words) {
-    // اگر این کلمه در 10 کلمه قبلی نیست، اضافه کن
+    // If this word is not in the last 10 words, add it
     if (!lastWords.includes(word)) {
       result.push(word)
       lastWords.push(word)
       
-      // فقط 10 کلمه آخر رو نگه دار
+      // Keep only the last 10 words
       if (lastWords.length > 10) {
         lastWords.shift()
       }
@@ -121,15 +121,15 @@ export function removeDuplicateWords(text: string): string {
 }
 
 /**
- * بررسی نیاز به پاکسازی
+ * Check if transcript needs cleaning
  */
 export function needsCleaning(transcript: VideoTranscriptData): boolean {
-  // بررسی وجود HTML tags در fullText
+  // Check for HTML tags in fullText
   if (/<[^>]+>/.test(transcript.fullText)) {
     return true
   }
   
-  // بررسی وجود HTML tags در segments
+  // Check for HTML tags in segments
   const hasHtmlInSegments = transcript.segments.some(seg => 
     /<[^>]+>/.test(seg.text)
   )
@@ -137,7 +137,7 @@ export function needsCleaning(transcript: VideoTranscriptData): boolean {
     return true
   }
   
-  // بررسی وجود segments تکراری
+  // Check for duplicate segments
   const uniqueTimestamps = new Set(
     transcript.segments.map(seg => `${seg.start}-${seg.end}`)
   )
@@ -145,7 +145,7 @@ export function needsCleaning(transcript: VideoTranscriptData): boolean {
     return true
   }
   
-  // بررسی وجود حروف عربی
+  // Check for Arabic characters
   if (/[يك]/.test(transcript.fullText)) {
     return true
   }
@@ -154,8 +154,8 @@ export function needsCleaning(transcript: VideoTranscriptData): boolean {
 }
 
 /**
- * ساخت fullText بدون تکرار از segments
- * استراتژی: استفاده از longest common substring برای حذف تکرارها
+ * Build fullText without duplication from segments
+ * Strategy: Use longest common substring to remove duplicates
  */
 function buildUniqueFullText(segments: TranscriptSegment[]): string {
   if (segments.length === 0) return ''
@@ -174,11 +174,11 @@ function buildUniqueFullText(segments: TranscriptSegment[]): string {
       continue
     }
     
-    // پیدا کردن overlap بین متن قبلی و فعلی
+    // Find overlap between previous and current text
     let overlapLength = 0
     const minLength = Math.min(previousText.length, currentText.length)
     
-    // چک کردن از آخر previousText و اول currentText
+    // Check from end of previousText and start of currentText
     for (let i = 1; i <= minLength; i++) {
       const endOfPrevious = previousText.slice(-i)
       const startOfCurrent = currentText.slice(0, i)
@@ -188,14 +188,14 @@ function buildUniqueFullText(segments: TranscriptSegment[]): string {
       }
     }
     
-    // اگر overlap پیدا شد، فقط قسمت جدید رو اضافه کن
+    // If overlap found, add only the new part
     if (overlapLength > 0) {
       const newPart = currentText.slice(overlapLength)
       if (newPart.trim()) {
         texts.push(newPart)
       }
     } else {
-      // اگر overlap نبود، با فاصله اضافه کن
+      // If no overlap, add with space
       texts.push(currentText)
     }
     
@@ -206,22 +206,22 @@ function buildUniqueFullText(segments: TranscriptSegment[]): string {
 }
 
 /**
- * پاکسازی کامل یک ترنسکریپت
+ * Complete cleaning of a transcript
  */
 export function cleanTranscript(transcript: VideoTranscriptData): VideoTranscriptData {
-  // پاکسازی segments
+  // Clean segments
   const cleanedSegments = transcript.segments
     .map(segment => ({
       ...segment,
       text: normalizePersianText(cleanHtmlTags(segment.text))
     }))
-    // حذف segments خالی
+    // Remove empty segments
     .filter(segment => segment.text.length > 0)
   
-  // حذف duplicates
+  // Remove duplicates
   const deduplicatedSegments = deduplicateSegments(cleanedSegments)
   
-  // تولید fullText بدون تکرار
+  // Generate fullText without duplication
   const fullText = buildUniqueFullText(deduplicatedSegments)
   
   return {
@@ -232,7 +232,7 @@ export function cleanTranscript(transcript: VideoTranscriptData): VideoTranscrip
 }
 
 /**
- * آمار پاکسازی
+ * Cleaning statistics
  */
 export interface CleaningStats {
   segmentsRemoved: number
@@ -242,7 +242,7 @@ export interface CleaningStats {
 }
 
 /**
- * پاکسازی با آمار
+ * Clean with statistics
  */
 export function cleanTranscriptWithStats(transcript: VideoTranscriptData): {
   cleaned: VideoTranscriptData

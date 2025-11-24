@@ -30,7 +30,7 @@ export interface SearchResult {
  * @param text - Text to normalize
  * @returns Normalized text
  * @example
- * normalizePersianText('سلام') // Normalizes Persian characters
+ * normalizePersianText('hello') // Normalizes Persian characters
  */
 function normalizePersianText(text: string): string {
     if (!text) return ''
