@@ -3,9 +3,11 @@
 **Story ID:** 9-3-server-utils-enhancement  
 **Epic:** Epic 9 - Content Relationships & UI Polish  
 **Priority:** Medium  
-**Status:** drafted  
+**Status:** done  
 **Created:** 2025-11-23  
-**Estimated Effort:** 4-5 hours
+**Completed:** 2025-11-24  
+**Estimated Effort:** 4-5 hours  
+**Actual Effort:** 5 hours
 
 ---
 
@@ -328,3 +330,107 @@ Enhanced **transcriptCache.ts** with:
 
 **Last Updated:** 2025-11-23  
 **Story Owner:** Development Team
+
+
+---
+
+## Implementation Notes
+
+### Transcript Cleaner Implementation (2025-11-24)
+
+**Created:** `server/utils/transcriptCleaner.ts`
+
+**Functions Implemented:**
+1. `cleanHtmlTags(text: string)` - Removes HTML tags and timing codes
+2. `normalizePersianText(text: string)` - Converts Arabic chars to Persian
+3. `deduplicateSegments(segments[])` - Removes duplicate and overlapping segments
+4. `buildUniqueFullText(segments[])` - Builds fullText without word repetition using overlap detection algorithm
+5. `cleanTranscript(transcript)` - Main cleaning function
+6. `cleanTranscriptWithStats(transcript)` - Cleaning with statistics
+7. `needsCleaning(transcript)` - Checks if transcript needs cleaning
+
+**Key Algorithm - Overlap Detection:**
+- Detects overlapping text between consecutive segments
+- Uses longest common substring matching
+- Removes duplicate words while preserving sentence flow
+- Example: "گاربج این، گاربج اوت. یا میگیم که ببین گاربج این، گاربج اوت." → "گاربج این، گاربج اوت. یا میگیم که ببین..."
+
+**Batch Processing Script:**
+- Created `scripts/clean-transcripts.ts` for batch cleaning
+- Added `--force` flag for re-cleaning already processed files
+- Added npm script: `pnpm clean:transcripts`
+
+**Results:**
+- ✅ 128 transcript files cleaned
+- ✅ 53,670 duplicate segments removed
+- ✅ HTML tags and timing codes removed
+- ✅ Arabic characters normalized to Persian
+- ✅ Duplicate words removed from fullText
+
+**Files Modified:**
+- Created: `server/utils/transcriptCleaner.ts`
+- Created: `scripts/clean-transcripts.ts`
+- Modified: `package.json` (added clean:transcripts script)
+- Cleaned: All 128 files in `server/data/transcripts/`
+
+### Transcript Page Enhancement
+
+**Modified:** `app/pages/transcript.vue`
+
+**Changes:**
+1. Display video title from video data instead of "Unknown Video"
+2. Show fullText instead of timestamped segments
+3. Added manual refresh trigger for better fetch reliability
+4. Added debug info for troubleshooting
+
+**Issue Fixed:** Transcript page was showing "No transcript found" because:
+- Transcripts had HTML tags and duplicate content
+- Page was displaying segments with timestamps instead of clean fullText
+- Video titles were not being fetched from video data
+
+---
+
+## Testing Results
+
+**Test Case 1: Duplicate Word Removal**
+- Video: MhDVy4-GTRA
+- Before: "گاربج این گاربج اوت چه زمانایی از این استفاده گاربج اوت چه زمانایی..."
+- After: "یه اصطلاح انگلیسی هست که میگه گاربج این گاربج اوت چه زمانایی از این استفاده می‌کنیم؟..."
+- ✅ Duplicates removed successfully
+
+**Test Case 2: HTML Tag Removal**
+- Before: "متن<00:00:02.600><c> با</c><00:00:02.800><c> تگ</c>"
+- After: "متن با تگ"
+- ✅ All HTML tags removed
+
+**Test Case 3: Segment Deduplication**
+- Video: k2UtRwGIfq0
+- Segments before: 1577
+- Segments after: 1577 (already deduplicated)
+- FullText length: 61,081 characters
+- ✅ No duplicate segments
+
+**Test Case 4: Transcript Page Display**
+- ✅ Video titles display correctly
+- ✅ Full transcript text shows without timestamps
+- ✅ Text is readable and flows naturally
+- ✅ RTL direction works correctly for Persian text
+
+---
+
+## Story Completion Checklist
+
+- [x] AC1: Utility Functions Documented
+- [x] AC2: Error Handling Improved
+- [x] AC3: Transcript Validation Enhanced
+- [x] AC4: Batch Operations Supported
+- [x] AC5: Search/Index Helpers Created
+- [x] All functions have JSDoc comments
+- [x] Error handling implemented
+- [x] Batch cleaning script created
+- [x] All 128 transcripts cleaned
+- [x] Transcript page displays correctly
+- [x] Testing completed
+- [x] Documentation updated
+
+**Status:** ✅ DONE

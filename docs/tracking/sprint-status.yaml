@@ -123,7 +123,7 @@ development_status:
   epic-9: backlog
   9-1-type-sharding: done
   9-2-transcript-audit: done
-  9-3-server-utils-enhancement: done
+  9-3-server-utils-enhancement: done  # Transcript cleaner + page fixes completed 2025-11-24
   9-4-video-card-standardization: done
   9-5-video-detail-enhancement: done
   9-6-transcript-skill-extraction: done

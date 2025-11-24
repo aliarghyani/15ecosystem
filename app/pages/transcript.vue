@@ -104,8 +104,8 @@ useHead({
 
       <!-- Main: Transcript -->
       <div class="lg:col-span-8">
-        <UCard class="h-[600px] overflow-hidden flex flex-col">
-          <div v-if="selectedVideoId" class="h-full overflow-y-auto p-4">
+        <UCard class="flex flex-col">
+          <div v-if="selectedVideoId" class="max-h-[80vh] overflow-y-auto p-4">
             <div v-if="transcriptPending" class="flex justify-center items-center h-full">
               <UIcon name="i-heroicons-arrow-path" class="animate-spin text-3xl text-primary-500" />
             </div>
@@ -120,23 +120,13 @@ useHead({
             <div v-else-if="transcriptData" class="prose dark:prose-invert max-w-none">
               <h2
                 class="text-xl font-bold mb-4 sticky top-0 bg-white dark:bg-gray-900 py-2 z-10 border-b border-gray-200 dark:border-gray-800">
-                {{ transcriptData.title || 'Transcript' }}
+                {{ allVideos.find(v => v.youtubeId === selectedVideoId)?.title[locale] || transcriptData.title || 'Transcript' }}
               </h2>
 
-              <!-- Display transcript segments -->
-              <div v-if="transcriptData.segments && transcriptData.segments.length > 0">
-                <div v-for="(segment, index) in transcriptData.segments" :key="index"
-                  class="mb-4 group hover:bg-gray-50 dark:hover:bg-gray-800/50 p-2 rounded transition-colors">
-                  <div class="flex gap-3">
-                    <span class="text-xs text-gray-400 font-mono mt-1 select-none w-12 flex-shrink-0">
-                      {{ formatDuration(segment.start) }}
-                    </span>
-                    <p class="m-0 text-gray-800 dark:text-gray-200 leading-relaxed"
-                      :dir="segment.text.match(/[\u0600-\u06FF]/) ? 'rtl' : 'ltr'">
-                      {{ segment.text }}
-                    </p>
-                  </div>
-                </div>
+              <!-- Display full transcript text -->
+              <div v-if="transcriptData.fullText" class="whitespace-pre-wrap leading-relaxed text-gray-800 dark:text-gray-200"
+                :dir="transcriptData.fullText.match(/[\u0600-\u06FF]/) ? 'rtl' : 'ltr'">
+                {{ transcriptData.fullText }}
               </div>
               <div v-else class="text-center py-12 text-gray-500">
                 No transcript text available.
